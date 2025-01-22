@@ -73,7 +73,7 @@ fun LogInScreen() {
             value = email,
             onValueChange = { email = it },
             leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = null) },
-            label = { Text(text = "Email Address") },
+            label = { Text(text = "Username or Email Address",  style = TextStyle(fontSize = 14.sp)) },
             modifier = Modifier.fillMaxWidth(0.8f)
 
         )
