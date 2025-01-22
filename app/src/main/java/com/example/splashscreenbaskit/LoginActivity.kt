@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.ui.res.colorResource
 import com.example.splashscreenbaskit.R
 
 
@@ -63,7 +64,9 @@ fun LogInScreen() {
 
         Text(
             text = "Log into your account",
+            color = Color.Gray,
             fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(bottom = 5.dp)
                 .align(Alignment.CenterHorizontally)
