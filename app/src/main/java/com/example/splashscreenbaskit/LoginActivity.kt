@@ -49,6 +49,9 @@ fun LogInScreen() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        Spacer(modifier = Modifier.height(30.dp))
+
         Image(
             painter = painterResource(id = R.drawable.baskit_logo),
             contentDescription = "Login Image",
@@ -62,8 +65,8 @@ fun LogInScreen() {
             text = "Log into your account",
             fontSize = 16.sp,
             modifier = Modifier
-                .fillMaxWidth(0.8f)
                 .padding(bottom = 5.dp)
+                .align(Alignment.CenterHorizontally)
         )
 
         OutlinedTextField(
@@ -122,6 +125,7 @@ fun LogInScreen() {
         }
 
         Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.weight(1f))
 
         Row(
             modifier = Modifier
