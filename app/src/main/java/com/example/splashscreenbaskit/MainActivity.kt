@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen*/
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.myapplication.design.loginregister.LogInScreen
 import com.example.splashscreenbaskit.ui.theme.SplashScreenBaskitTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,12 +36,15 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
+            LogInScreen()
             SplashScreenBaskitTheme { }
-            LoginActivity()
             //SignUpActivity()
             //AccountActivity()
 
         }
+
+
+
     }
 }
 

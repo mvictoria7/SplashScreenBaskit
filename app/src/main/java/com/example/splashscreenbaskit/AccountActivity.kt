@@ -144,9 +144,15 @@ fun AccountActivity () {
                         OutlinedTextField(
                             value = email,
                             onValueChange = {},
-                            leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = null)},
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Person,
+                                    contentDescription = null
+                                )
+                            },
                             modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(10.dp))
+                            shape = RoundedCornerShape(10.dp)
+                        )
                     }
                 }
 
@@ -174,51 +180,65 @@ fun AccountActivity () {
                         OutlinedTextField(
                             value = email,
                             onValueChange = {},
-                            leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = null)},
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Email,
+                                    contentDescription = null
+                                )
+                            },
                             modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(10.dp))
-                            }
+                            shape = RoundedCornerShape(10.dp)
+                        )
                     }
                 }
+            }
 
 
-                Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
-                //email
-                Column {
+            //email
+            Column {
 
-                    Text(
-                        text = "Email",
-                        fontSize = 12.sp,
-                        color = Color.Gray,
-                        fontWeight = FontWeight.Normal
-                    )
+                Text(
+                    text = "Email",
+                    fontSize = 12.sp,
+                    color = Color.Gray,
+                    fontWeight = FontWeight.Normal
+                )
 
-                    Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(4.dp))
 
-                    Row(
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(text = email)
+
+                    OutlinedTextField(
+                        value = email,
+                        onValueChange = {},
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Email,
+                                contentDescription = null
+                            )
+                        },
                         modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Text(text = email)
-
-                        OutlinedTextField(
-                            value = email,
-                            onValueChange = {},
-                            leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = null)},
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(10.dp))
-                    }
+                        shape = RoundedCornerShape(10.dp)
+                    )
                 }
-            
-
+            }
 
 
         }
-
-
     }
+}
+
+
+
+
+
 
 
 
