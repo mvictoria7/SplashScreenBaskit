@@ -2,7 +2,6 @@ package com.example.splashscreenbaskit
 
 import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,18 +13,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
@@ -34,8 +36,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -48,9 +50,11 @@ fun SignUpActivity() {
 
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
+    var birthday by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+    var isChecked by remember { mutableStateOf(false) }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -68,7 +72,7 @@ fun SignUpActivity() {
             Image(
                 painter = painterResource(id = R.drawable.signup_image),
                 contentDescription = "Sign Up image",
-                modifier = Modifier.size(250.dp)
+                modifier = Modifier.size(100.dp)
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -109,6 +113,24 @@ fun SignUpActivity() {
 
             Spacer(modifier = Modifier.height(5.dp))
 
+            OutlinedTextField(
+                value = birthday,
+                onValueChange = { birthday = it },
+                label = { Text("Birthday") },
+                placeholder = { Text("MM/DD/YYYY") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.DateRange,
+                        contentDescription = "Calendar Icon"
+                    )
+                },
+                modifier = Modifier.fillMaxWidth(0.8f),
+                shape = RoundedCornerShape(10.dp)
+            )
+
+            Spacer(modifier = Modifier.height(5.dp))
+
             // Email field
             OutlinedTextField(
                 value = email,
@@ -144,14 +166,33 @@ fun SignUpActivity() {
                 onValueChange = { confirmPassword = it },
                 label = { Text(text = "Confirm Password") },
                 leadingIcon = {
-                    Icon(imageVector = Icons.Default.Lock, contentDescription = "Confirm Password Icon")
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = "Confirm Password Icon"
+                    )
                 },
                 modifier = Modifier.fillMaxWidth(0.8f),
                 shape = RoundedCornerShape(10.dp),
                 visualTransformation = PasswordVisualTransformation()
             )
 
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(5.dp))
+
+            // Terms and Conditions
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Checkbox(
+                    checked = isChecked,
+                    onCheckedChange = { isChecked = it }
+                )
+                Spacer(modifier = Modifier.width(2.dp))
+                Text(text = "Agree to Terms and Conditions")
+            }
+
+            Spacer(modifier = Modifier.width(10.dp))
 
             // Sign Up button
             Button(
@@ -176,8 +217,9 @@ fun SignUpActivity() {
                 Text(text = "Sign up")
             }
 
-            Spacer(modifier = Modifier.height(100.dp))
+            Spacer(modifier = Modifier.height(70.dp))
 
+            //Already have an account
             Row(
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
@@ -201,12 +243,13 @@ fun SignUpActivity() {
                         fontWeight = FontWeight.Bold,
                         style = TextStyle(textDecoration = TextDecoration.Underline)
                     )
+
+
                 }
             }
         }
     }
 }
-
 
 
 

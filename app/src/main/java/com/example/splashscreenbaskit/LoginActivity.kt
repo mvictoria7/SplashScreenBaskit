@@ -34,6 +34,8 @@ import com.example.splashscreenbaskit.R
 fun LogInScreen() {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    val options = listOf("Guest", "Tagabili")
+    var selectedOption by remember { mutableStateOf(options[0]) }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -57,7 +59,7 @@ fun LogInScreen() {
             painter = painterResource(id = R.drawable.baskit_logo),
             contentDescription = "Login Image",
             modifier = Modifier
-                .size(300.dp)
+                .size(200.dp)
                 .padding(bottom = 16.dp)
         )
 
@@ -69,16 +71,16 @@ fun LogInScreen() {
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(bottom = 5.dp)
-                .align(Alignment.CenterHorizontally)
+                .align(Alignment.CenterHorizontally),
         )
 
-        OutlinedTextField(
+        TextField(
             value = email,
             onValueChange = { email = it },
             leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = null) },
-            label = { Text(text = "Username or Email Address",  style = TextStyle(fontSize = 14.sp)) },
-            modifier = Modifier.fillMaxWidth(0.8f)
-
+            label = { Text(text = "Username or Email") },
+            modifier = Modifier.fillMaxWidth(0.8f ) .background(color = Color.LightGray),
+            shape = RoundedCornerShape(10.dp)
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -89,7 +91,8 @@ fun LogInScreen() {
             leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = null) },
             label = { Text(text = "Password") },
             visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth(0.8f)
+            modifier = Modifier.fillMaxWidth(0.8f),
+            shape = RoundedCornerShape(10.dp)
         )
 
         Spacer(modifier = Modifier.height(4.dp))
@@ -109,7 +112,23 @@ fun LogInScreen() {
             )
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Row (modifier = Modifier.padding(5.dp)) {
+            options.forEach { text ->
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(vertical = 8.dp)
+                ) {
+                    RadioButton(
+                        selected = (text == selectedOption),
+                        onClick = { selectedOption = text }
+                    )
+                    Spacer(modifier = Modifier.width(15.dp))
+                    Text(text = text)
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
 
         Button(
             onClick = {
@@ -119,7 +138,7 @@ fun LogInScreen() {
                 .height(50.dp),
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF3A6E51),
+                containerColor = Color(0xFF1d7151),
                 contentColor = Color.White
             )
 
@@ -127,8 +146,8 @@ fun LogInScreen() {
             Text(text = "Login")
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(150.dp))
+        //Spacer(modifier = Modifier.weight(1f))
 
         Row(
             modifier = Modifier
@@ -147,8 +166,10 @@ fun LogInScreen() {
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Text(text = "Sign Up", fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
                     style = TextStyle(textDecoration = TextDecoration.Underline,
-                        color = Color(0xFF006400)))
+                    color = Color(0xFF006400))
+                )
 
             }
         }
