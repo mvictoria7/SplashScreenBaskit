@@ -27,11 +27,12 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.res.colorResource
+import androidx.navigation.NavController
 import com.example.splashscreenbaskit.R
 
 
 @Composable
-fun LogInScreen() {
+fun LogInScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val options = listOf("Guest", "Tagabili")
@@ -122,7 +123,7 @@ fun LogInScreen() {
                         selected = (text == selectedOption),
                         onClick = { selectedOption = text }
                     )
-                    Spacer(modifier = Modifier.width(15.dp))
+                    Spacer(modifier = Modifier.width(0.dp))
                     Text(text = text)
                 }
             }
@@ -133,6 +134,7 @@ fun LogInScreen() {
         Button(
             onClick = {
                 Log.i("Credential", "Email: $email, Password: $password")
+                navController.navigate("Home")
             },
             modifier = Modifier.fillMaxWidth(0.8f)
                 .height(50.dp),
@@ -162,24 +164,18 @@ fun LogInScreen() {
             )
 
             TextButton(
-                onClick = {  },
+                onClick = { navController.navigate ("SignUpActivity") },
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Text(text = "Sign Up", fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     style = TextStyle(textDecoration = TextDecoration.Underline,
-                    color = Color(0xFF006400))
+                    color = Color(0xFF1d7151))
                 )
 
             }
         }
     }
 
-}
-
-@Preview(showBackground = true)
-@Composable
-fun LogInScreenPreview() {
-    LogInScreen()
 }
 

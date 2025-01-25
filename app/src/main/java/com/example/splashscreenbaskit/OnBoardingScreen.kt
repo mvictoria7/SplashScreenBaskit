@@ -1,4 +1,5 @@
 package com.example.splashscreenbaskit
+import android.provider.Telephony.Mms.Intents
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -19,20 +20,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-
-@Preview(showBackground = true)
-@Composable
-fun OnBoardingScreen() {
-    OnboardingScreen()
-}
-
+import android.content.Intent
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 
 
 @Composable
-fun OnboardingScreen() {
+fun OnboardingScreen(navController: NavController) {
     var currentPage by remember { mutableStateOf(0) }
     val totalScreens = 3
+
+    val context = LocalContext.current
 
     Box(
         modifier = Modifier
@@ -79,6 +78,7 @@ fun OnboardingScreen() {
                     }
                 },
                 onGetStartedClick = {
+                    navController.navigate( "SignUpActivity")
 
                 }
             )
@@ -90,15 +90,15 @@ fun OnboardingScreen() {
 fun PageIndicator(currentPage: Int, totalScreens: Int) {
     Row(
         horizontalArrangement = Arrangement.Center,
-        modifier = Modifier.padding(top = 20.dp, bottom = 20.dp)
+        modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
     ) {
         repeat(totalScreens) { index ->
             Box(
                 modifier = Modifier
-                    .size(16.dp)
-                    .padding(horizontal = 2.dp)
+                    .size(10.dp)
+                    .padding(horizontal = 0.dp)
                     .background(
-                        color = if (index == currentPage) Color(0xFF00471B) else Color.Gray,
+                        color = if (index == currentPage) Color(0xAA1d7151) else Color.Gray,
                         shape = CircleShape
                     ))
         }
@@ -172,7 +172,7 @@ fun BottomNavigation(
 
         Row(
             horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(vertical = 16.dp)
+            modifier = Modifier.padding(vertical = 5.dp)
         ) {
             repeat(totalScreens) { index ->
                 Box(
@@ -180,7 +180,7 @@ fun BottomNavigation(
                         .size(6.dp)
                         .padding(horizontal = 4.dp)
                         .background(
-                            color = if (index == currentPage) Color(0xFFFFA726) else Color.Gray,
+                            color = if (index == currentPage) Color(0xFF1d7151) else Color.Gray,
                             shape = CircleShape
                         )
                 )
@@ -190,7 +190,7 @@ fun BottomNavigation(
 
         Button(
             onClick = if (currentPage < totalScreens - 1) onNextClick else onGetStartedClick,
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00471B))
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151))
         ) {
             Text(
                 text = if (currentPage < totalScreens - 1) "Next" else "Get Started",

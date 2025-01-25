@@ -16,6 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen*/
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.design.loginregister.LogInScreen
 import com.example.splashscreenbaskit.ui.theme.SplashScreenBaskitTheme
 import kotlinx.coroutines.CoroutineScope
@@ -30,19 +34,32 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         enableEdgeToEdge()
 
-        //CoroutineScope(Dispatchers.Main).launch {
-            //delay(3000L)
-        //}
-
 
         setContent {
+            SplashScreenBaskitTheme {
+                val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = "OnBoardingScreen") {
+                    composable("OnBoardingScreen") {
+                        OnboardingScreen(navController)
+                    }
+                    composable("LoginActivity") {
+                        LogInScreen(navController)
+                    }
+                    composable("SignUpActivity") {
+                        SignUpActivity(navController)
+                    }
+                    composable("AccountActivity") {
+                        AccountActivity(navController)
+                    }
+                    composable("Home") {
+                        Home(navController)
+                    }
 
-            SplashScreenBaskitTheme { }
-            //LogInScreen()
-            //SignUpActivity()
-            //AccountActivity()
-            SettingsActivity()
-            OnBoardingScreen()
+
+
+                }
+            }
+
 
         }
 

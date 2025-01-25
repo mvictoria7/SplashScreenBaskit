@@ -9,4 +9,11 @@
     </style>
 
     <style name="Theme.SplashScreenBaskit" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.BaskitSplashScreen.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.BaskitSplashScreen.AppBarOverlay"
+        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.BaskitSplashScreen.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

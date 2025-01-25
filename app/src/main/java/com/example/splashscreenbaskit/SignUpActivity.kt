@@ -43,13 +43,15 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @Preview(showBackground = true)
 @Composable
-fun SignUpActivity() {
+fun SignUpActivity(navController: NavController) {
 
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
+    var userName by remember { mutableStateOf("") }
     var birthday by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -131,6 +133,20 @@ fun SignUpActivity() {
 
             Spacer(modifier = Modifier.height(5.dp))
 
+            // usrname field
+            OutlinedTextField(
+                value = userName,
+                onValueChange = { userName = it },
+                label = { Text(text = "Username") },
+                leadingIcon = {
+                    Icon(imageVector = Icons.Default.Person, contentDescription = "Person Icon")
+                },
+                modifier = Modifier.fillMaxWidth(0.8f),
+                shape = RoundedCornerShape(10.dp)
+            )
+
+            Spacer(modifier = Modifier.height(5.dp))
+
             // Email field
             OutlinedTextField(
                 value = email,
@@ -176,13 +192,14 @@ fun SignUpActivity() {
                 visualTransformation = PasswordVisualTransformation()
             )
 
-            Spacer(modifier = Modifier.height(5.dp))
+            Spacer(modifier = Modifier.height(1.dp))
 
             // Terms and Conditions
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth() .padding(horizontal = 25.dp, vertical = 0.dp),
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
+
             ) {
                 Checkbox(
                     checked = isChecked,
@@ -210,14 +227,14 @@ fun SignUpActivity() {
                     .width(180.dp)
                     .height(50.dp),
                 shape = RoundedCornerShape(100.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3A6E51)),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151)),
                 enabled = firstName.isNotBlank() && lastName.isNotBlank() &&
                         email.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()
             ) {
                 Text(text = "Sign up")
             }
 
-            Spacer(modifier = Modifier.height(70.dp))
+            Spacer(modifier = Modifier.height(50.dp))
 
             //Already have an account
             Row(
@@ -233,7 +250,7 @@ fun SignUpActivity() {
                 )
 
                 TextButton(
-                    onClick = { },
+                    onClick = { navController.navigate("LoginActivity")},
                     enabled = true
                 ) {
                     Text(
