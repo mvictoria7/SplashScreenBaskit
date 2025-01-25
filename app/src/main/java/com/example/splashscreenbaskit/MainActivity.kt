@@ -42,6 +42,7 @@ class MainActivity : ComponentActivity() {
             //SignUpActivity()
             //AccountActivity()
             SettingsActivity()
+            OnBoardingScreen()
 
         }
 
