@@ -74,12 +74,12 @@ fun LogInScreen() {
                 .align(Alignment.CenterHorizontally),
         )
 
-        TextField(
+        OutlinedTextField(
             value = email,
             onValueChange = { email = it },
             leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = null) },
             label = { Text(text = "Username or Email") },
-            modifier = Modifier.fillMaxWidth(0.8f ) .background(color = Color.LightGray),
+            modifier = Modifier.fillMaxWidth(0.8f ),
             shape = RoundedCornerShape(10.dp)
         )
 

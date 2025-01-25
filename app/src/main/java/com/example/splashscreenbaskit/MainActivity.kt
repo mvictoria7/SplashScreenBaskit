@@ -36,10 +36,12 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
-            //LogInScreen()
+
             SplashScreenBaskitTheme { }
+            //LogInScreen()
             //SignUpActivity()
-            AccountActivity()
+            //AccountActivity()
+            SettingsActivity()
 
         }
 

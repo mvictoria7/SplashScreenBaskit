@@ -228,18 +228,18 @@ fun SignUpActivity() {
             ) {
                 Text(
                     text = "Already have an account?",
-                    fontSize = 12.sp,
+                    fontSize = 14.sp,
                     modifier = Modifier.align(Alignment.CenterVertically)
                 )
 
                 TextButton(
-                    onClick = { /* Navigate to login */ },
+                    onClick = { },
                     enabled = true
                 ) {
                     Text(
                         text = "Log In",
                         color = Color(0xFF1d7151),
-                        fontSize = 12.sp,
+                        fontSize = 14.sp,
                         fontWeight = FontWeight.Bold,
                         style = TextStyle(textDecoration = TextDecoration.Underline)
                     )

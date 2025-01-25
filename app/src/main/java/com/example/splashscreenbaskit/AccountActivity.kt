@@ -1,7 +1,6 @@
 package com.example.splashscreenbaskit
 
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-//import androidx.compose.foundation.layout.FlowRowScopeInstance.weight
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,7 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
@@ -31,30 +28,20 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.design.loginregister.LogInScreen
 
 @Preview (showBackground = true)
 @Composable
 fun AccountActivity () {
-
-    val email by remember { mutableStateOf("") }
 
     Box(
         modifier = Modifier
@@ -62,8 +49,6 @@ fun AccountActivity () {
             .background(Color(0xAA1d7151).copy(alpha = 1f))
     ) {
         //notif and settings button
-
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -103,7 +88,7 @@ fun AccountActivity () {
         // Inner Box
         Box(
             modifier = Modifier
-                .height(650.dp)
+                .height(680.dp)
                 .width(420.dp)
                 .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
                 .align(Alignment.BottomCenter)
@@ -148,18 +133,24 @@ fun AccountActivity () {
                     ) {
                         Text(text = "")
 
-                        OutlinedTextField(
-                            value = "",
-                            onValueChange = {},
-                            leadingIcon = {
+                        Box(modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color(0xFFF1F1F1), RoundedCornerShape(10.dp))
+                        ) {
+                            Row (
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                modifier = Modifier.padding(15.dp)
+                            ){
                                 Icon(
                                     imageVector = Icons.Default.Person,
-                                    contentDescription = null
+                                    contentDescription = null,
+                                    tint = Color.DarkGray
                                 )
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(10.dp)
-                        )
+                                Text(text = "mariavicky")
+                            }
+                        }
+
                     }
                 }
 
@@ -184,18 +175,23 @@ fun AccountActivity () {
                     ) {
                         Text(text = "")
 
-                        OutlinedTextField(
-                            value = "",
-                            onValueChange = {},
-                            leadingIcon = {
+                        Box(modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color(0xFFF1F1F1), RoundedCornerShape(10.dp))
+
+                        ) {
+                            Row (verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                modifier = Modifier.padding(15.dp)
+                            ){
                                 Icon(
                                     imageVector = Icons.Default.DateRange,
-                                    contentDescription = null
+                                    contentDescription = null,
+                                    tint = Color.DarkGray
                                 )
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(10.dp)
-                        )
+                                Text(text = "02/15/2005")
+                            }
+                        }
                     }
                 }
 
@@ -218,38 +214,30 @@ fun AccountActivity () {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        Text(text = email)
+                        Text(text = "")
 
-                        OutlinedTextField(
-                            value = email,
-                            onValueChange = {},
-                            leadingIcon = {
+                        Box(modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color(0xFFF1F1F1), RoundedCornerShape(10.dp))
+                        ) {
+                            Row (verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                modifier = Modifier.padding(15.dp)
+                            ){
                                 Icon(
                                     imageVector = Icons.Default.Email,
-                                    contentDescription = null
+                                    contentDescription = null,
+                                    tint = Color.DarkGray
                                 )
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(10.dp)
-                        )
+                                Text(text = "test@gmail.com")
+                            }
+                        }
                     }
                 }
 
                 Spacer(modifier = Modifier.height(15.dp))
 
-                Box(
-                    modifier = Modifier
-                        //.padding(16.dp)
-                        .border(0.5.dp, Color.Black, RoundedCornerShape(10.dp))
-                        .padding(15.dp) //inside padding
-                        //.width
-
-
-                ) {
-                    Text(text = "This is some text inside a box")
-                }
-
-                //email
+                //password
                 Column {
 
                     Text(
@@ -266,36 +254,37 @@ fun AccountActivity () {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        Text(text = email)
+                        Text(text = "")
 
-                        OutlinedTextField(
-                            value = email,
-                            onValueChange = {},
-                            leadingIcon = {
+                        Box(modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color(0xFFF1F1F1), RoundedCornerShape(10.dp))
+                        ) {
+                            Row (verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                modifier = Modifier.padding(15.dp)
+                            ){
                                 Icon(
                                     imageVector = Icons.Default.Lock,
-                                    contentDescription = null
+                                    contentDescription = null,
+                                    tint = Color.DarkGray
                                 )
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(10.dp)
-                        )
+                                Text(text = "**********")
+                            }
+                        }
                     }
                 }
 
                 Spacer(modifier = Modifier.height(4.dp))
 
-                Column (
-                    //modifier = Modifier.fillMaxWidth(),
-                    //.width(180.dp),
-                    //verticalArrangement = Arrangement,
-                    horizontalAlignment = Alignment.End
+                //reset password
+                Column (horizontalAlignment = Alignment.End
                 ){
                     Row(
                         modifier = Modifier
                             .fillMaxWidth(0.8f)
                             .padding(top = 8.dp),
-                        horizontalArrangement = Arrangement.End
+                        horizontalArrangement = Arrangement.Start
                     ) {
                         Text(
                             text = "Reset password",
@@ -307,26 +296,23 @@ fun AccountActivity () {
                 }
 
                 Column ( modifier = Modifier.fillMaxWidth(),
-                    //.width(180.dp),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(50.dp))
 
                     // Log Out button
                     Button(
                         onClick = { },
                         modifier = Modifier
-                            .fillMaxWidth(0.8f)
+                            .width(170.dp)
                             .height(50.dp),
                         shape = RoundedCornerShape(100.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFc1121f),
                         contentColor = Color.White
                         )
 
-                    ) {
-                        Text(text = "Log Out")
-                    }
+                    ) {Text(text = "Log Out")}
                 }
 
 
