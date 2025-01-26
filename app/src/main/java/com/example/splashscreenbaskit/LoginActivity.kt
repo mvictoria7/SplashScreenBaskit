@@ -28,9 +28,14 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.res.colorResource
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
 
-
+@Preview(showBackground = true)
+@Composable
+fun LoginActivityPreview() {
+    LogInScreen(navController =  rememberNavController())
+}
 @Composable
 fun LogInScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }

@@ -24,8 +24,15 @@ import android.content.Intent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.myapplication.design.loginregister.LogInScreen
 
 
+@Preview(showBackground = true)
+@Composable
+fun OnBoardingScreenPreview() {
+    OnboardingScreen(navController =  rememberNavController())
+}
 @Composable
 fun OnboardingScreen(navController: NavController) {
     var currentPage by remember { mutableStateOf(0) }
