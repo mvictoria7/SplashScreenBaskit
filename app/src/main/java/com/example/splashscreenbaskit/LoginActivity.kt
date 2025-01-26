@@ -14,8 +14,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -26,18 +24,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.ui.res.colorResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
 
 @Preview(showBackground = true)
 @Composable
-fun LoginActivityPreview() {
-    LogInScreen(navController =  rememberNavController())
+fun LoginActivity() {
+    LoginActivity(navController = rememberNavController())
 }
+
 @Composable
-fun LogInScreen(navController: NavController) {
+fun LoginActivity(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val options = listOf("Guest", "Tagabili")
@@ -46,9 +44,7 @@ fun LogInScreen(navController: NavController) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.White
-    ) {
-
-    }
+    ) { }
 
     Column(
         modifier = Modifier
@@ -128,7 +124,7 @@ fun LogInScreen(navController: NavController) {
                         selected = (text == selectedOption),
                         onClick = { selectedOption = text }
                     )
-                    Spacer(modifier = Modifier.width(0.dp))
+                    Spacer(modifier = Modifier.width(15.dp))
                     Text(text = text)
                 }
             }
@@ -138,8 +134,8 @@ fun LogInScreen(navController: NavController) {
 
         Button(
             onClick = {
+                navController.navigate( "HomeActivity")
                 Log.i("Credential", "Email: $email, Password: $password")
-                navController.navigate("Home")
             },
             modifier = Modifier.fillMaxWidth(0.8f)
                 .height(50.dp),
@@ -169,13 +165,13 @@ fun LogInScreen(navController: NavController) {
             )
 
             TextButton(
-                onClick = { navController.navigate ("SignUpActivity") },
+                onClick = {  },
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Text(text = "Sign Up", fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     style = TextStyle(textDecoration = TextDecoration.Underline,
-                    color = Color(0xFF1d7151))
+                    color = Color(0xFF006400))
                 )
 
             }
@@ -183,4 +179,10 @@ fun LogInScreen(navController: NavController) {
     }
 
 }
+
+/*@Preview(showBackground = true)
+@Composable
+fun LogInScreenPreview() {
+    LogInScreen()
+}*/
 
