@@ -1,5 +1,6 @@
 package com.example.splashscreenbaskit
 
+import HomeScreen
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
