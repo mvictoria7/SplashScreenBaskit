@@ -297,7 +297,7 @@ fun AccountActivity (navController: NavController) {
                         Text(
                             text = "Reset password",
                             fontSize = 12.sp,
-                            color = Color(0xFF006400),
+                            color = Color(0xFF4557FF),
                             modifier = Modifier.clickable {  }
                         )
                     }
@@ -316,7 +316,7 @@ fun AccountActivity (navController: NavController) {
                             .width(170.dp)
                             .height(50.dp),
                         shape = RoundedCornerShape(100.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFc1121f),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCA0000),
                         contentColor = Color.White
                         )
 
