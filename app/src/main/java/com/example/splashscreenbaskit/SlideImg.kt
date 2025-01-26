@@ -21,7 +21,7 @@ fun Slide(modifier: Modifier = Modifier) {
         HorizontalPager(
             count = 3,
             state = pagerState,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize() // Adjust to match parent size
         ) { page ->
             Image(
                 painter = painterResource(
