@@ -99,7 +99,7 @@ fun PageIndicator(currentPage: Int, totalScreens: Int) {
                     .size(10.dp)
                     .padding(horizontal = 1.dp)
                     .background(
-                        color = if (index == currentPage) Color(0xAA1d7151) else Color.Gray,
+                        color = if (index == currentPage) Color(0xAAFF9100) else Color.Gray,
                         shape = CircleShape
                     )
             )
@@ -117,7 +117,7 @@ fun WavyHeader() {
         val path = Path().apply {
             moveTo(0f, size.height * 0.6f)
             cubicTo(
-                size.width * 0.25f, size.height * 0.3f,
+                size.width * 0.35f, size.height * 0.3f,
                 size.width * 0.75f, size.height * 0.7f,
                 size.width, size.height * 0.6f
             )
@@ -127,7 +127,7 @@ fun WavyHeader() {
         }
         clipPath(path) {
             drawRoundRect(
-                color = Color(0xFF00471B),
+                color = Color(0xFF1d7151),
                 size = size,
                 cornerRadius = CornerRadius(0f, 0f)
             )

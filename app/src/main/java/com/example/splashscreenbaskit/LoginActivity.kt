@@ -81,7 +81,7 @@ fun LoginActivity(navController: NavController) {
             onValueChange = { email = it },
             leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = null) },
             label = { Text(text = "Username or Email") },
-            modifier = Modifier.fillMaxWidth(0.8f ),
+            modifier = Modifier.fillMaxWidth(0.8f),
             shape = RoundedCornerShape(10.dp)
         )
 
@@ -109,7 +109,7 @@ fun LoginActivity(navController: NavController) {
             Text(
                 text = "Forgot password?",
                 fontSize = 12.sp,
-                color = Color(0xFF006400),
+                color = Color(0xFF4557FF),
                 modifier = Modifier.clickable {  }
             )
         }
@@ -160,7 +160,7 @@ fun LoginActivity(navController: NavController) {
         ) {
             Text(
                 text = "Don't have an account?",
-                fontSize = 14.sp,
+                fontSize = 12.sp,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
 
@@ -168,10 +168,10 @@ fun LoginActivity(navController: NavController) {
                 onClick = {  },
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
-                Text(text = "Sign Up", fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    style = TextStyle(textDecoration = TextDecoration.Underline,
-                    color = Color(0xFF006400))
+                Text(text = "Sign Up", fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium,
+                    style = TextStyle(textDecoration = TextDecoration.Underline),
+                    color = Color(0xFF4557FF)
                 )
 
             }

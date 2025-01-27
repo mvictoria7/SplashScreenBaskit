@@ -2,6 +2,7 @@ package com.example.splashscreenbaskit
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -105,6 +106,7 @@ fun SignUpActivity(navController: NavController) {
                     onValueChange = { firstName = it },
                     label = { Text(text = "First Name") },
                     modifier = Modifier.weight(1f),
+
                     shape = RoundedCornerShape(10.dp)
                 )
 
@@ -261,8 +263,8 @@ fun SignUpActivity(navController: NavController) {
                     Text(
                         text = "Log In",
                         color = Color(0xFF1d7151),
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Medium,
                         style = TextStyle(textDecoration = TextDecoration.Underline)
                     )
 
