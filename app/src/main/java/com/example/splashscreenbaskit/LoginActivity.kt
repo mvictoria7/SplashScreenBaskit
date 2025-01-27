@@ -124,7 +124,7 @@ fun LoginActivity(navController: NavController) {
                         selected = (text == selectedOption),
                         onClick = { selectedOption = text }
                     )
-                    Spacer(modifier = Modifier.width(15.dp))
+                    Spacer(modifier = Modifier.width(10.dp))
                     Text(text = text)
                 }
             }

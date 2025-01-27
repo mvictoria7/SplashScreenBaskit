@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.*
 
 @Composable
-fun Slide(modifier: Modifier = Modifier) {
+fun SlideImg(modifier: Modifier = Modifier) {
     val pagerState = rememberPagerState(initialPage = 0)
 
     Column(
@@ -40,5 +40,5 @@ fun Slide(modifier: Modifier = Modifier) {
             pagerState = pagerState,
             modifier = Modifier.padding(top = 8.dp)
         )
-    }
+       }
 }

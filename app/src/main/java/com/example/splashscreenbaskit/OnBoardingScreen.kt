@@ -1,12 +1,11 @@
 package com.example.splashscreenbaskit
-import android.provider.Telephony.Mms.Intents
+
+import android.content.Intent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,22 +19,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import android.content.Intent
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-
+import com.google.accompanist.pager.*
 
 @Preview(showBackground = true)
 @Composable
 fun OnBoardingScreenPreview() {
-    OnboardingScreen(navController =  rememberNavController())
+    OnboardingScreen(navController = rememberNavController())
 }
+
 @Composable
 fun OnboardingScreen(navController: NavController) {
-    var currentPage by remember { mutableStateOf(0) }
-    val totalScreens = 3
+    val pagerState = rememberPagerState(initialPage = 0)
 
     val context = LocalContext.current
 
@@ -46,18 +43,13 @@ fun OnboardingScreen(navController: NavController) {
     ) {
         WavyHeader()
 
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 550.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-
-            PageIndicator(currentPage = currentPage, totalScreens = totalScreens)
-
-
-            when (currentPage) {
+        // Pager for Onboarding Screens
+        HorizontalPager(
+            count = 3,
+            state = pagerState,
+            modifier = Modifier.fillMaxSize()
+        ) { page ->
+            when (page) {
                 0 -> OnboardingContent(
                     title = "Good Day!",
                     description = "At Baskit, we believe that shopping should \nbe simple and stress-free. \nStart by creating a personalized grocery \nlist tailored to your needs."
@@ -71,23 +63,26 @@ fun OnboardingScreen(navController: NavController) {
                     description = "Convenience is at the heart of Baskit.\nPresent your code in-store, collect your items \nwith ease, and enjoy a seamless shopping experience."
                 )
             }
+        }
 
-            Spacer(modifier = Modifier.weight(1f))
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 20.dp),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            PageIndicator(currentPage = pagerState.currentPage, totalScreens = 3)
 
-
-            BottomNavigation(
-                currentPage = currentPage,
-                totalScreens = totalScreens,
-                onNextClick = {
-                    if (currentPage < totalScreens - 1) {
-                        currentPage++
-                    }
-                },
-                onGetStartedClick = {
-                    navController.navigate( "SignUpActivity")
-
+            // check if on the last page
+            if (pagerState.currentPage == 2) {
+                TextButton(onClick = {
+                    // Navigate to SignUp Activity
+                    navController.navigate("SignUpActivity")
+                }) {
+                    Text("Get Started", color = Color(0xFF1d7151), fontWeight = FontWeight.Bold)
                 }
-            )
+            }
         }
     }
 }
@@ -102,15 +97,15 @@ fun PageIndicator(currentPage: Int, totalScreens: Int) {
             Box(
                 modifier = Modifier
                     .size(10.dp)
-                    .padding(horizontal = 0.dp)
+                    .padding(horizontal = 1.dp)
                     .background(
                         color = if (index == currentPage) Color(0xAA1d7151) else Color.Gray,
                         shape = CircleShape
-                    ))
+                    )
+            )
         }
     }
 }
-
 
 @Composable
 fun WavyHeader() {
@@ -145,13 +140,13 @@ fun OnboardingContent(title: String, description: String) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Text(
             text = title,
             fontSize = 35.sp,
             fontWeight = FontWeight.Bold,
             color = Color.Black,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            modifier = Modifier.offset(y = 150.dp)
         )
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -159,50 +154,8 @@ fun OnboardingContent(title: String, description: String) {
             text = description,
             fontSize = 16.sp,
             color = Color.Gray,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            modifier = Modifier.offset(y = 180.dp)
         )
     }
 }
-
-@Composable
-fun BottomNavigation(
-    currentPage: Int,
-    totalScreens: Int,
-    onNextClick: () -> Unit,
-    onGetStartedClick: () -> Unit
-) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(vertical = 5.dp)
-        ) {
-            repeat(totalScreens) { index ->
-                Box(
-                    modifier = Modifier
-                        .size(6.dp)
-                        .padding(horizontal = 4.dp)
-                        .background(
-                            color = if (index == currentPage) Color(0xFF1d7151) else Color.Gray,
-                            shape = CircleShape
-                        )
-                )
-            }
-        }
-
-
-        Button(
-            onClick = if (currentPage < totalScreens - 1) onNextClick else onGetStartedClick,
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151))
-        ) {
-            Text(
-                text = if (currentPage < totalScreens - 1) "Next" else "Get Started",
-                color = Color.White
-            )
-        }
-    }
-}
-

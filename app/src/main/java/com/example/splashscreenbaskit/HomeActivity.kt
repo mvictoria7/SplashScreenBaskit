@@ -1,6 +1,7 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Card
@@ -20,10 +21,40 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.splashscreenbaskit.R
+import com.example.splashscreenbaskit.SlideImg
+
+@Composable
+fun PageIndicator(currentPage: Int, totalScreens: Int) {
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .padding(top = 170.dp, bottom = 20.dp)
+            .fillMaxWidth(),
+
+    )
+    {
+        repeat(totalScreens) { index ->
+            Box(
+                modifier = Modifier
+                    .size(10.dp)
+                    .padding(horizontal = 1.dp)
+                    .background(
+                        color = if (index == currentPage) Color(0xAA1d7151) else Color.Gray,
+                        shape = CircleShape
+                    )
+                    .offset(y = 2.dp)
+            )
+        }
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
 fun HomeScreen() {
+    var searchText by remember { mutableStateOf("text") }
+    val totalScreens = 3
+    var currentPage by remember { mutableStateOf(0) }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.White
@@ -34,6 +65,7 @@ fun HomeScreen() {
                 .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             Spacer(modifier = Modifier.height(32.dp))
 
             // Logo
@@ -101,6 +133,7 @@ fun HomeScreen() {
 
             Spacer(modifier = Modifier.height(20.dp))
 
+            // Card with Image and Page Indicator
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -113,10 +146,14 @@ fun HomeScreen() {
                     defaultElevation = 4.dp
                 )
             ) {
-
-                SlideImg(modifier = Modifier.fillMaxSize())
-
+                Box(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    SlideImg(modifier = Modifier.fillMaxSize())
+                    PageIndicator(currentPage = currentPage, totalScreens = totalScreens)
+                }
             }
+
         }
     }
 }
