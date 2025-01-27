@@ -311,7 +311,8 @@ fun AccountActivity (navController: NavController) {
 
                     // Log Out button
                     Button(
-                        onClick = { },
+                        onClick = {
+                            navController.navigate( "LoginActivity") },
                         modifier = Modifier
                             .width(170.dp)
                             .height(50.dp),

@@ -180,9 +180,3 @@ fun LoginActivity(navController: NavController) {
 
 }
 
-/*@Preview(showBackground = true)
-@Composable
-fun LogInScreenPreview() {
-    LogInScreen()
-}*/
-

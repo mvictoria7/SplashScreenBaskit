@@ -1,14 +1,13 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,8 +19,20 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.navigation.NavDestination.Companion.hierarchy
+import com.example.splashscreenbaskit.AccountActivity
 import com.example.splashscreenbaskit.R
-import com.example.splashscreenbaskit.SlideImg
 
 @Composable
 fun PageIndicator(currentPage: Int, totalScreens: Int) {
@@ -29,10 +40,8 @@ fun PageIndicator(currentPage: Int, totalScreens: Int) {
         horizontalArrangement = Arrangement.Center,
         modifier = Modifier
             .padding(top = 170.dp, bottom = 20.dp)
-            .fillMaxWidth(),
-
-    )
-    {
+            .fillMaxWidth()
+    ) {
         repeat(totalScreens) { index ->
             Box(
                 modifier = Modifier
@@ -51,10 +60,30 @@ fun PageIndicator(currentPage: Int, totalScreens: Int) {
 @Preview(showBackground = true)
 @Composable
 fun HomeScreen() {
-    var searchText by remember { mutableStateOf("text") }
-    val totalScreens = 3
-    var currentPage by remember { mutableStateOf(0) }
+    val navController = rememberNavController()
+    Scaffold(
+        bottomBar = { BottomBar(navController = navController) }
+    ) { paddingValues ->
+        NavHost(
+            navController = navController,
+            startDestination = BottomBarActivity.Home.route,
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            composable(BottomBarActivity.Home.route) {
+                HomeContent()
+            }
+            composable(BottomBarActivity.Cart.route) {
+                CartScreen()
+            }
+            composable(BottomBarActivity.Account.route) {
+                AccountActivity()
+            }
+        }
+    }
+}
 
+@Composable
+fun HomeContent() {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.White
@@ -97,7 +126,6 @@ fun HomeScreen() {
                     .height(50.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Search Bar
                 var searchText by remember { mutableStateOf(TextFieldValue("")) }
 
                 Image(
@@ -149,11 +177,98 @@ fun HomeScreen() {
                 Box(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    SlideImg(modifier = Modifier.fillMaxSize())
-                    PageIndicator(currentPage = currentPage, totalScreens = totalScreens)
+                    // Replace SlideImg with your image content
+                    PageIndicator(currentPage = 0, totalScreens = 3)
                 }
             }
-
         }
     }
+}
+
+@Composable
+fun CartScreen() {
+    Surface(modifier = Modifier.fillMaxSize()) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Text(text = "Cart Screen", fontSize = 20.sp)
+        }
+    }
+}
+
+@Composable
+fun AccountScreen() {
+    Surface(modifier = Modifier.fillMaxSize()) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Text(text = "Account Screen", fontSize = 20.sp)
+        }
+    }
+}
+
+@Composable
+fun BottomBar(navController: NavController) {
+    val screens = listOf(
+        BottomBarActivity.Home,
+        BottomBarActivity.Cart,
+        BottomBarActivity.Account,
+    )
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+    BottomNavigation (
+        backgroundColor = Color(0xFF1d7151)
+    ) {
+        screens.forEach { screen ->
+            AddItem(
+                screen = screen,
+                currentDestination = currentDestination,
+                navController = navController
+            )
+        }
+    }
+}
+
+@Composable
+fun RowScope.AddItem(
+    screen: BottomBarActivity.Screen,
+    currentDestination: NavDestination?,
+    navController: NavController
+) {
+    BottomNavigationItem(
+        label = {
+            Text(
+                text = screen.title,
+                color = if (currentDestination?.hierarchy?.any { it.route == screen.route } == true)
+                    Color.White else Color.Gray // White when selected, Gray when unselected
+            )
+        },
+        icon = {
+            Icon(
+                imageVector = screen.icon,
+                contentDescription = "Navigation Icon",
+                tint = if (currentDestination?.hierarchy?.any { it.route == screen.route } == true)
+                    Color.White else Color.Gray // White for selected, Gray for unselected
+            )
+        },
+        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+        onClick = {
+            navController.navigate(screen.route) {
+                popUpTo(navController.graph.startDestinationId) { saveState = true }
+                launchSingleTop = true
+                restoreState = true
+            }
+        }
+    )
+}
+
+object BottomBarActivity {
+    val Home = Screen("home", "Home", Icons.Default.Home)
+    val Cart = Screen("cart", "Cart", Icons.Default.ShoppingCart)
+    val Account = Screen("account", "Account", Icons.Default.AccountCircle)
+
+    data class Screen(val route: String, val title: String, val icon: ImageVector)
 }
