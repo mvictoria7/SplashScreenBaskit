@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
                         AccountActivity(navController)
                     }
                     composable("HomeActivity") {
-                        HomeActivity(navController)
+                        HomeScreen()
                     }
                 }
             }
