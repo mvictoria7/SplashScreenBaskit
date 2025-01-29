@@ -114,21 +114,24 @@ fun LoginActivity(navController: NavController) {
             )
         }
 
-        Row (modifier = Modifier.padding(5.dp)) {
+        Row(modifier = Modifier.padding(1.dp)) {
             options.forEach { text ->
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(vertical = 8.dp)
+                    modifier = Modifier.padding(vertical = 1.dp)
                 ) {
                     RadioButton(
                         selected = (text == selectedOption),
                         onClick = { selectedOption = text }
                     )
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Text(text = text)
+                    Text(
+                        text = text,
+                        modifier = Modifier.padding(start = 1.dp)
+                    )
                 }
             }
         }
+
 
         Spacer(modifier = Modifier.height(10.dp))
 

@@ -33,6 +33,7 @@ import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.example.splashscreenbaskit.AccountActivity
 import com.example.splashscreenbaskit.R
+import com.example.splashscreenbaskit.SlideImg
 
 @Composable
 fun PageIndicator(currentPage: Int, totalScreens: Int) {
@@ -177,7 +178,7 @@ fun HomeContent() {
                 Box(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    // Replace SlideImg with your image content
+                    SlideImg(modifier = Modifier.fillMaxSize())
                     PageIndicator(currentPage = 0, totalScreens = 3)
                 }
             }
