@@ -57,7 +57,7 @@ fun CartActivity()
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp)
+                .padding(start = 30.dp, end = 30.dp)
         ) {
             Column {
                 Text(
@@ -66,11 +66,9 @@ fun CartActivity()
                     fontWeight = FontWeight.Bold
                 )
 
-                Spacer(modifier = Modifier.height(5.dp))
-
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(vertical = 4.dp)
+                    //modifier = Modifier.padding(vertical = 4.dp)
                 ) {
 
                     repeat(4) {
@@ -87,9 +85,34 @@ fun CartActivity()
 //                    tint = Color.Black,
                         modifier = Modifier.size(25.dp)
                     )
-                }
 
-                Spacer(modifier = Modifier.height(5.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(start = 100.dp)
+                    ) {
+                        IconButton(onClick = {  }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.minus),
+                                contentDescription = "Minus",
+                                tint = Color.Black,
+                                modifier = Modifier.size(16.dp)
+                            )
+                        }
+                        Text(
+                            text = "2",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                        )
+                        IconButton(onClick = { /* Increase quantity */ }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.add),
+                                contentDescription = "Add",
+                                tint = Color.Black,
+                                modifier = Modifier.size(16.dp)
+                            )
+                        }
+                    }
+                }
 
                 Text(
                     text = "₱ 32.25",
@@ -100,7 +123,7 @@ fun CartActivity()
             }
 
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
 
             // Counter Row
@@ -115,29 +138,6 @@ fun CartActivity()
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(onClick = {  }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.minus),
-                            contentDescription = "Minus",
-                            tint = Color.Black,
-                            modifier = Modifier.size(16.dp)
-                        )
-                    }
-                    Text(
-                        text = "2",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                    )
-                    IconButton(onClick = { /* Increase quantity */ }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.add),
-                            contentDescription = "Add",
-                            tint = Color.Black,
-                            modifier = Modifier.size(16.dp)
-                        )
-                    }
-                }
             }
 
 
@@ -151,7 +151,7 @@ fun CartActivity()
                 color = Color.Gray
             )
 
-            Spacer(modifier = Modifier.height(100.dp))
+            Spacer(modifier = Modifier.height(80.dp))
 
             // Weight options
             Row(
@@ -211,6 +211,7 @@ fun CartActivity()
                 )
             }
             Button(
+                modifier = Modifier.height(55.dp),
                 onClick = {  },
                 shape = RoundedCornerShape(30.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White)
