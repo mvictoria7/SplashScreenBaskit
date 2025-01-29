@@ -27,12 +27,16 @@ import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.example.splashscreenbaskit.AccountActivity
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.SlideImg
+import java.util.Locale.Category
 
 @Composable
 fun PageIndicator(currentPage: Int, totalScreens: Int) {
@@ -45,7 +49,7 @@ fun PageIndicator(currentPage: Int, totalScreens: Int) {
         repeat(totalScreens) { index ->
             Box(
                 modifier = Modifier
-                    .size(10.dp)
+                    .size(15.dp)
                     .padding(horizontal = 1.dp)
                     .background(
                         color = if (index == currentPage) Color(0xAA1d7151) else Color.Gray,
@@ -84,6 +88,9 @@ fun HomeScreen() {
 
 @Composable
 fun HomeContent() {
+
+    val textState = remember { mutableStateOf("") }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.White
@@ -91,11 +98,11 @@ fun HomeContent() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 30.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(45.dp))
 
             // Logo
             Image(
@@ -111,30 +118,32 @@ fun HomeContent() {
             // Title
             Text(
                 text = "Shop Smarter, Not Harder",
-                fontSize = 15.sp,
+                fontSize = 12.sp,
                 color = Color.Black,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.offset(y = (-20).dp)
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             // Search Bar with Notification Icon
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    //.padding(start = 30.dp, end = 30.dp)
                     .height(50.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 var searchText by remember { mutableStateOf(TextFieldValue("")) }
 
-                Image(
+                /*Image(
                     painter = painterResource(id = R.drawable.searchq),
                     contentDescription = "Search Icon",
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .size(24.dp)
-                )
+                )*/
+                //Spacer(modifier = Modifier.width(10.dp))
 
                 BasicTextField(
                     value = searchText,
@@ -146,27 +155,37 @@ fun HomeContent() {
                             shape = RoundedCornerShape(10.dp)
                         )
                         .padding(horizontal = 16.dp, vertical = 12.dp),
-                    singleLine = true
+                    singleLine = true,
+                    decorationBox = { innerTextField ->
+                        if (textState.value.isEmpty()) {
+                            Text(
+                                text = "Search food, vegetable, etc.",
+                                color = Color.Gray,
+                                fontSize = 12.sp
+                            )
+                        }
+                        innerTextField()
+                    }
                 )
 
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(10.dp))
 
                 // Notification Icon
                 Icon(
                     painter = painterResource(id = R.drawable.notification),
                     contentDescription = "Notifications",
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(20.dp)
                 )
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
             // Card with Image and Page Indicator
             Card(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
-                shape = RoundedCornerShape(16.dp),
+                    .fillMaxWidth().height(155.dp),
+                    //.padding(start = 30.dp, end = 30.dp),
+                shape = RoundedCornerShape(10.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = Color.White
                 ),
@@ -182,8 +201,63 @@ fun HomeContent() {
                 }
             }
         }
+
+        Column(){
+            Box(
+                modifier = Modifier.padding(top = 400.dp)
+            ){
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.White),
+                    horizontalArrangement = Arrangement.Start
+                ){
+                    TextButton(
+                        onClick = {  },
+                        modifier = Modifier.padding(8.dp)
+                    ) {
+                        Text("DAGUPAN", color = Color.Black, fontSize = 14.sp)
+                    }
+
+                    TextButton(
+                        onClick = {  },
+                        modifier = Modifier.padding(8.dp)
+                    ) {
+                        Text("CALASIAO", color = Color.LightGray, fontSize = 14.sp)
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(2.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.White),
+                horizontalArrangement = Arrangement.Start
+            ){
+                TextButton(
+                    onClick = {  },
+                    modifier = Modifier.padding(8.dp)
+                ) {
+                    Text("SHOP", color = Color.Black, fontSize = 14.sp)
+                }
+
+                TextButton(
+                    onClick = {  },
+                    modifier = Modifier.padding(8.dp)
+                ) {
+                    Text("Fruits", color = Color.LightGray, fontSize = 14.sp)
+                }
+            }
+
+        }
+
     }
+
+
 }
+
 
 @Composable
 fun CartScreen() {
@@ -251,7 +325,7 @@ fun RowScope.AddItem(
                 imageVector = screen.icon,
                 contentDescription = "Navigation Icon",
                 tint = if (currentDestination?.hierarchy?.any { it.route == screen.route } == true)
-                    Color.White else Color.Gray // White for selected, Gray for unselected
+                    Color.White else Color.LightGray
             )
         },
         selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,

@@ -106,7 +106,7 @@ fun SignUpActivity(navController: NavController) {
                     value = firstName,
                     onValueChange = { firstName = it },
                     label = { Text(text = "First Name") },
-                    //modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(10.dp),
 
 
@@ -205,7 +205,9 @@ fun SignUpActivity(navController: NavController) {
 
             // Terms and Conditions
             Row(
-                modifier = Modifier.fillMaxWidth() .padding(horizontal = 25.dp, vertical = 0.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 25.dp, vertical = 0.dp),
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
 
@@ -218,7 +220,7 @@ fun SignUpActivity(navController: NavController) {
                 Text(text = "Agree to Terms and Conditions")
             }
 
-            Spacer(modifier = Modifier.width(10.dp))
+            //Spacer(modifier = Modifier.width(15.dp))
 
             // Sign Up button
             Button(

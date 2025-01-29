@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,7 +32,7 @@ fun CartActivity()
                 .height(300.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.lettuce2),
+                painter = painterResource(id = R.drawable.lettuce),
                 contentDescription = "Lettuce",
                 modifier = Modifier.fillMaxSize()
             )
@@ -56,41 +57,47 @@ fun CartActivity()
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(15.dp)
+                .padding(start = 20.dp, end = 20.dp)
         ) {
-            Text(
-                text = "Lettuce",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            )
+            Column {
+                Text(
+                    text = "Lettuce",
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Bold
+                )
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(vertical = 4.dp)
-            ) {
+                Spacer(modifier = Modifier.height(5.dp))
 
-                repeat(4) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(vertical = 4.dp)
+                ) {
+
+                    repeat(4) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.star),
+                            contentDescription = "Star",
+                            tint = Color(0xFFFFC107),
+                            modifier = Modifier.size(25.dp)
+                        )
+                    }
                     Icon(
-                        painter = painterResource(id = R.drawable.star),
-                        contentDescription = "Star",
-                        tint = Color(0xFFFFC107),
+                        painter = painterResource(id = R.drawable.star_outline),
+                        contentDescription = "Star Outline",
+//                    tint = Color.Black,
                         modifier = Modifier.size(25.dp)
                     )
                 }
-                Icon(
-                    painter = painterResource(id = R.drawable.star_outline),
-                    contentDescription = "Star Outline",
-//                    tint = Color.Black,
-                    modifier = Modifier.size(25.dp)
+
+                Spacer(modifier = Modifier.height(5.dp))
+
+                Text(
+                    text = "₱ 32.25",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Gray
                 )
             }
-
-            Text(
-                text = "₱ 32.25",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = Color.Gray
-            )
 
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -104,7 +111,7 @@ fun CartActivity()
             ) {
                 Text(
                     text = "Product Description",
-                    fontSize = 20.sp,
+                    fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
@@ -138,29 +145,33 @@ fun CartActivity()
 
 
             Text(
-                text = "LETTTUCE MAGANDA SA KATAWAN, LETTUCE LETTUCE LETTUCE. KAYA BILI KA NA.",
-                fontSize = 20.sp,
+                text = "Freshly grown lettuce from Aling Nena's own garden \nFresh every day!",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Light,
                 color = Color.Gray
             )
 
-            Spacer(modifier = Modifier.height(150.dp))
+            Spacer(modifier = Modifier.height(100.dp))
 
             // Weight options
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 listOf("1 pc", "1/4 kg", "1/2 pc", "1 kg").forEach { option ->
                     Button(
-                        onClick = { /* Handle selection */ },
-                        shape = RoundedCornerShape(15.dp),
+                        modifier = Modifier
+                            .height(52.dp)
+                            .width(80.dp),
+                        onClick = { },
+                        shape = RoundedCornerShape(10.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color.White,
                             contentColor = Color.Black
                         ),
                         elevation = ButtonDefaults.buttonElevation(2.dp)
                     ) {
-                        Text(text = option)
+                        Text(text = option, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
                     }
                 }
             }
@@ -171,9 +182,10 @@ fun CartActivity()
         // Footer section
         Row(
             modifier = Modifier
+                .height(114.dp)
                 .fillMaxWidth()
                 .background(Color(0xFF1D7151))
-                .padding(16.dp),
+                .padding(20.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -188,22 +200,26 @@ fun CartActivity()
                     color = Color.White,
                     fontWeight = FontWeight.Bold
                 )
+
+                Spacer(modifier = Modifier.height(5.dp))
+
                 Text(
                     text = "₱ 64.50",
-                    fontSize = 15.sp,
+                    fontSize = 22.sp,
                     color = Color.White,
                     fontWeight = FontWeight.Bold
                 )
             }
             Button(
-                onClick = { /* Add to Basket */ },
-                shape = RoundedCornerShape(20.dp),
+                onClick = {  },
+                shape = RoundedCornerShape(30.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White)
             ) {
                 Text(
                     text = "Add to Basket",
                     color = Color.Black,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
                 )
             }
         }
