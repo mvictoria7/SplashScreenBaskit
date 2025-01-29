@@ -1,12 +1,14 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.TextButton
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -27,16 +29,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.input.pointer.motionEventSpy
-import androidx.navigation.NavDestination.Companion.hierarchy
 import com.example.splashscreenbaskit.AccountActivity
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.SlideImg
-import java.util.Locale.Category
 
 @Composable
 fun PageIndicator(currentPage: Int, totalScreens: Int) {
@@ -50,13 +47,39 @@ fun PageIndicator(currentPage: Int, totalScreens: Int) {
             Box(
                 modifier = Modifier
                     .size(15.dp)
-                    .padding(horizontal = 1.dp)
+                    .padding(horizontal = 2.dp)
                     .background(
                         color = if (index == currentPage) Color(0xAA1d7151) else Color.Gray,
                         shape = CircleShape
                     )
-                    .offset(y = 2.dp)
             )
+        }
+    }
+}
+
+@Composable
+fun CategoryRow(selectedCategory: MutableState<String?>) {
+    val categories = listOf("SHOP", "Vegetables", "Fruits", "Meats", "Fish", "Spices", "Frozen Foods")
+    val selectedCategoryLocal = selectedCategory.value
+
+    LazyRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 2.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(categories) { category ->
+            TextButton(
+                onClick = { selectedCategory.value = category },
+                modifier = Modifier.padding(4.dp)
+            ) {
+                Text(
+                    text = category,
+                    color = if (selectedCategoryLocal == category) Color.Black else Color.Gray,
+                    fontSize = 14.sp,
+                    fontWeight = if (selectedCategoryLocal == category) FontWeight.Bold else FontWeight.Normal
+                )
+            }
         }
     }
 }
@@ -88,8 +111,8 @@ fun HomeScreen() {
 
 @Composable
 fun HomeContent() {
-
-    val textState = remember { mutableStateOf("") }
+    // Remembering selected categories
+    val selectedCategory = remember { mutableStateOf<String?>(null) }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -101,7 +124,6 @@ fun HomeContent() {
                 .padding(horizontal = 30.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Spacer(modifier = Modifier.height(45.dp))
 
             // Logo
@@ -113,7 +135,7 @@ fun HomeContent() {
                     .padding(bottom = 16.dp)
             )
 
-            Spacer(modifier = Modifier.height(0.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             // Title
             Text(
@@ -130,20 +152,10 @@ fun HomeContent() {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    //.padding(start = 30.dp, end = 30.dp)
                     .height(50.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 var searchText by remember { mutableStateOf(TextFieldValue("")) }
-
-                /*Image(
-                    painter = painterResource(id = R.drawable.searchq),
-                    contentDescription = "Search Icon",
-                    modifier = Modifier 
-                        .align(Alignment.CenterVertically)
-                        .size(24.dp)
-                )*/
-                //Spacer(modifier = Modifier.width(10.dp))
 
                 BasicTextField(
                     value = searchText,
@@ -157,7 +169,7 @@ fun HomeContent() {
                         .padding(horizontal = 16.dp, vertical = 12.dp),
                     singleLine = true,
                     decorationBox = { innerTextField ->
-                        if (textState.value.isEmpty()) {
+                        if (searchText.text.isEmpty()) {
                             Text(
                                 text = "Search food, vegetable, etc.",
                                 color = Color.Gray,
@@ -180,11 +192,10 @@ fun HomeContent() {
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            // Card with Image and Page Indicator
+            // Move Page Indicator and SlideImg below search bar
             Card(
                 modifier = Modifier
                     .fillMaxWidth().height(155.dp),
-                    //.padding(start = 30.dp, end = 30.dp),
                 shape = RoundedCornerShape(10.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = Color.White
@@ -200,86 +211,63 @@ fun HomeContent() {
                     PageIndicator(currentPage = 0, totalScreens = 3)
                 }
             }
-        }
 
-        Column(){
-            Box(
-                modifier = Modifier.padding(top = 400.dp)
-            ){
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Color.White),
-                    horizontalArrangement = Arrangement.Start
-                ){
-                    TextButton(
-                        onClick = {  },
-                        modifier = Modifier.padding(8.dp)
-                    ) {
-                        Text("DAGUPAN", color = Color.Black, fontSize = 14.sp)
-                    }
+            Spacer(modifier = Modifier.height(20.dp))
 
-                    TextButton(
-                        onClick = {  },
-                        modifier = Modifier.padding(8.dp)
-                    ) {
-                        Text("CALASIAO", color = Color.LightGray, fontSize = 14.sp)
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(2.dp))
-
+            // Category Row for Dagupan and Calasiao
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.White),
                 horizontalArrangement = Arrangement.Start
-            ){
+            ) {
+                // Colors for Dagupan and Calasiao based on selection
+                val dagupanColor = if (selectedCategory.value == "Dagupan") Color.Black else Color.Gray
+                val calasiaoColor = if (selectedCategory.value == "Calasiao") Color.Black else Color.Gray
+
                 TextButton(
-                    onClick = {  },
+                    onClick = {
+                        selectedCategory.value = "Dagupan" // When Dagupan is clicked, set it as selected
+                    },
                     modifier = Modifier.padding(8.dp)
                 ) {
-                    Text("SHOP", color = Color.Black, fontSize = 14.sp)
+                    Text("DAGUPAN", color = dagupanColor, fontSize = 14.sp)
                 }
 
                 TextButton(
-                    onClick = {  },
+                    onClick = {
+                        selectedCategory.value = "Calasiao" // When Calasiao is clicked, set it as selected
+                    },
                     modifier = Modifier.padding(8.dp)
                 ) {
-                    Text("Fruits", color = Color.LightGray, fontSize = 14.sp)
+                    Text("CALASIAO", color = calasiaoColor, fontSize = 14.sp)
                 }
             }
 
+
+            // Category Row (For other categories like Fish, Spices, etc.)
+            CategoryRow(selectedCategory)
         }
-
     }
-
-
 }
-
 
 @Composable
 fun CartScreen() {
-    Surface(modifier = Modifier.fillMaxSize()) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Text(text = "Cart Screen", fontSize = 20.sp)
-        }
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Text(text = "Cart Screen", fontSize = 20.sp)
     }
 }
 
 @Composable
 fun AccountScreen() {
-    Surface(modifier = Modifier.fillMaxSize()) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Text(text = "Account Screen", fontSize = 20.sp)
-        }
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Text(text = "Account Screen", fontSize = 20.sp)
     }
 }
 
@@ -293,50 +281,27 @@ fun BottomBar(navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    BottomNavigation (
-        backgroundColor = Color(0xFF1d7151)
-    ) {
+    BottomNavigation(backgroundColor = Color(0xFF1d7151)) {
         screens.forEach { screen ->
-            AddItem(
-                screen = screen,
-                currentDestination = currentDestination,
-                navController = navController
+            BottomNavigationItem(
+                label = { Text(screen.title) },
+                icon = {
+                    Icon(
+                        imageVector = screen.icon,
+                        contentDescription = null
+                    )
+                },
+                selected = currentDestination?.route == screen.route,
+                onClick = {
+                    navController.navigate(screen.route) {
+                        popUpTo(navController.graph.startDestinationId) { saveState = true }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
             )
         }
     }
-}
-
-@Composable
-fun RowScope.AddItem(
-    screen: BottomBarActivity.Screen,
-    currentDestination: NavDestination?,
-    navController: NavController
-) {
-    BottomNavigationItem(
-        label = {
-            Text(
-                text = screen.title,
-                color = if (currentDestination?.hierarchy?.any { it.route == screen.route } == true)
-                    Color.White else Color.Gray // White when selected, Gray when unselected
-            )
-        },
-        icon = {
-            Icon(
-                imageVector = screen.icon,
-                contentDescription = "Navigation Icon",
-                tint = if (currentDestination?.hierarchy?.any { it.route == screen.route } == true)
-                    Color.White else Color.LightGray
-            )
-        },
-        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-        onClick = {
-            navController.navigate(screen.route) {
-                popUpTo(navController.graph.startDestinationId) { saveState = true }
-                launchSingleTop = true
-                restoreState = true
-            }
-        }
-    )
 }
 
 object BottomBarActivity {

@@ -5,21 +5,19 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.BasicText
-import androidx.compose.material3.*
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.*
@@ -34,33 +32,32 @@ fun OnBoardingScreenPreview() {
 fun OnboardingScreen(navController: NavController) {
     val pagerState = rememberPagerState(initialPage = 0)
 
-    val context = LocalContext.current
-
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
-        WavyHeader()
-
-        // Pager for Onboarding Screens
         HorizontalPager(
             count = 3,
             state = pagerState,
             modifier = Modifier.fillMaxSize()
         ) { page ->
-            when (page) {
-                0 -> OnboardingContent(
-                    title = "Good Day!",
-                    description = "At Baskit, we believe that shopping should \nbe simple and stress-free. \nStart by creating a personalized grocery \nlist tailored to your needs."
-                )
-                1 -> OnboardingContent(
-                    title = "Shop Smarter,\nNot Harder",
-                    description = "Why spend extra time in the market? \nBaskit lets you shop smarter by generating a code \nfor effortless pickup, saving you both time and effort."
-                )
-                2 -> OnboardingContent(
-                    title = "Welcome!",
-                    description = "Convenience is at the heart of Baskit.\nPresent your code in-store, collect your items \nwith ease, and enjoy a seamless shopping experience."
+            Column(modifier = Modifier.fillMaxSize()) {
+                WavyHeader(page = page, pagerState = pagerState)
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                OnboardingContent(
+                    title = when (page) {
+                        0 -> "Good Day!"
+                        1 -> "Shop Smarter,\nNot Harder"
+                        else -> "Welcome!"
+                    },
+                    description = when (page) {
+                        0 -> "At Baskit, we believe that shopping should be simple and stress-free. Start by creating a personalized grocery list tailored to your needs."
+                        1 -> "Why spend extra time in the market? Baskit lets you shop smarter by generating a code for effortless pickup, saving you both time and effort."
+                        else -> "Convenience is at the heart of Baskit. Present your code in-store, collect your items with ease, and enjoy a seamless shopping experience."
+                    }
                 )
             }
         }
@@ -74,10 +71,8 @@ fun OnboardingScreen(navController: NavController) {
         ) {
             PageIndicator(currentPage = pagerState.currentPage, totalScreens = 3)
 
-            // check if on the last page
             if (pagerState.currentPage == 2) {
                 TextButton(onClick = {
-                    // Navigate to SignUp Activity
                     navController.navigate("SignUpActivity")
                 }) {
                     Text("Get Started", color = Color(0xFF1d7151), fontWeight = FontWeight.Bold)
@@ -97,7 +92,7 @@ fun PageIndicator(currentPage: Int, totalScreens: Int) {
             Box(
                 modifier = Modifier
                     .size(10.dp)
-                    .padding(horizontal = 1.dp)
+                    .padding(horizontal = 4.dp)
                     .background(
                         color = if (index == currentPage) Color(0xAAFF9100) else Color.Gray,
                         shape = CircleShape
@@ -108,54 +103,72 @@ fun PageIndicator(currentPage: Int, totalScreens: Int) {
 }
 
 @Composable
-fun WavyHeader() {
+fun WavyHeader(page: Int, pagerState: PagerState) {
     Canvas(
         modifier = Modifier
             .fillMaxWidth()
-            .height(800.dp)
+            .height(550.dp)
     ) {
+        // Interpolating between pages for smooth transitions
+        val offset = pagerState.currentPageOffset
+
+        val gradient = Brush.verticalGradient(
+            colors = when (page) {
+                0 -> listOf(Color(0xFF1d7151), Color(0xFF34a853))
+                1 -> listOf(Color(0xFF34a853), Color(0xFF1d7151))
+                else -> listOf(Color(0xFF1d7151), Color(0xFF34a853))
+            }
+        )
+
+        // Starting and ending heights for the wave based on page transitions
+        val startHeight = size.height * 0.8f
+        val controlHeight1 = size.height * (0.5f - offset * 0.3f)
+        val controlHeight2 = size.height * (0.9f + offset * 0.2f)
+        val endHeight = size.height * 0.8f
+
         val path = Path().apply {
-            moveTo(0f, size.height * 0.6f)
+            moveTo(0f, startHeight) // Starting point of the wave
             cubicTo(
-                size.width * 0.35f, size.height * 0.3f,
-                size.width * 0.75f, size.height * 0.7f,
-                size.width, size.height * 0.6f
+                size.width * 0.25f, controlHeight1, // First control point
+                size.width * 0.75f, controlHeight2, // Second control point
+                size.width, endHeight // Ending point
             )
-            lineTo(size.width, 0f)
+            lineTo(size.width, 0f) // Closing the top of the canvas
             lineTo(0f, 0f)
             close()
         }
-        clipPath(path) {
-            drawRoundRect(
-                color = Color(0xFF1d7151),
-                size = size,
-                cornerRadius = CornerRadius(0f, 0f)
-            )
-        }
+
+        drawPath(
+            path = path,
+            brush = gradient
+        )
     }
 }
 
 @Composable
 fun OnboardingContent(title: String, description: String) {
     Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(20.dp))
+
         Text(
             text = title,
-            fontSize = 35.sp,
+            fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             color = Color.Black,
             textAlign = TextAlign.Center,
-            modifier = Modifier.offset(y = 150.dp)
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         Text(
             text = description,
             fontSize = 16.sp,
             color = Color.Gray,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.offset(y = 180.dp)
+            textAlign = TextAlign.Center
         )
     }
 }
