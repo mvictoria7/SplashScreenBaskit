@@ -28,6 +28,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
@@ -88,9 +89,9 @@ fun SignUpActivity(navController: NavController) {
             Text(
                 text = "Create your account",
                 color = Color.Gray,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 5.dp)
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.padding(top = 5.dp)
             )
 
             Spacer(modifier = Modifier.height(15.dp))
@@ -105,9 +106,10 @@ fun SignUpActivity(navController: NavController) {
                     value = firstName,
                     onValueChange = { firstName = it },
                     label = { Text(text = "First Name") },
-                    modifier = Modifier.weight(1f),
+                    //modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(10.dp),
 
-                    shape = RoundedCornerShape(10.dp)
+
                 )
 
                 // Last Name field
@@ -130,7 +132,7 @@ fun SignUpActivity(navController: NavController) {
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Default.DateRange,
+                        imageVector = Icons.Filled.DateRange,
                         contentDescription = "Calendar Icon"
                     )
                 },
@@ -253,6 +255,7 @@ fun SignUpActivity(navController: NavController) {
                 Text(
                     text = "Already have an account?",
                     fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
                     modifier = Modifier.align(Alignment.CenterVertically)
                 )
 

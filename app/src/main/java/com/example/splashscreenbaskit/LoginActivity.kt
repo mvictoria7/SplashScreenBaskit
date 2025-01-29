@@ -55,16 +55,15 @@ fun LoginActivity(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(100.dp))
 
         Image(
             painter = painterResource(id = R.drawable.baskit_logo),
             contentDescription = "Login Image",
             modifier = Modifier
-                .size(200.dp)
-                .padding(bottom = 16.dp)
+                .size(250.dp)
+                .padding(bottom = 8.dp)
         )
-
 
         Text(
             text = "Log into your account",
@@ -118,7 +117,7 @@ fun LoginActivity(navController: NavController) {
             options.forEach { text ->
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(vertical = 8.dp)
+                    modifier = Modifier.padding(vertical = 5.dp)
                 ) {
                     RadioButton(
                         selected = (text == selectedOption),
@@ -149,7 +148,7 @@ fun LoginActivity(navController: NavController) {
             Text(text = "Login")
         }
 
-        Spacer(modifier = Modifier.height(150.dp))
+        Spacer(modifier = Modifier.height(80.dp))
         //Spacer(modifier = Modifier.weight(1f))
 
         Row(

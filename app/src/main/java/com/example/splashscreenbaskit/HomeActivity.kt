@@ -53,7 +53,7 @@ fun PageIndicator(currentPage: Int, totalScreens: Int) {
 fun HomeScreen() {
     var searchText by remember { mutableStateOf("text") }
     val totalScreens = 3
-    var currentPage by remember { mutableStateOf(0) }
+    var currentPage by remember { mutableStateOf(0)}
 
     Surface(
         modifier = Modifier.fillMaxSize(),
