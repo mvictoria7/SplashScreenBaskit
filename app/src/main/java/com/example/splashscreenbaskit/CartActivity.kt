@@ -82,7 +82,7 @@ fun CartActivity()
                     Icon(
                         painter = painterResource(id = R.drawable.star_outline),
                         contentDescription = "Star Outline",
-//                    tint = Color.Black,
+                        tint = Color.Black,
                         modifier = Modifier.size(25.dp)
                     )
 
@@ -162,7 +162,8 @@ fun CartActivity()
                     Button(
                         modifier = Modifier
                             .height(52.dp)
-                            .width(80.dp),
+                            .padding(0.dp)
+                            .width(70.dp),
                         onClick = { },
                         shape = RoundedCornerShape(10.dp),
                         colors = ButtonDefaults.buttonColors(
@@ -171,7 +172,11 @@ fun CartActivity()
                         ),
                         elevation = ButtonDefaults.buttonElevation(2.dp)
                     ) {
-                        Text(text = option, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+                        Text(
+                            //modifier = Modifier.padding(0.dp),
+                            text = option,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.SemiBold)
                     }
                 }
             }
@@ -185,7 +190,7 @@ fun CartActivity()
                 .height(114.dp)
                 .fillMaxWidth()
                 .background(Color(0xFF1D7151))
-                .padding(20.dp),
+                .padding(30.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {

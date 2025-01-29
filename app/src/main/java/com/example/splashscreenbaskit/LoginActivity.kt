@@ -138,10 +138,10 @@ fun LoginActivity(navController: NavController) {
         Button(
             onClick = {
                 navController.navigate( "HomeActivity")
-                Log.i("Credential", "Email: $email, Password: $password")
-            },
+                Log.i("Credential", "Email: $email, Password: $password")},
             modifier = Modifier.fillMaxWidth(0.8f)
                 .height(50.dp),
+            enabled = email.isNotBlank() && password.isNotBlank(),
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF1d7151),

@@ -48,12 +48,12 @@ fun OnboardingScreen(navController: NavController) {
         HorizontalPager (
             count = 3,
             state = pagerState,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize() .padding(30.dp)
         ) { page ->
             when (page) {
                 0 -> OnboardingContent(
-                    title = "Good Day!",
-                    description = "At Baskit, we believe that shopping should \nbe simple and stress-free. \nStart by creating a personalized grocery \nlist tailored to your needs."
+                    title = "Welcome!",
+                    description = "At Baskit, shopping is made simple and stress-free!\nCreate your personalized grocery \nlist tailored to your needs."
                 )
                 1 -> OnboardingContent(
                     title = "Shop Smarter,\nNot Harder",
@@ -91,18 +91,19 @@ fun OnboardingScreen(navController: NavController) {
 @Composable
 fun PageIndicator(currentPage: Int, totalScreens: Int) {
     Row(
-        horizontalArrangement = Arrangement.Center,
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
         modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
     ) {
         repeat(totalScreens) { index ->
             Box(
                 modifier = Modifier
-                    .size(10.dp)
-                    .padding(horizontal = 1.dp)
+                    .size(12.dp)
+                    .padding(horizontal = 0.5.dp)
                     .background(
                         color = if (index == currentPage) Color(0xAAFF9100) else Color.Gray,
                         shape = CircleShape
-                    )
+                    ),
+
             )
         }
     }

@@ -230,7 +230,15 @@ fun HomeContent() {
 
             Spacer(modifier = Modifier.height(2.dp))
 
-            Row(
+            Column (){
+                Box(
+                    modifier = Modifier.padding(10.dp),
+
+                )
+            }
+
+
+            /*Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.White),
@@ -249,7 +257,7 @@ fun HomeContent() {
                 ) {
                     Text("Fruits", color = Color.LightGray, fontSize = 14.sp)
                 }
-            }
+            }*/
 
         }
 
