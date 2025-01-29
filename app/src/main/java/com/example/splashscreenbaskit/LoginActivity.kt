@@ -55,15 +55,16 @@ fun LoginActivity(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Spacer(modifier = Modifier.height(100.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
         Image(
             painter = painterResource(id = R.drawable.baskit_logo),
             contentDescription = "Login Image",
             modifier = Modifier
-                .size(250.dp)
-                .padding(bottom = 8.dp)
+                .size(200.dp)
+                .padding(bottom = 16.dp)
         )
+
 
         Text(
             text = "Log into your account",
@@ -113,21 +114,24 @@ fun LoginActivity(navController: NavController) {
             )
         }
 
-        Row (modifier = Modifier.padding(5.dp)) {
+        Row(modifier = Modifier.padding(1.dp)) {
             options.forEach { text ->
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(vertical = 5.dp)
+                    modifier = Modifier.padding(vertical = 1.dp)
                 ) {
                     RadioButton(
                         selected = (text == selectedOption),
                         onClick = { selectedOption = text }
                     )
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Text(text = text)
+                    Text(
+                        text = text,
+                        modifier = Modifier.padding(start = 1.dp)
+                    )
                 }
             }
         }
+
 
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -148,7 +152,7 @@ fun LoginActivity(navController: NavController) {
             Text(text = "Login")
         }
 
-        Spacer(modifier = Modifier.height(80.dp))
+        Spacer(modifier = Modifier.height(150.dp))
         //Spacer(modifier = Modifier.weight(1f))
 
         Row(
@@ -178,10 +182,4 @@ fun LoginActivity(navController: NavController) {
     }
 
 }
-
-/*@Preview(showBackground = true)
-@Composable
-fun LogInScreenPreview() {
-    LogInScreen()
-}*/
 
