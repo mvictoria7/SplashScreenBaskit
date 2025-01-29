@@ -4,8 +4,6 @@ import android.content.Intent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material3.*
@@ -34,18 +32,19 @@ fun OnBoardingScreenPreview() {
 
 @Composable
 fun OnboardingScreen(navController: NavController) {
-    val pagerState = rememberPagerState (initialPage = 0)
+    val pagerState = rememberPagerState(initialPage = 0)
 
     val context = LocalContext.current
 
-    Box(        modifier = Modifier
+    Box(
+        modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
         WavyHeader()
 
         // Pager for Onboarding Screens
-        HorizontalPager (
+        HorizontalPager(
             count = 3,
             state = pagerState,
             modifier = Modifier.fillMaxSize()

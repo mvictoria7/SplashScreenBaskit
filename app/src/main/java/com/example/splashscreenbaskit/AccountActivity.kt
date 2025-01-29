@@ -3,32 +3,10 @@ package com.example.splashscreenbaskit
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,14 +17,42 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.ui.window.DialogProperties
 
 @Preview(showBackground = true)
 @Composable
 fun AccountActivity() {
-    AccountActivity(navController =  rememberNavController())
+    AccountActivity(navController = rememberNavController())
 }
+
 @Composable
-fun AccountActivity (navController: NavController) {
+fun AccountActivity(navController: NavController) {
+    // State to control dialog visibility
+    val showDialog = remember { mutableStateOf(false) }
+
+    // Show dialog when the user clicks "Log Out"
+    val onLogOutClick = {
+        showDialog.value = true
+    }
+
+    // Handle "Yes" and "No" actions from the dialog
+    val onConfirmLogOut = {
+        // Navigate to the login screen
+        navController.navigate("LoginActivity")
+        showDialog.value = false
+    }
+
+    val onCancelLogOut = {
+        // Just close the dialog without logging out
+        showDialog.value = false
+    }
 
     Box(
         modifier = Modifier
@@ -116,7 +122,7 @@ fun AccountActivity (navController: NavController) {
                     color = Color.Black,
                     fontWeight = FontWeight.Black,
 
-                )
+                    )
 
                 Spacer(modifier = Modifier.height(40.dp))
 
@@ -309,36 +315,46 @@ fun AccountActivity (navController: NavController) {
 
                     // Log Out button
                     Button(
-                        onClick = {
-                            navController.navigate( "LoginActivity") },
+                        onClick = onLogOutClick,
                         modifier = Modifier
                             .width(170.dp)
                             .height(50.dp),
                         shape = RoundedCornerShape(100.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCA0000),
-                        contentColor = Color.White
-                        )
-
-                    ) {Text(text = "Log Out")}
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCA0000), contentColor = Color.White)
+                    ) {
+                        Text(text = "Log Out")
+                    }
                 }
-
-
             }
+        }
 
+        // Confirmation Dialog
+        if (showDialog.value) {
+            AlertDialog(
+                onDismissRequest = { showDialog.value = false },
+                title = { Text("Log Out") },
+                text = { Text("Are you sure you want to log out?") },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            navController.navigate(route = "LoginActivity")
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCA0000))
+                    ) {
+                        Text("Log out", color = Color.White)
+                    }
+                },
+                dismissButton = {
+                    Button(
+                        onClick = onCancelLogOut,
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
+                    ) {
+                        Text("Cancel", color = Color.White)
+                    }
+                },
+                containerColor = Color.White,
+                properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
+            )
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

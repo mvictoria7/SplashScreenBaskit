@@ -139,7 +139,7 @@ fun HomeContent() {
                 /*Image(
                     painter = painterResource(id = R.drawable.searchq),
                     contentDescription = "Search Icon",
-                    modifier = Modifier
+                    modifier = Modifier 
                         .align(Alignment.CenterVertically)
                         .size(24.dp)
                 )*/
