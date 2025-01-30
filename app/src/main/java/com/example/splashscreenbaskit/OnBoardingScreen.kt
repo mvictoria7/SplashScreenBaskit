@@ -5,11 +5,15 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
@@ -72,10 +76,18 @@ fun OnboardingScreen(navController: NavController) {
             PageIndicator(currentPage = pagerState.currentPage, totalScreens = 3)
 
             if (pagerState.currentPage == 2) {
-                TextButton(onClick = {
-                    navController.navigate("SignUpActivity")
-                }) {
-                    Text("Get Started", color = Color(0xFF1d7151), fontWeight = FontWeight.Bold)
+                Button(
+                    onClick = {navController.navigate("SignUpActivity")},
+                    modifier = Modifier.height(50.dp),
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD9D9D9))
+                ) {
+                    Text(
+                        text = "Get Started",
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp
+                    )
                 }
             }
         }
@@ -86,18 +98,23 @@ fun OnboardingScreen(navController: NavController) {
 fun PageIndicator(currentPage: Int, totalScreens: Int) {
     Row(
         horizontalArrangement = Arrangement.Center,
-        modifier = Modifier.padding(top = 8.dp, bottom = 20.dp)
+        modifier = Modifier
+            .padding(top = 8.dp, bottom = 20.dp)
+            .fillMaxWidth()
     ) {
         repeat(totalScreens) { index ->
             Box(
                 modifier = Modifier
                     .size(10.dp)
-                    .padding(horizontal = 4.dp)
+                    //.padding(horizontal = 4.dp)
                     .background(
                         color = if (index == currentPage) Color(0xAAFF9100) else Color.Gray,
                         shape = CircleShape
                     )
             )
+            if (index < totalScreens - 1) {
+                Spacer(modifier = Modifier.width(8.dp)) // Adjust the width to set space between circles
+            }
         }
     }
 }

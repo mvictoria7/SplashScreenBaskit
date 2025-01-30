@@ -1,6 +1,5 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -38,8 +37,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.SlideImg
 
-// Data classes
-data class Vendor(
+// Data classes 
+data class Product(
     val name: String,
     val imageRes: Int
 )
@@ -49,19 +48,11 @@ data class Fruits(
     val imageRes: Int
 )
 
-//data class Product(
-//    val name: String,
-//    val price: Double,
-//    val description: String,
-//    val imageRes: Int,
-//    val vendorName: String
-//)
-
 val sampleProducts = listOf(
-    Vendor("Vendor 1", R.drawable.testimg),
-    Vendor("Vendor 2", R.drawable.testimg),
-    Vendor("Vendor 3", R.drawable.testimg),
-    Vendor("Vendor 4", R.drawable.testimg),
+    Product("Product 1", R.drawable.testimg),
+    Product("Product 2", R.drawable.testimg),
+    Product("Product 3", R.drawable.testimg),
+    Product("Product 4", R.drawable.testimg),
 
 )
 
@@ -114,16 +105,16 @@ fun CategoryRow(selectedCategory: MutableState<String?>) {
 }
 
 @Composable
-fun VendorGrid(products: List<Vendor>) {
+fun ProductGrid(products: List<Product>) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        products.chunked(2).forEach { rowVendor ->
+        products.chunked(2).forEach { rowProducts ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 4.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                rowVendor.forEach { vendor ->
+                rowProducts.forEach { product ->
                     Card(
                         modifier = Modifier
                             .weight(1f)
@@ -137,16 +128,16 @@ fun VendorGrid(products: List<Vendor>) {
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Image(
-                                painter = painterResource(id = vendor.imageRes),
+                                painter = painterResource(id = product.imageRes),
                                 contentDescription = "Product Image",
                                 modifier = Modifier.size(120.dp)
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            Text(vendor.name, fontWeight = FontWeight.Bold)
+                            Text(product.name, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
-                if (rowVendor.size == 1) {
+                if (rowProducts.size == 1) {
                     Spacer(modifier = Modifier.weight(1f))
                 }
             }
@@ -208,7 +199,7 @@ fun HomeScreen() {
             modifier = Modifier.padding(paddingValues)
         ) {
             composable(BottomBarScreen.Home.route) {
-                HomeContent(navController)
+                HomeContent()
             }
             composable(BottomBarScreen.Cart.route) {
                 CartScreen()
@@ -216,18 +207,12 @@ fun HomeScreen() {
             composable(BottomBarScreen.Account.route) {
                 AccountScreen()
             }
-            composable("vendorDetail/{vendorName}") { backStackEntry ->
-                val vendorName = backStackEntry.arguments?.getString("vendorName") ?: "Unknown Vendor"
-                VendorDetailScreen(vendorName)
-            }
         }
-
     }
 }
 
-
 @Composable
-fun HomeContent(navController: NavController) {
+fun HomeContent() {
     val selectedCategory = remember { mutableStateOf<String?>(null) }
     val selectedLocation = remember { mutableStateOf<String?>("Dagupan") }
     val scrollState = rememberScrollState()
@@ -245,6 +230,7 @@ fun HomeContent(navController: NavController) {
         ) {
             Spacer(modifier = Modifier.height(45.dp))
 
+            // Logo
             Image(
                 painter = painterResource(id = R.drawable.baskit_logo),
                 contentDescription = "Logo",
@@ -255,6 +241,7 @@ fun HomeContent(navController: NavController) {
 
             Spacer(modifier = Modifier.height(10.dp))
 
+            // Title
             Text(
                 text = "Shop Smarter, Not Harder",
                 fontSize = 12.sp,
@@ -265,92 +252,38 @@ fun HomeContent(navController: NavController) {
 
             Spacer(modifier = Modifier.height(10.dp))
 
+            // Search Bar
             SearchBar()
 
             Spacer(modifier = Modifier.height(30.dp))
 
+            // Slider Card
             SliderCard()
 
             Spacer(modifier = Modifier.height(20.dp))
 
+            // Location Selection
             LocationSelector(selectedLocation)
 
+            // Category Row
             CategoryRow(selectedCategory)
 
             when (selectedCategory.value) {
                 "Fruits" -> FruitGrid(listOf(
                     Fruits("Apple", R.drawable.testimg),
                     Fruits("Orange", R.drawable.testimg)
+                    // Add more fruits as needed
                 ))
-                else -> VendorGrid(sampleProducts, navController)
+                else -> ProductGrid(sampleProducts)
             }
+
 
             Spacer(modifier = Modifier.height(80.dp))
         }
     }
 }
 
-@Composable
-fun VendorDetailScreen(vendorName: String) {
-    val products = listOf(
-        Fruits("Apple", R.drawable.testimg),
-        Fruits("Orange", R.drawable.testimg),
-        Fruits("Banana", R.drawable.testimg)
-    )
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Text(text = "$vendorName's Products", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-        Spacer(modifier = Modifier.height(10.dp))
-        FruitGrid(products)
-    }
-}
-
-@Composable
-fun VendorGrid(products: List<Vendor>, navController: NavController) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        products.chunked(2).forEach { rowVendor ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 4.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                rowVendor.forEach { vendor ->
-                    Card(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(4.dp)
-                            .clickable {
-                                navController.navigate("vendorDetail/${vendor.name}")
-                            },
-                        shape = RoundedCornerShape(10.dp),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(8.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Image(
-                                painter = painterResource(id = vendor.imageRes),
-                                contentDescription = "Product Image",
-                                modifier = Modifier.size(120.dp)
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(vendor.name, fontWeight = FontWeight.Bold)
-                        }
-                    }
-                }
-                if (rowVendor.size == 1) {
-                    Spacer(modifier = Modifier.weight(1f))
-                }
-            }
-        }
-    }
-}
 
 @Composable
 fun SearchBar() {

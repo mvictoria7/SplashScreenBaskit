@@ -3,11 +3,13 @@ package com.example.splashscreenbaskit
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.res.painterResource
@@ -82,7 +84,7 @@ fun CartActivity()
                     Icon(
                         painter = painterResource(id = R.drawable.star_outline),
                         contentDescription = "Star Outline",
-//                    tint = Color.Black,
+                        tint = Color.Black,
                         modifier = Modifier.size(25.dp)
                     )
 
@@ -123,7 +125,7 @@ fun CartActivity()
             }
 
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(50.dp))
 
 
             // Counter Row
@@ -133,7 +135,7 @@ fun CartActivity()
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Product Description",
+                    text = "Seller Description",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(vertical = 8.dp)
@@ -144,14 +146,28 @@ fun CartActivity()
             Spacer(modifier = Modifier.height(10.dp))
 
 
-            Text(
-                text = "Freshly grown lettuce from Aling Nena's own garden \nFresh every day!",
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Light,
-                color = Color.Gray
-            )
+            Row {
 
-            Spacer(modifier = Modifier.height(80.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.lettuce),
+                    contentDescription = "profile",
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .height(35.dp)
+
+                        //.width(35.dp)
+                )
+
+                Text(
+                    text = "Martha Rosario (Aling Martha’s)\n" +
+                            "0900-000-0000",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.Black,
+                    modifier = Modifier.padding(start = 10.dp)
+            ) }
+
+            Spacer(modifier = Modifier.height(70.dp))
 
             // Weight options
             Row(
@@ -162,7 +178,8 @@ fun CartActivity()
                     Button(
                         modifier = Modifier
                             .height(52.dp)
-                            .width(80.dp),
+                            .padding(0.dp)
+                            .width(70.dp),
                         onClick = { },
                         shape = RoundedCornerShape(10.dp),
                         colors = ButtonDefaults.buttonColors(
@@ -171,7 +188,11 @@ fun CartActivity()
                         ),
                         elevation = ButtonDefaults.buttonElevation(2.dp)
                     ) {
-                        Text(text = option, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+                        Text(
+                            //modifier = Modifier.padding(0.dp),
+                            text = option,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.SemiBold)
                     }
                 }
             }
@@ -185,7 +206,7 @@ fun CartActivity()
                 .height(114.dp)
                 .fillMaxWidth()
                 .background(Color(0xFF1D7151))
-                .padding(20.dp),
+                .padding(30.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {

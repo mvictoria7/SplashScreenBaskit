@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
@@ -59,6 +60,7 @@ fun SignUpActivity(navController: NavController) {
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var userName by remember { mutableStateOf("") }
+    var contactNumber by remember { mutableStateOf("") }
     var birthday by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -142,13 +144,27 @@ fun SignUpActivity(navController: NavController) {
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            // usrname field
+            // username field
             OutlinedTextField(
                 value = userName,
                 onValueChange = { userName = it },
                 label = { Text(text = "Username") },
                 leadingIcon = {
                     Icon(imageVector = Icons.Default.Person, contentDescription = "Person Icon")
+                },
+                modifier = Modifier.fillMaxWidth(0.8f),
+                shape = RoundedCornerShape(10.dp)
+            )
+
+            Spacer(modifier = Modifier.height(5.dp))
+
+            // number field
+            OutlinedTextField(
+                value = contactNumber,
+                onValueChange = { contactNumber = it },
+                label = { Text(text = "Contact Number") },
+                leadingIcon = {
+                    Icon(imageVector = Icons.Default.Phone, contentDescription = "Phone Icon")
                 },
                 modifier = Modifier.fillMaxWidth(0.8f),
                 shape = RoundedCornerShape(10.dp)
