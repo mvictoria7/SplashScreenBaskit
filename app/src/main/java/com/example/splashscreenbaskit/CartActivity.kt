@@ -3,11 +3,13 @@ package com.example.splashscreenbaskit
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.res.painterResource
@@ -123,7 +125,7 @@ fun CartActivity()
             }
 
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(50.dp))
 
 
             // Counter Row
@@ -133,7 +135,7 @@ fun CartActivity()
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Product Description",
+                    text = "Seller Description",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(vertical = 8.dp)
@@ -144,14 +146,28 @@ fun CartActivity()
             Spacer(modifier = Modifier.height(10.dp))
 
 
-            Text(
-                text = "Freshly grown lettuce from Aling Nena's own garden \nFresh every day!",
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Light,
-                color = Color.Gray
-            )
+            Row {
 
-            Spacer(modifier = Modifier.height(80.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.lettuce),
+                    contentDescription = "profile",
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .height(35.dp)
+
+                        //.width(35.dp)
+                )
+
+                Text(
+                    text = "Martha Rosario (Aling Martha’s)\n" +
+                            "0900-000-0000",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.Black,
+                    modifier = Modifier.padding(start = 10.dp)
+            ) }
+
+            Spacer(modifier = Modifier.height(70.dp))
 
             // Weight options
             Row(

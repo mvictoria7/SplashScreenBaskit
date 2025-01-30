@@ -33,11 +33,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.SlideImg
 
-// Data classes 
+// Data classes
 data class Product(
     val name: String,
     val imageRes: Int
@@ -48,12 +49,16 @@ data class Fruits(
     val imageRes: Int
 )
 
-val sampleProducts = listOf(
-    Product("Product 1", R.drawable.testimg),
-    Product("Product 2", R.drawable.testimg),
-    Product("Product 3", R.drawable.testimg),
-    Product("Product 4", R.drawable.testimg),
+data class Vegetables(
+    val name: String,
+    val imageRes: Int
+)
 
+val sampleProducts = listOf(
+    Product("Product 1", R.drawable.lettuce),
+    Product("Product 2", R.drawable.testimg),
+    Product("Product 3", R.drawable.lettuce),
+    Product("Product 4", R.drawable.testimg)
 )
 
 @Composable
@@ -78,62 +83,76 @@ fun PageIndicator(currentPage: Int, totalScreens: Int) {
     }
 }
 
+//Categories
 @Composable
 fun CategoryRow(selectedCategory: MutableState<String?>) {
-    val categories = listOf("SHOP", "Vegetables", "Fruits", "Meats", "Fish", "Spices", "Frozen Foods")
+    val categories = listOf("SHOP", "Vegetables", "Fruits", "Meat", "Fish", "Spices", "Frozen Foods")
 
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 2.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(2.dp)
     ) {
         items(categories) { category ->
             TextButton(
                 onClick = { selectedCategory.value = category },
-                modifier = Modifier.padding(4.dp)
+                modifier = Modifier.padding(end = 2.dp)
             ) {
                 Text(
                     text = category,
-                    color = if (selectedCategory.value == category) Color.Black else Color.Gray,
+                    color = if (selectedCategory.value == category) Color(0xFF8C8C8C) else Color(0xFFBFBFBF),
                     fontSize = 14.sp,
-                    fontWeight = if (selectedCategory.value == category) FontWeight.Bold else FontWeight.Normal
+                    fontWeight = if (selectedCategory.value == category) FontWeight.Bold else FontWeight.Bold
                 )
             }
         }
     }
 }
 
+
+
+//products
 @Composable
 fun ProductGrid(products: List<Product>) {
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.fillMaxWidth()
+    ) {
         products.chunked(2).forEach { rowProducts ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 4.dp),
+                    .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 rowProducts.forEach { product ->
                     Card(
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F0F0)),
                         modifier = Modifier
-                            .weight(1f)
-                            .padding(4.dp),
+                            .size(170.dp)
+                            .weight(1f),
                         shape = RoundedCornerShape(10.dp),
                         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                     ) {
                         Column(
                             modifier = Modifier
-                                .padding(8.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                                .fillMaxWidth()
+                                .padding(top = 5.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center,
+
                         ) {
                             Image(
                                 painter = painterResource(id = product.imageRes),
                                 contentDescription = "Product Image",
-                                modifier = Modifier.size(120.dp)
+                                modifier = Modifier
+                                    .height(100.dp)
+                                    .width(135.dp)
+                                    .padding(2.dp)
+                                    .clip(RoundedCornerShape(10.dp))
                             )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(product.name, fontWeight = FontWeight.Bold)
+                            Spacer(modifier = Modifier.height(15.dp))
+
+                            Text(product.name, fontWeight = FontWeight.Bold, fontSize = 18.sp)
                         }
                     }
                 }
@@ -145,6 +164,59 @@ fun ProductGrid(products: List<Product>) {
     }
 }
 
+//veggies
+/*@Composable
+fun VegetablesGrid(products: List<Vegetables>) {
+    Column(modifier = Modifier.fillMaxWidth()
+    ) {
+        vegetables.chunked(2).forEach { rowVegetables ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                rowVegetables.forEach { vegetables ->
+                    Card(
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F0F0)),
+                        modifier = Modifier
+                            .size(170.dp)
+                            .weight(1f),
+                        shape = RoundedCornerShape(10.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 5.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center,
+
+                            ) {
+                            Image(
+                                painter = painterResource(id = vegetables.imageRes),
+                                contentDescription = "Product Image",
+                                modifier = Modifier
+                                    .height(100.dp)
+                                    .width(135.dp)
+                                    .padding(2.dp)
+                                    .clip(RoundedCornerShape(10.dp))
+                            )
+                            Spacer(modifier = Modifier.height(15.dp))
+
+                            Text(vegetables.name, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                        }
+                    }
+                }
+                if (rowVegetables.size == 1) {
+                    Spacer(modifier = Modifier.weight(1f))
+                }
+            }
+        }
+    }
+}*/
+
+//Fruits
 @Composable
 fun FruitGrid(fruits: List<Fruits>) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -157,26 +229,36 @@ fun FruitGrid(fruits: List<Fruits>) {
             ) {
                 rowFruits.forEach { fruit ->
                     Card(
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F0F0)),
                         modifier = Modifier
+                            .size(170.dp)
                             .weight(1f)
-                            .padding(4.dp),
+                            .padding(2.dp),
                         shape = RoundedCornerShape(10.dp),
                         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                     ) {
                         Column(
                             modifier = Modifier
-                                .padding(8.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
+                                .fillMaxWidth()
+                                .padding(top = 15.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center,
+
+                            ) {
                             Image(
                                 painter = painterResource(id = fruit.imageRes),
-                                contentDescription = "Fruit Image",
-                                modifier = Modifier.size(120.dp)
+                                contentDescription = "Product Image",
+                                modifier = Modifier
+                                    .height(100.dp)
+                                    .width(135.dp)
+                                    .padding(10.dp)
+                                    .clip(RoundedCornerShape(10.dp))
                             )
-                            Spacer(modifier = Modifier.height(8.dp))
+                            //Spacer(modifier = Modifier.height(8.dp))
                             Text(fruit.name, fontWeight = FontWeight.Bold)
                         }
                     }
+                    Spacer(modifier = Modifier.width(16.dp))
                 }
                 if (rowFruits.size == 1) {
                     Spacer(modifier = Modifier.weight(1f))
@@ -185,6 +267,7 @@ fun FruitGrid(fruits: List<Fruits>) {
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
@@ -239,8 +322,6 @@ fun HomeContent() {
                     .padding(bottom = 16.dp)
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
-
             // Title
             Text(
                 text = "Shop Smarter, Not Harder",
@@ -271,11 +352,24 @@ fun HomeContent() {
             when (selectedCategory.value) {
                 "Fruits" -> FruitGrid(listOf(
                     Fruits("Apple", R.drawable.testimg),
+                    Fruits("Orange", R.drawable.testimg),
+                    Fruits("Mango", R.drawable.testimg),
+                    Fruits("Banana", R.drawable.testimg),
+                    Fruits("Grapes", R.drawable.testimg),
                     Fruits("Orange", R.drawable.testimg)
-                    // Add more fruits as needed
                 ))
                 else -> ProductGrid(sampleProducts)
             }
+
+            /*when (selectedCategory.value) {
+                "Vegetables" -> VegetablesGrid(listOf(
+                    Vegetables("Lettuce", R.drawable.testimg),
+                    Vegetables("Cabbage", R.drawable.testimg),
+                    Vegetables("Kangkong", R.drawable.testimg),
+                    Vegetables("Eggplant", R.drawable.testimg)
+                ))
+                else -> ProductGrid(sampleProducts)
+            }*/
 
 
             Spacer(modifier = Modifier.height(80.dp))
@@ -350,28 +444,31 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(2.dp)
             .background(Color.White),
         horizontalArrangement = Arrangement.Start
     ) {
         TextButton(
             onClick = { selectedLocation.value = "Dagupan" },
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(end = 8.dp)
         ) {
             Text(
                 "DAGUPAN",
-                color = if (selectedLocation.value == "Dagupan") Color.Black else Color.Gray,
-                fontSize = 14.sp
+                color = if (selectedLocation.value == "Dagupan") Color (0xFF8C8C8C) else Color(0xFFBFBFBF),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold
             )
         }
 
         TextButton(
             onClick = { selectedLocation.value = "Calasiao" },
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(end = 8.dp)
         ) {
             Text(
                 "CALASIAO",
-                color = if (selectedLocation.value == "Calasiao") Color.Black else Color.Gray,
-                fontSize = 14.sp
+                color = if (selectedLocation.value == "Calasiao") Color(0xFF8C8C8C) else Color(0xFFBFBFBF),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold
             )
         }
     }
