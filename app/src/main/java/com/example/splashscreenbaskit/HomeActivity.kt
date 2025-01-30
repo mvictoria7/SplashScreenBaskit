@@ -1,12 +1,18 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.TextButton
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,24 +25,36 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.input.pointer.motionEventSpy
-import androidx.navigation.NavDestination.Companion.hierarchy
-import com.example.splashscreenbaskit.AccountActivity
+import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.SlideImg
-import java.util.Locale.Category
+
+// Data classes 
+data class Product(
+    val name: String,
+    val imageRes: Int
+)
+
+data class Fruits(
+    val name: String,
+    val imageRes: Int
+)
+
+val sampleProducts = listOf(
+    Product("Product 1", R.drawable.testimg),
+    Product("Product 2", R.drawable.testimg),
+    Product("Product 3", R.drawable.testimg),
+    Product("Product 4", R.drawable.testimg),
+
+)
 
 @Composable
 fun PageIndicator(currentPage: Int, totalScreens: Int) {
@@ -50,13 +68,120 @@ fun PageIndicator(currentPage: Int, totalScreens: Int) {
             Box(
                 modifier = Modifier
                     .size(15.dp)
-                    .padding(horizontal = 1.dp)
+                    .padding(horizontal = 2.dp)
                     .background(
                         color = if (index == currentPage) Color(0xAA1d7151) else Color.Gray,
                         shape = CircleShape
                     )
-                    .offset(y = 2.dp)
             )
+        }
+    }
+}
+
+@Composable
+fun CategoryRow(selectedCategory: MutableState<String?>) {
+    val categories = listOf("SHOP", "Vegetables", "Fruits", "Meats", "Fish", "Spices", "Frozen Foods")
+
+    LazyRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 2.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(categories) { category ->
+            TextButton(
+                onClick = { selectedCategory.value = category },
+                modifier = Modifier.padding(4.dp)
+            ) {
+                Text(
+                    text = category,
+                    color = if (selectedCategory.value == category) Color.Black else Color.Gray,
+                    fontSize = 14.sp,
+                    fontWeight = if (selectedCategory.value == category) FontWeight.Bold else FontWeight.Normal
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun ProductGrid(products: List<Product>) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        products.chunked(2).forEach { rowProducts ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                rowProducts.forEach { product ->
+                    Card(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(4.dp),
+                        shape = RoundedCornerShape(10.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .padding(8.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Image(
+                                painter = painterResource(id = product.imageRes),
+                                contentDescription = "Product Image",
+                                modifier = Modifier.size(120.dp)
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(product.name, fontWeight = FontWeight.Bold)
+                        }
+                    }
+                }
+                if (rowProducts.size == 1) {
+                    Spacer(modifier = Modifier.weight(1f))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun FruitGrid(fruits: List<Fruits>) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        fruits.chunked(2).forEach { rowFruits ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                rowFruits.forEach { fruit ->
+                    Card(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(4.dp),
+                        shape = RoundedCornerShape(10.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .padding(8.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Image(
+                                painter = painterResource(id = fruit.imageRes),
+                                contentDescription = "Fruit Image",
+                                modifier = Modifier.size(120.dp)
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(fruit.name, fontWeight = FontWeight.Bold)
+                        }
+                    }
+                }
+                if (rowFruits.size == 1) {
+                    Spacer(modifier = Modifier.weight(1f))
+                }
+            }
         }
     }
 }
@@ -70,17 +195,17 @@ fun HomeScreen() {
     ) { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = BottomBarActivity.Home.route,
+            startDestination = BottomBarScreen.Home.route,
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable(BottomBarActivity.Home.route) {
+            composable(BottomBarScreen.Home.route) {
                 HomeContent()
             }
-            composable(BottomBarActivity.Cart.route) {
+            composable(BottomBarScreen.Cart.route) {
                 CartScreen()
             }
-            composable(BottomBarActivity.Account.route) {
-                AccountActivity()
+            composable(BottomBarScreen.Account.route) {
+                AccountScreen()
             }
         }
     }
@@ -88,8 +213,9 @@ fun HomeScreen() {
 
 @Composable
 fun HomeContent() {
-
-    val textState = remember { mutableStateOf("") }
+    val selectedCategory = remember { mutableStateOf<String?>(null) }
+    val selectedLocation = remember { mutableStateOf<String?>("Dagupan") }
+    val scrollState = rememberScrollState()
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -98,10 +224,10 @@ fun HomeContent() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .verticalScroll(scrollState)
                 .padding(horizontal = 30.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Spacer(modifier = Modifier.height(45.dp))
 
             // Logo
@@ -113,7 +239,7 @@ fun HomeContent() {
                     .padding(bottom = 16.dp)
             )
 
-            Spacer(modifier = Modifier.height(0.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             // Title
             Text(
@@ -126,231 +252,188 @@ fun HomeContent() {
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            // Search Bar with Notification Icon
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    //.padding(start = 30.dp, end = 30.dp)
-                    .height(50.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                var searchText by remember { mutableStateOf(TextFieldValue("")) }
-
-                /*Image(
-                    painter = painterResource(id = R.drawable.searchq),
-                    contentDescription = "Search Icon",
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .size(24.dp)
-                )*/
-                //Spacer(modifier = Modifier.width(10.dp))
-
-                BasicTextField(
-                    value = searchText,
-                    onValueChange = { searchText = it },
-                    modifier = Modifier
-                        .weight(1f)
-                        .background(
-                            color = Color(0xFFF5F5F5),
-                            shape = RoundedCornerShape(10.dp)
-                        )
-                        .padding(horizontal = 16.dp, vertical = 12.dp),
-                    singleLine = true,
-                    decorationBox = { innerTextField ->
-                        if (textState.value.isEmpty()) {
-                            Text(
-                                text = "Search food, vegetable, etc.",
-                                color = Color.Gray,
-                                fontSize = 12.sp
-                            )
-                        }
-                        innerTextField()
-                    }
-                )
-
-                Spacer(modifier = Modifier.width(10.dp))
-
-                // Notification Icon
-                Icon(
-                    painter = painterResource(id = R.drawable.notification),
-                    contentDescription = "Notifications",
-                    modifier = Modifier.size(20.dp)
-                )
-            }
+            // Search Bar
+            SearchBar()
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            // Card with Image and Page Indicator
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth().height(155.dp),
-                    //.padding(start = 30.dp, end = 30.dp),
-                shape = RoundedCornerShape(10.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = Color.White
-                ),
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 4.dp
-                )
-            ) {
-                Box(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    SlideImg(modifier = Modifier.fillMaxSize())
-                    PageIndicator(currentPage = 0, totalScreens = 3)
-                }
+            // Slider Card
+            SliderCard()
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            // Location Selection
+            LocationSelector(selectedLocation)
+
+            // Category Row
+            CategoryRow(selectedCategory)
+
+            when (selectedCategory.value) {
+                "Fruits" -> FruitGrid(listOf(
+                    Fruits("Apple", R.drawable.testimg),
+                    Fruits("Orange", R.drawable.testimg)
+                    // Add more fruits as needed
+                ))
+                else -> ProductGrid(sampleProducts)
             }
+
+
+            Spacer(modifier = Modifier.height(80.dp))
         }
-
-        Column(){
-            Box(
-                modifier = Modifier.padding(top = 400.dp)
-            ){
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Color.White),
-                    horizontalArrangement = Arrangement.Start
-                ){
-                    TextButton(
-                        onClick = {  },
-                        modifier = Modifier.padding(8.dp)
-                    ) {
-                        Text("DAGUPAN", color = Color.Black, fontSize = 14.sp)
-                    }
-
-                    TextButton(
-                        onClick = {  },
-                        modifier = Modifier.padding(8.dp)
-                    ) {
-                        Text("CALASIAO", color = Color.LightGray, fontSize = 14.sp)
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(2.dp))
-
-            Column (){
-                Box(
-                    modifier = Modifier.padding(10.dp),
-
-                )
-            }
-
-
-            /*Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.White),
-                horizontalArrangement = Arrangement.Start
-            ){
-                TextButton(
-                    onClick = {  },
-                    modifier = Modifier.padding(8.dp)
-                ) {
-                    Text("SHOP", color = Color.Black, fontSize = 14.sp)
-                }
-
-                TextButton(
-                    onClick = {  },
-                    modifier = Modifier.padding(8.dp)
-                ) {
-                    Text("Fruits", color = Color.LightGray, fontSize = 14.sp)
-                }
-            }*/
-
-        }
-
     }
-
-
 }
 
 
+
+@Composable
+fun SearchBar() {
+    var searchText by remember { mutableStateOf(TextFieldValue("")) }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(50.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        BasicTextField(
+            value = searchText,
+            onValueChange = { searchText = it },
+            modifier = Modifier
+                .weight(1f)
+                .background(
+                    color = Color(0xFFF5F5F5),
+                    shape = RoundedCornerShape(10.dp)
+                )
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            singleLine = true,
+            decorationBox = { innerTextField ->
+                if (searchText.text.isEmpty()) {
+                    Text(
+                        text = "Search food, vegetable, etc.",
+                        color = Color.Gray,
+                        fontSize = 12.sp
+                    )
+                }
+                innerTextField()
+            }
+        )
+
+        Spacer(modifier = Modifier.width(10.dp))
+
+        Icon(
+            painter = painterResource(id = R.drawable.notification),
+            contentDescription = "Notifications",
+            modifier = Modifier.size(20.dp)
+        )
+    }
+}
+
+@Composable
+fun SliderCard() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(155.dp),
+        shape = RoundedCornerShape(10.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            SlideImg(modifier = Modifier.fillMaxSize())
+            PageIndicator(currentPage = 0, totalScreens = 3)
+        }
+    }
+}
+
+@Composable
+fun LocationSelector(selectedLocation: MutableState<String?>) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.White),
+        horizontalArrangement = Arrangement.Start
+    ) {
+        TextButton(
+            onClick = { selectedLocation.value = "Dagupan" },
+            modifier = Modifier.padding(8.dp)
+        ) {
+            Text(
+                "DAGUPAN",
+                color = if (selectedLocation.value == "Dagupan") Color.Black else Color.Gray,
+                fontSize = 14.sp
+            )
+        }
+
+        TextButton(
+            onClick = { selectedLocation.value = "Calasiao" },
+            modifier = Modifier.padding(8.dp)
+        ) {
+            Text(
+                "CALASIAO",
+                color = if (selectedLocation.value == "Calasiao") Color.Black else Color.Gray,
+                fontSize = 14.sp
+            )
+        }
+    }
+}
+
 @Composable
 fun CartScreen() {
-    Surface(modifier = Modifier.fillMaxSize()) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Text(text = "Cart Screen", fontSize = 20.sp)
-        }
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Text(text = "Cart Screen", fontSize = 20.sp)
     }
 }
 
 @Composable
 fun AccountScreen() {
-    Surface(modifier = Modifier.fillMaxSize()) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Text(text = "Account Screen", fontSize = 20.sp)
-        }
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Text(text = "Account Screen", fontSize = 20.sp)
     }
 }
 
 @Composable
 fun BottomBar(navController: NavController) {
     val screens = listOf(
-        BottomBarActivity.Home,
-        BottomBarActivity.Cart,
-        BottomBarActivity.Account,
+        BottomBarScreen.Home,
+        BottomBarScreen.Cart,
+        BottomBarScreen.Account,
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    BottomNavigation (
-        backgroundColor = Color(0xFF1d7151)
-    ) {
+    BottomNavigation(backgroundColor = Color(0xFF1d7151)) {
         screens.forEach { screen ->
-            AddItem(
-                screen = screen,
-                currentDestination = currentDestination,
-                navController = navController
+            BottomNavigationItem(
+                label = { Text(screen.title) },
+                icon = {
+                    Icon(
+                        imageVector = screen.icon,
+                        contentDescription = screen.title
+                    )
+                },
+                selected = currentDestination?.route == screen.route,
+                onClick = {
+                    navController.navigate(screen.route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
             )
         }
     }
 }
 
-@Composable
-fun RowScope.AddItem(
-    screen: BottomBarActivity.Screen,
-    currentDestination: NavDestination?,
-    navController: NavController
-) {
-    BottomNavigationItem(
-        label = {
-            Text(
-                text = screen.title,
-                color = if (currentDestination?.hierarchy?.any { it.route == screen.route } == true)
-                    Color.White else Color.Gray // White when selected, Gray when unselected
-            )
-        },
-        icon = {
-            Icon(
-                imageVector = screen.icon,
-                contentDescription = "Navigation Icon",
-                tint = if (currentDestination?.hierarchy?.any { it.route == screen.route } == true)
-                    Color.White else Color.LightGray
-            )
-        },
-        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-        onClick = {
-            navController.navigate(screen.route) {
-                popUpTo(navController.graph.startDestinationId) { saveState = true }
-                launchSingleTop = true
-                restoreState = true
-            }
-        }
-    )
-}
-
-object BottomBarActivity {
-    val Home = Screen("home", "Home", Icons.Default.Home)
-    val Cart = Screen("cart", "Cart", Icons.Default.ShoppingCart)
-    val Account = Screen("account", "Account", Icons.Default.AccountCircle)
-
-    data class Screen(val route: String, val title: String, val icon: ImageVector)
+sealed class BottomBarScreen(val route: String, val title: String, val icon: ImageVector) {
+    object Home : BottomBarScreen("home", "Home", Icons.Default.Home)
+    object Cart : BottomBarScreen("cart", "Cart", Icons.Default.ShoppingCart)
+    object Account : BottomBarScreen("account", "Account", Icons.Default.AccountCircle)
 }
