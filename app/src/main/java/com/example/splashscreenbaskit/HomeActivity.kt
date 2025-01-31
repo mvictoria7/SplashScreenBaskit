@@ -33,7 +33,10 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.example.splashscreenbaskit.AccountActivity
+import com.example.splashscreenbaskit.AddToCartScreen
 import com.example.splashscreenbaskit.AppleScreen
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.SlideImg
@@ -116,47 +119,6 @@ fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavContr
 }
 
 @Composable
-fun VendorGrid(products: List<Vendor>) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        products.chunked(2).forEach { rowVendor ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 4.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                rowVendor.forEach { vendor ->
-                    Card(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(4.dp),
-                        shape = RoundedCornerShape(10.dp),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .padding(8.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Image(
-                                painter = painterResource(id = vendor.imageRes),
-                                contentDescription = "Product Image",
-                                modifier = Modifier.size(120.dp)
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(vendor.name, fontWeight = FontWeight.Bold)
-                        }
-                    }
-                }
-                if (rowVendor.size == 1) {
-                    Spacer(modifier = Modifier.weight(1f))
-                }
-            }
-        }
-    }
-}
-
-@Composable
 fun FruitGrid(fruits: List<Fruits>, navController: NavController) {
     Column(modifier = Modifier.fillMaxWidth()) {
         fruits.chunked(2).forEach { rowFruits ->
@@ -227,14 +189,29 @@ fun HomeScreen() {
                 AccountActivity()
             }
             composable("AppleScreen") {
-                AppleScreen()
+                AppleScreen(navController)
             }
             composable("OrangeScreen") {
                 OrangeScreen()
             }
+            composable(
+                "AddToCart/{selectedWeight}/{quantity}/{totalPrice}",
+                arguments = listOf(
+                    navArgument("selectedWeight") { type = NavType.StringType },
+                    navArgument("quantity") { type = NavType.IntType },
+                    navArgument("totalPrice") { type = NavType.StringType }
+                )
+            ) { backStackEntry ->
+                val selectedWeight = backStackEntry.arguments?.getString("selectedWeight") ?: "1 pc"
+                val quantity = backStackEntry.arguments?.getInt("quantity") ?: 1
+                val totalPrice = backStackEntry.arguments?.getString("totalPrice")?.toDoubleOrNull() ?: 0.0
+                AddToCartScreen(navController, selectedWeight, quantity, totalPrice)
             }
+
         }
-        }
+    }
+}
+
 
 
 
