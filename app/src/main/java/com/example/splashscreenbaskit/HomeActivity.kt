@@ -194,7 +194,7 @@ fun HomeScreen() {
                 AccountActivity()
             }
             composable("AppleScreen") {
-                AppleScreen(navController)
+                AppleScreen()
             }
             composable("OrangeScreen") {
                 OrangeScreen(rememberNavController())

@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
                         AppleScreen()
                     }
                     composable("OrangeScreen") {
-                        OrangeScreen()
+                        OrangeScreen(navController)
                     }
                     composable(
                         "add_to_cart/{weight}/{quantity}/{totalPrice}",
