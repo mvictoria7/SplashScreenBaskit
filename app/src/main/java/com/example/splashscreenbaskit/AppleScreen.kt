@@ -14,10 +14,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.splashscreenbaskit.data.BasketItem
 
 @Preview(showBackground = true)
 @Composable
-fun AppleScreen() {
+fun AppleScreenPreview() {
+    AppleScreen(navController =  rememberNavController())
+}
+fun AppleScreen(navController: NavHostController) {
+
+}
+@Composable
+fun AppleScreen(basket: BasketItem, navController: NavHostController) {
     var quantity by remember { mutableStateOf(1) }
     var selectedWeight by remember { mutableStateOf("1 pc") }
     val basePrice = 32.25
@@ -37,6 +47,7 @@ fun AppleScreen() {
             .fillMaxSize()
             .background(Color.White)
     ) {
+
         // Image section
         Box(
             modifier = Modifier
@@ -203,7 +214,9 @@ fun AppleScreen() {
                 )
             }
             Button(
-                onClick = { /* Add to Basket */ },
+                onClick = {
+                    basket.addItem(BasketItem("Apple", quantity, totalPrice))
+                    navController.navigate("AddToCartScreen()") },
                 shape = RoundedCornerShape(20.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White)
             ) {
@@ -216,3 +229,8 @@ fun AppleScreen() {
         }
     }
 }
+
+private fun BasketItem.addItem(basketItem: BasketItem) {
+
+}
+

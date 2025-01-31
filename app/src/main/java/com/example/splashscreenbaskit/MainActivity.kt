@@ -43,11 +43,15 @@ class MainActivity : ComponentActivity() {
                         HomeScreen()
                     }
                     composable("AppleScreen") {
-                        AppleScreen()
+                        AppleScreen(navController)
                     }
                     composable("OrangeScreen") {
-                        OrangeScreen()
+                        OrangeScreen(rememberNavController())
                     }
+                    composable("Addtocart") {
+                        AddToCartScreen(navController())
+                    }
+
                     composable(
                         "add_to_cart/{weight}/{quantity}/{totalPrice}",
                         arguments = listOf(

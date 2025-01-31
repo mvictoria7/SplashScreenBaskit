@@ -9,11 +9,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
+@Preview(showBackground = true)
+@Composable
+fun AddtocartPreview() {
+    AddToCartScreen(navController =  rememberNavController())
+}
+fun AddToCartScreen(navController: NavHostController) {
 
+}
 @Composable
 fun AddToCartScreen(
     navController: NavController,
@@ -32,7 +42,7 @@ fun AddToCartScreen(
     ) {
         // Header
         Text(
-            text = "Your Cart",
+            text = "My Basket",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 20.dp)

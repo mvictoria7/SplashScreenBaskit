@@ -32,6 +32,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.splashscreenbaskit.AccountActivity
 import com.example.splashscreenbaskit.AppleScreen
@@ -97,18 +98,18 @@ fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavContr
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 2.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(2.dp)
     ) {
         items(categories) { category ->
             TextButton(
                 onClick = { selectedCategory.value = category},
-                modifier = Modifier.padding(4.dp)
+                modifier = Modifier.padding(end = 2.dp)
             ) {
                 Text(
                     text = category,
-                    color = if (selectedCategory.value == category) Color.Black else Color.Gray,
+                    color = if (selectedCategory.value == category) Color(0xFF8C8C8C) else Color(0xFFBFBFBF),
                     fontSize = 14.sp,
-                    fontWeight = if (selectedCategory.value == category) FontWeight.Bold else FontWeight.Normal
+                    fontWeight = FontWeight.Bold
                 )
             }
         }
@@ -192,7 +193,11 @@ fun FruitGrid(fruits: List<Fruits>, navController: NavController) {
                                 modifier = Modifier.size(120.dp)
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            Text(fruit.name, fontWeight = FontWeight.Bold)
+                            Row (){
+                                Text(fruit.name, fontWeight = FontWeight.Bold, modifier = Modifier.padding (8.dp))
+                                Spacer(modifier = Modifier.width(10.dp))
+                                Text(text = "₱ 0.00", fontWeight = FontWeight.Bold, modifier = Modifier.padding (8.dp)
+                            )}
                         }
                     }
                 }
@@ -227,10 +232,10 @@ fun HomeScreen() {
                 AccountActivity()
             }
             composable("AppleScreen") {
-                AppleScreen()
+                AppleScreen(navController)
             }
             composable("OrangeScreen") {
-                OrangeScreen()
+                OrangeScreen(rememberNavController())
             }
             }
         }
@@ -336,23 +341,29 @@ fun VendorGrid(products: List<Vendor>, navController: NavController) {
                 rowVendor.forEach { vendor ->
                     Card(
                         modifier = Modifier
-                            .weight(1f)
-                            .padding(4.dp),
+                            .size(170.dp)
+                            .weight(1f),
                         shape = RoundedCornerShape(10.dp),
                         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
 
                     ) {
-                        Column(
-                            modifier = Modifier.padding(8.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                        Column( modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 5.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
                         ) {
                             Image(
                                 painter = painterResource(id = vendor.imageRes),
                                 contentDescription = "Product Image",
-                                modifier = Modifier.size(150.dp)
+                                modifier = Modifier
+                                    .height(100.dp)
+                                    .width(135.dp)
+                                    .padding(top = 8.dp)
+                                    .clip(RoundedCornerShape(10.dp))
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            Text(vendor.name, fontWeight = FontWeight.Bold)
+                            Text(vendor.name, fontWeight = FontWeight.Bold, fontSize = 16.sp, modifier = Modifier.padding(8.dp))
                         }
                     }
                 }
@@ -428,28 +439,31 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(2.dp)
             .background(Color.White),
         horizontalArrangement = Arrangement.Start
     ) {
         TextButton(
             onClick = { selectedLocation.value = "Dagupan" },
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(end = 8.dp)
         ) {
             Text(
                 "DAGUPAN",
-                color = if (selectedLocation.value == "Dagupan") Color.Black else Color.Gray,
-                fontSize = 14.sp
+                color = if (selectedLocation.value == "Dagupan") Color (0xFF8C8C8C) else Color(0xFFBFBFBF),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold
             )
         }
 
         TextButton(
             onClick = { selectedLocation.value = "Calasiao" },
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(end = 8.dp)
         ) {
             Text(
                 "CALASIAO",
-                color = if (selectedLocation.value == "Calasiao") Color.Black else Color.Gray,
-                fontSize = 14.sp
+                color = if (selectedLocation.value == "Calasiao") Color(0xFF8C8C8C) else Color(0xFFBFBFBF),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold
             )
         }
     }
