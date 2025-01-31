@@ -43,34 +43,32 @@ class MainActivity : ComponentActivity() {
                         HomeScreen()
                     }
                     composable("AppleScreen") {
-                        AppleScreen(navController)
+                        AppleScreen()
                     }
                     composable("OrangeScreen") {
                         OrangeScreen()
                     }
-                    composable("AddToCart") {
-                    }
-
-                    composable("AddToCart/{weight}/{quantity}/{totalPrice}") { backStackEntry ->
+                    composable(
+                        "add_to_cart/{weight}/{quantity}/{totalPrice}",
+                        arguments = listOf(
+                            navArgument("weight") { type = NavType.StringType },
+                            navArgument("quantity") { type = NavType.IntType },
+                            navArgument("totalPrice") { type = NavType.FloatType }
+                        )
+                    ) { backStackEntry ->
                         val weight = backStackEntry.arguments?.getString("weight") ?: "1 pc"
-                        val quantity = backStackEntry.arguments?.getString("quantity")?.toIntOrNull() ?: 1
-                        val totalPrice = backStackEntry.arguments?.getString("totalPrice")?.toDoubleOrNull() ?: 0.0
-
+                        val quantity = backStackEntry.arguments?.getInt("quantity") ?: 1
+                        val totalPrice = backStackEntry.arguments?.getFloat("totalPrice") ?: 0f
 
                         AddToCartScreen(
                             navController = navController,
-                            selectedWeight = weight,
+                            productName = "Apple",
                             quantity = quantity,
-                            totalPrice = totalPrice
+                            price = totalPrice.toDouble()
                         )
                     }
-
                 }
             }
         }
     }
 }
-
-
-
-

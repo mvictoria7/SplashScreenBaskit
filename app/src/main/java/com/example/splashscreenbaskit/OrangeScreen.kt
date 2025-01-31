@@ -14,10 +14,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 @Preview(showBackground = true)
 @Composable
-fun OrangeScreen() {
+fun OrangeScreenPreview() {
+    OrangeScreen(navController = rememberNavController())
+}
+
+@Composable
+fun OrangeScreen(navController: NavHostController) {
     var quantity by remember { mutableIntStateOf(1) }
     var selectedWeight by remember { mutableStateOf("1 pc") }
     val basePrice = 32.25
@@ -203,7 +210,7 @@ fun OrangeScreen() {
                 )
             }
             Button(
-                onClick = { /* Add to Basket */ },
+                onClick = { navController.navigate("LoginActivity") },
                 shape = RoundedCornerShape(20.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White)
             ) {
