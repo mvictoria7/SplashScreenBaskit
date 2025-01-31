@@ -43,7 +43,10 @@ class MainActivity : ComponentActivity() {
                         HomeScreen()
                     }
                     composable("AppleScreen") {
-                        AppleScreen(navController)  // ✅ Pass navController correctly
+                        AppleScreen()
+                    }
+                    composable("OrangeScreen") {
+                        OrangeScreen()
                     }
                     composable(
                         "add_to_cart/{weight}/{quantity}/{totalPrice}",

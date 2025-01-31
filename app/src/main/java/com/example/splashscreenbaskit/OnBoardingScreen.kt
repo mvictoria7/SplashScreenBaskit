@@ -113,7 +113,7 @@ fun PageIndicator(currentPage: Int, totalScreens: Int) {
                     )
             )
             if (index < totalScreens - 1) {
-                Spacer(modifier = Modifier.width(8.dp)) // Adjust the width to set space between circles
+                Spacer(modifier = Modifier.width(8.dp))
             }
         }
     }
@@ -144,13 +144,13 @@ fun WavyHeader(page: Int, pagerState: PagerState) {
         val endHeight = size.height * 0.8f
 
         val path = Path().apply {
-            moveTo(0f, startHeight) // Starting point of the wave
+            moveTo(0f, startHeight)
             cubicTo(
-                size.width * 0.25f, controlHeight1, // First control point
-                size.width * 0.75f, controlHeight2, // Second control point
-                size.width, endHeight // Ending point
+                size.width * 0.25f, controlHeight1,
+                size.width * 0.75f, controlHeight2,
+                size.width, endHeight
             )
-            lineTo(size.width, 0f) // Closing the top of the canvas
+            lineTo(size.width, 0f)
             lineTo(0f, 0f)
             close()
         }

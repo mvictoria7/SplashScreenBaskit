@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.sp
 
 @Preview(showBackground = true)
 @Composable
-fun AppleScreen() {
-    var quantity by remember { mutableStateOf(1) }
+fun OrangeScreen() {
+    var quantity by remember { mutableIntStateOf(1) }
     var selectedWeight by remember { mutableStateOf("1 pc") }
     val basePrice = 32.25
     val priceIncrease = 30.0
@@ -37,7 +37,7 @@ fun AppleScreen() {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        // Image section
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -45,7 +45,7 @@ fun AppleScreen() {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.apple),
-                contentDescription = "Apple",
+                contentDescription = "Orange",
                 modifier = Modifier.fillMaxSize()
             )
             IconButton(
@@ -71,7 +71,7 @@ fun AppleScreen() {
                 .padding(15.dp)
         ) {
             Text(
-                text = "Apple",
+                text = "Orange",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -145,7 +145,7 @@ fun AppleScreen() {
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = "Fresh apples, perfect for a healthy snack!",
+                text = "Fresh oranges, perfect for a healthy snack!",
                 fontSize = 18.sp,
                 color = Color.Gray
             )

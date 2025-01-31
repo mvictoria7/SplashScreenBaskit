@@ -37,7 +37,7 @@ import com.example.splashscreenbaskit.AccountActivity
 import com.example.splashscreenbaskit.AppleScreen
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.SlideImg
-import com.example.splashscreenbaskit.AppleScreen
+import com.example.splashscreenbaskit.OrangeScreen
 
 
 // Data classes
@@ -175,6 +175,9 @@ fun FruitGrid(fruits: List<Fruits>, navController: NavController) {
                                 if (fruit.name == "Apple") {
                                     navController.navigate("AppleScreen")
                                 }
+                                if (fruit.name == "Orange") {
+                                    navController.navigate("OrangeScreen")
+                                }
                             },
                         shape = RoundedCornerShape(10.dp),
                         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -224,7 +227,10 @@ fun HomeScreen() {
                 AccountActivity()
             }
             composable("AppleScreen") {
-                AppleScreen(navController) // Pass the NavController here
+                AppleScreen()
+            }
+            composable("OrangeScreen") {
+                OrangeScreen()
             }
             }
         }
@@ -343,7 +349,7 @@ fun VendorGrid(products: List<Vendor>, navController: NavController) {
                             Image(
                                 painter = painterResource(id = vendor.imageRes),
                                 contentDescription = "Product Image",
-                                modifier = Modifier.size(120.dp)
+                                modifier = Modifier.size(150.dp)
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(vendor.name, fontWeight = FontWeight.Bold)
