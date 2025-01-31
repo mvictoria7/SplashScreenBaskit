@@ -3,8 +3,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -35,8 +33,12 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.example.splashscreenbaskit.AccountActivity
+import com.example.splashscreenbaskit.AppleScreen
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.SlideImg
+import com.example.splashscreenbaskit.AppleScreen
+
 
 // Data classes
 data class Vendor(
@@ -88,7 +90,7 @@ fun PageIndicator(currentPage: Int, totalScreens: Int) {
 }
 
 @Composable
-fun CategoryRow(selectedCategory: MutableState<String?>) {
+fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavController) {
     val categories = listOf("SHOP", "Vegetables", "Fruits", "Meats", "Fish", "Spices", "Frozen Foods")
 
     LazyRow(
@@ -99,7 +101,7 @@ fun CategoryRow(selectedCategory: MutableState<String?>) {
     ) {
         items(categories) { category ->
             TextButton(
-                onClick = { selectedCategory.value = category },
+                onClick = { selectedCategory.value = category},
                 modifier = Modifier.padding(4.dp)
             ) {
                 Text(
@@ -155,7 +157,7 @@ fun VendorGrid(products: List<Vendor>) {
 }
 
 @Composable
-fun FruitGrid(fruits: List<Fruits>) {
+fun FruitGrid(fruits: List<Fruits>, navController: NavController) {
     Column(modifier = Modifier.fillMaxWidth()) {
         fruits.chunked(2).forEach { rowFruits ->
             Row(
@@ -168,13 +170,17 @@ fun FruitGrid(fruits: List<Fruits>) {
                     Card(
                         modifier = Modifier
                             .weight(1f)
-                            .padding(4.dp),
+                            .padding(4.dp)
+                            .clickable {
+                                if (fruit.name == "Apple") {
+                                    navController.navigate("AppleScreen")
+                                }
+                            },
                         shape = RoundedCornerShape(10.dp),
                         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                     ) {
                         Column(
-                            modifier = Modifier
-                                .padding(8.dp),
+                            modifier = Modifier.padding(8.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Image(
@@ -207,6 +213,7 @@ fun HomeScreen() {
             startDestination = BottomBarScreen.Home.route,
             modifier = Modifier.padding(paddingValues)
         ) {
+
             composable(BottomBarScreen.Home.route) {
                 HomeContent(navController)
             }
@@ -214,16 +221,15 @@ fun HomeScreen() {
                 CartScreen()
             }
             composable(BottomBarScreen.Account.route) {
-                AccountScreen()
+                AccountActivity()
             }
-            composable("vendorDetail/{vendorName}") { backStackEntry ->
-                val vendorName = backStackEntry.arguments?.getString("vendorName") ?: "Unknown Vendor"
-                VendorDetailScreen(vendorName)
+            composable("AppleScreen") {
+                AppleScreen(navController) // Pass the NavController here
+            }
             }
         }
+        }
 
-    }
-}
 
 
 @Composable
@@ -275,13 +281,16 @@ fun HomeContent(navController: NavController) {
 
             LocationSelector(selectedLocation)
 
-            CategoryRow(selectedCategory)
+            CategoryRow(selectedCategory, navController)
 
             when (selectedCategory.value) {
-                "Fruits" -> FruitGrid(listOf(
-                    Fruits("Apple", R.drawable.testimg),
-                    Fruits("Orange", R.drawable.testimg)
-                ))
+                "Fruits" -> FruitGrid(
+                    listOf(
+                        Fruits("Apple", R.drawable.testimg),
+                        Fruits("Orange", R.drawable.testimg)
+                    ),
+                    navController // Pass navController to FruitGrid
+                )
                 else -> VendorGrid(sampleProducts, navController)
             }
 
@@ -305,7 +314,6 @@ fun VendorDetailScreen(vendorName: String) {
     ) {
         Text(text = "$vendorName's Products", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(10.dp))
-        FruitGrid(products)
     }
 }
 
@@ -323,12 +331,10 @@ fun VendorGrid(products: List<Vendor>, navController: NavController) {
                     Card(
                         modifier = Modifier
                             .weight(1f)
-                            .padding(4.dp)
-                            .clickable {
-                                navController.navigate("vendorDetail/${vendor.name}")
-                            },
+                            .padding(4.dp),
                         shape = RoundedCornerShape(10.dp),
                         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+
                     ) {
                         Column(
                             modifier = Modifier.padding(8.dp),
@@ -351,7 +357,6 @@ fun VendorGrid(products: List<Vendor>, navController: NavController) {
         }
     }
 }
-
 @Composable
 fun SearchBar() {
     var searchText by remember { mutableStateOf(TextFieldValue("")) }
