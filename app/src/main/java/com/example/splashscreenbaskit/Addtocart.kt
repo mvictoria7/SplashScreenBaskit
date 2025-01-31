@@ -21,7 +21,7 @@ fun AddToCartScreen(
     quantity: Int,
     price: Double
 ) {
-    val context = LocalContext.current  // ✅ Fix Toast context issue'
+    val context = LocalContext.current
 
 
     Column(
@@ -63,7 +63,7 @@ fun AddToCartScreen(
         // Back Button
         Button(
             onClick = {
-                navController.popBackStack()  // ✅ Navigate back
+                navController.popBackStack()
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -81,12 +81,9 @@ fun AddToCartScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Proceed to Checkout Button
         Button(
             onClick = {
                 Toast.makeText(context, "Proceeding to Checkout...", Toast.LENGTH_SHORT).show()
-                // ✅ Navigate to checkout screen (implement navigation if needed)
-                // navController.navigate("checkoutScreen")
             },
             modifier = Modifier.fillMaxWidth(),
             shape = MaterialTheme.shapes.medium,

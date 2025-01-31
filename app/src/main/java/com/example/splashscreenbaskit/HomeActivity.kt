@@ -159,7 +159,7 @@ fun FruitGrid(fruits: List<Fruits>, navController: NavController) {
                                 Text(fruit.name, fontWeight = FontWeight.Bold, modifier = Modifier.padding (8.dp))
                                 Spacer(modifier = Modifier.width(10.dp))
                                 Text(text = "₱ 0.00", fontWeight = FontWeight.Bold, modifier = Modifier.padding (8.dp)
-                            )}
+                                )}
                         }
                     }
                 }
@@ -194,13 +194,13 @@ fun HomeScreen() {
                 AccountActivity()
             }
             composable("AppleScreen") {
-                AppleScreen()
+                AppleScreen(navController)
             }
             composable("OrangeScreen") {
                 OrangeScreen(rememberNavController())
             }
             composable(
-                "AddToCart/{selectedWeight}/{quantity}/{totalPrice}",
+                "add_to_cart/{selectedWeight}/{quantity}/{totalPrice}",
                 arguments = listOf(
                     navArgument("selectedWeight") { type = NavType.StringType },
                     navArgument("quantity") { type = NavType.IntType },
@@ -327,8 +327,8 @@ fun VendorGrid(products: List<Vendor>, navController: NavController) {
                         Column( modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 5.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center,
                         ) {
                             Image(
                                 painter = painterResource(id = vendor.imageRes),

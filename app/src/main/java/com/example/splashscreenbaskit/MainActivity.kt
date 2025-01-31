@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
                         HomeScreen()
                     }
                     composable("AppleScreen") {
-                        AppleScreen()
+                        AppleScreen(navController)
                     }
                     composable("OrangeScreen") {
                         OrangeScreen(navController)
@@ -67,6 +67,7 @@ class MainActivity : ComponentActivity() {
                             price = totalPrice.toDouble()
                         )
                     }
+
                 }
             }
         }

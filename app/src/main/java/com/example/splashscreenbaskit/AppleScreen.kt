@@ -14,10 +14,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
-@Preview(showBackground = true)
 @Composable
-fun AppleScreen() {
+fun AppleScreen(navController: NavController) {
     var quantity by remember { mutableStateOf(1) }
     var selectedWeight by remember { mutableStateOf("1 pc") }
     val basePrice = 32.25
@@ -203,7 +203,7 @@ fun AppleScreen() {
                 )
             }
             Button(
-                onClick = { /* Add to Basket */ },
+                onClick = { navController.navigate("add_to_cart/${selectedWeight}/${quantity}/${totalPrice.toFloat()}") },
                 shape = RoundedCornerShape(20.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White)
             ) {
