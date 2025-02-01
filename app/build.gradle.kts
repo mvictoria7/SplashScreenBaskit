@@ -70,7 +70,11 @@ dependencies {
 
     val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-compose:$nav_version")
-
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     implementation ("com.google.accompanist:accompanist-pager:0.30.1")
     implementation ("com.google.accompanist:accompanist-pager-indicators:0.30.1")
 

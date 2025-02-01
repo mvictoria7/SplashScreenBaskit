@@ -22,7 +22,7 @@ import com.example.splashscreenbaskit.ui.theme.SplashScreenBaskitTheme
 
 @Composable
 fun AppleScreen(navController: NavController) {
-    var quantity by remember { mutableStateOf(1) }
+    var quantity by remember { mutableIntStateOf(1) }
     var selectedWeight by remember { mutableStateOf("1 pc") }
     val basePrice = 32.25
     val priceIncrease = 30.0
@@ -162,7 +162,7 @@ fun AppleScreen(navController: NavController) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                listOf("1 pc", "1/4 kg", "1/2 kg", "1 kg").forEach { option ->
+                listOf("1 pc", "1 kg").forEach { option ->
                     Button(
                         onClick = { selectedWeight = option },
                         shape = RoundedCornerShape(15.dp),
