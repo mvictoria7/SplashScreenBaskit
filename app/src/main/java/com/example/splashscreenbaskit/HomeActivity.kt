@@ -1,3 +1,4 @@
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,7 +33,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -101,18 +101,18 @@ fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavContr
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 2.dp),
-        horizontalArrangement = Arrangement.spacedBy(2.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(categories) { category ->
             TextButton(
                 onClick = { selectedCategory.value = category},
-                modifier = Modifier.padding(end = 2.dp)
+                modifier = Modifier.padding(4.dp)
             ) {
                 Text(
                     text = category,
-                    color = if (selectedCategory.value == category) Color(0xFF8C8C8C) else Color(0xFFBFBFBF),
+                    color = if (selectedCategory.value == category) Color.Black else Color.Gray,
                     fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = if (selectedCategory.value == category) FontWeight.Bold else FontWeight.Normal
                 )
             }
         }
@@ -155,11 +155,7 @@ fun FruitGrid(fruits: List<Fruits>, navController: NavController) {
                                 modifier = Modifier.size(120.dp)
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            Row (){
-                                Text(fruit.name, fontWeight = FontWeight.Bold, modifier = Modifier.padding (8.dp))
-                                Spacer(modifier = Modifier.width(10.dp))
-                                Text(text = "₱ 0.00", fontWeight = FontWeight.Bold, modifier = Modifier.padding (8.dp)
-                                )}
+                            Text(fruit.name, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -197,10 +193,10 @@ fun HomeScreen() {
                 AppleScreen(navController)
             }
             composable("OrangeScreen") {
-                OrangeScreen(rememberNavController())
+                OrangeScreen(navController)
             }
             composable(
-                "add_to_cart/{selectedWeight}/{quantity}/{totalPrice}",
+                "AddToCart/{selectedWeight}/{quantity}/{totalPrice}",
                 arguments = listOf(
                     navArgument("selectedWeight") { type = NavType.StringType },
                     navArgument("quantity") { type = NavType.IntType },
@@ -208,7 +204,7 @@ fun HomeScreen() {
                 )
             ) { backStackEntry ->
                 val selectedWeight = backStackEntry.arguments?.getString("selectedWeight") ?: "1 pc"
-                val quantity = backStackEntry.arguments?.getInt("quantity") ?: 1
+                val quantity = backStackEntry.arguments?.getInt("quantity") ?: 0
                 val totalPrice = backStackEntry.arguments?.getString("totalPrice")?.toDoubleOrNull() ?: 0.0
                 AddToCartScreen(navController, selectedWeight, quantity, totalPrice)
             }
@@ -318,29 +314,23 @@ fun VendorGrid(products: List<Vendor>, navController: NavController) {
                 rowVendor.forEach { vendor ->
                     Card(
                         modifier = Modifier
-                            .size(170.dp)
-                            .weight(1f),
+                            .weight(1f)
+                            .padding(4.dp),
                         shape = RoundedCornerShape(10.dp),
                         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
 
                     ) {
-                        Column( modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 5.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center,
+                        Column(
+                            modifier = Modifier.padding(8.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Image(
                                 painter = painterResource(id = vendor.imageRes),
                                 contentDescription = "Product Image",
-                                modifier = Modifier
-                                    .height(100.dp)
-                                    .width(135.dp)
-                                    .padding(top = 8.dp)
-                                    .clip(RoundedCornerShape(10.dp))
+                                modifier = Modifier.size(150.dp)
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            Text(vendor.name, fontWeight = FontWeight.Bold, fontSize = 16.sp, modifier = Modifier.padding(8.dp))
+                            Text(vendor.name, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -416,31 +406,28 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(2.dp)
             .background(Color.White),
         horizontalArrangement = Arrangement.Start
     ) {
         TextButton(
             onClick = { selectedLocation.value = "Dagupan" },
-            modifier = Modifier.padding(end = 8.dp)
+            modifier = Modifier.padding(8.dp)
         ) {
             Text(
                 "DAGUPAN",
-                color = if (selectedLocation.value == "Dagupan") Color (0xFF8C8C8C) else Color(0xFFBFBFBF),
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold
+                color = if (selectedLocation.value == "Dagupan") Color.Black else Color.Gray,
+                fontSize = 14.sp
             )
         }
 
         TextButton(
             onClick = { selectedLocation.value = "Calasiao" },
-            modifier = Modifier.padding(end = 8.dp)
+            modifier = Modifier.padding(8.dp)
         ) {
             Text(
                 "CALASIAO",
-                color = if (selectedLocation.value == "Calasiao") Color(0xFF8C8C8C) else Color(0xFFBFBFBF),
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold
+                color = if (selectedLocation.value == "Calasiao") Color.Black else Color.Gray,
+                fontSize = 14.sp
             )
         }
     }

@@ -1,5 +1,6 @@
 package com.example.splashscreenbaskit
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -9,12 +10,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.splashscreenbaskit.ui.theme.SplashScreenBaskitTheme
 
 @Composable
 fun AppleScreen(navController: NavController) {
@@ -22,6 +26,7 @@ fun AppleScreen(navController: NavController) {
     var selectedWeight by remember { mutableStateOf("1 pc") }
     val basePrice = 32.25
     val priceIncrease = 30.0
+    val context = LocalContext.current
 
     val priceForWeight = when (selectedWeight) {
         "1 pc" -> basePrice
@@ -176,7 +181,6 @@ fun AppleScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.weight(1f))
 
-        // Footer section
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -185,10 +189,7 @@ fun AppleScreen(navController: NavController) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     text = "Total Price",
                     fontSize = 16.sp,
@@ -203,16 +204,20 @@ fun AppleScreen(navController: NavController) {
                 )
             }
             Button(
-                onClick = { navController.navigate("add_to_cart/${selectedWeight}/${quantity}/${totalPrice.toFloat()}") },
+                onClick = {
+                    try {
+                        navController.navigate("AddToCart/${selectedWeight}/${quantity}/${"%.2f".format(totalPrice)}")
+                        Toast.makeText(context, "Added to basket!", Toast.LENGTH_SHORT).show()
+                    } catch (e: Exception) {
+                        Toast.makeText(context, "Error adding to basket", Toast.LENGTH_SHORT).show()
+                    }
+                },
                 shape = RoundedCornerShape(20.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White)
             ) {
-                Text(
-                    text = "Add to Basket",
-                    color = Color.Black,
-                    fontWeight = FontWeight.Bold
-                )
+                Text(text = "Add to Basket", color = Color.Black, fontWeight = FontWeight.Bold)
             }
+
         }
     }
 }
