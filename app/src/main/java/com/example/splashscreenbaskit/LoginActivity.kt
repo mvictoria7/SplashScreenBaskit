@@ -1,4 +1,4 @@
-package com.example.myapplication.design.loginregister
+    package com.example.myapplication.design.loginregister
 
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -64,7 +64,6 @@ fun LoginActivity(navController: NavController) {
                 .size(200.dp)
                 .padding(bottom = 16.dp)
         )
-
 
         Text(
             text = "Log into your account",
@@ -183,6 +182,6 @@ fun LoginActivity(navController: NavController) {
             }
         }
     }
-
+//haahaa//
 }
 
