@@ -32,7 +32,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -101,18 +103,18 @@ fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavContr
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 2.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         items(categories) { category ->
             TextButton(
-                onClick = { selectedCategory.value = category},
-                modifier = Modifier.padding(4.dp)
+                modifier = Modifier.padding(0.dp),
+                onClick = { selectedCategory.value = category}
             ) {
                 Text(
                     text = category,
-                    color = if (selectedCategory.value == category) Color.Black else Color.Gray,
+                    color = if (selectedCategory.value == category) Color(0xFF8C8C8C) else Color(0xFFBFBFBF),
                     fontSize = 14.sp,
-                    fontWeight = if (selectedCategory.value == category) FontWeight.Bold else FontWeight.Normal
+                    fontWeight = FontWeight.Bold
                 )
             }
         }
@@ -261,25 +263,30 @@ fun HomeContent(navController: NavController) {
 
             SliderCard()
 
-            Spacer(modifier = Modifier.height(20.dp))
-
-            LocationSelector(selectedLocation)
-
-            CategoryRow(selectedCategory, navController)
+            Spacer(modifier = Modifier.height(120.dp))
 
             when (selectedCategory.value) {
                 "Fruits" -> FruitGrid(
                     listOf(
-                        Fruits("Apple", R.drawable.testimg),
-                        Fruits("Orange", R.drawable.testimg)
+                        Fruits("Apple", R.drawable.apple),
+                        Fruits("Orange", R.drawable.orange)
                     ),
                     navController // Pass navController to FruitGrid
                 )
                 else -> VendorGrid(sampleProducts, navController)
             }
 
-            Spacer(modifier = Modifier.height(80.dp))
+
         }
+    }
+
+    Column (modifier = Modifier.padding(top = 410.dp, start = 10.dp)
+    ) {
+        LocationSelector(selectedLocation)
+
+        CategoryRow(selectedCategory, navController)
+
+        Spacer(modifier = Modifier.height(80.dp))
     }
 }
 
@@ -288,7 +295,10 @@ fun VendorDetailScreen(vendorName: String) {
     val products = listOf(
         Fruits("Apple", R.drawable.testimg),
         Fruits("Orange", R.drawable.testimg),
-        Fruits("Banana", R.drawable.testimg)
+        Fruits("Banana", R.drawable.testimg),
+        Fruits("Mango", R.drawable.testimg),
+        Fruits("Grapes", R.drawable.testimg),
+        Fruits("Pineapple", R.drawable.testimg)
     )
 
     Column(
@@ -313,24 +323,32 @@ fun VendorGrid(products: List<Vendor>, navController: NavController) {
             ) {
                 rowVendor.forEach { vendor ->
                     Card(
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F0F0)),
                         modifier = Modifier
                             .weight(1f)
+                            .height(170.dp)
                             .padding(4.dp),
                         shape = RoundedCornerShape(10.dp),
                         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
 
                     ) {
-                        Column(
-                            modifier = Modifier.padding(8.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                        Column( modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 5.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center,
                         ) {
                             Image(
                                 painter = painterResource(id = vendor.imageRes),
                                 contentDescription = "Product Image",
-                                modifier = Modifier.size(150.dp)
+                                modifier = Modifier
+                                    .height(100.dp)
+                                    .width(135.dp)
+                                    .padding(top = 8.dp)
+                                    .clip(RoundedCornerShape(10.dp))
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            Text(vendor.name, fontWeight = FontWeight.Bold)
+                            Text(vendor.name, fontWeight = FontWeight.Bold, fontSize = 16.sp, modifier = Modifier.padding(8.dp))
                         }
                     }
                 }
@@ -377,9 +395,9 @@ fun SearchBar() {
         Spacer(modifier = Modifier.width(10.dp))
 
         Icon(
-            painter = painterResource(id = R.drawable.notification),
-            contentDescription = "Notifications",
-            modifier = Modifier.size(20.dp)
+            Icons.Default.Notifications,
+            contentDescription = "Notifications Icon",
+            modifier = Modifier.size(25.dp)
         )
     }
 }
@@ -406,8 +424,10 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White),
-        horizontalArrangement = Arrangement.Start
+            .background(Color.White)
+            .padding(bottom = 2.dp)
+            .size(width = 100.dp , height = 45.dp),
+        horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         TextButton(
             onClick = { selectedLocation.value = "Dagupan" },
@@ -415,8 +435,9 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
         ) {
             Text(
                 "DAGUPAN",
-                color = if (selectedLocation.value == "Dagupan") Color.Black else Color.Gray,
-                fontSize = 14.sp
+                color = if (selectedLocation.value == "Dagupan") Color(0xFF8C8C8C) else Color(0xFFBFBFBF),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold
             )
         }
 
@@ -426,8 +447,9 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
         ) {
             Text(
                 "CALASIAO",
-                color = if (selectedLocation.value == "Calasiao") Color.Black else Color.Gray,
-                fontSize = 14.sp
+                color = if (selectedLocation.value == "Calasiao") Color(0xFF8C8C8C) else Color(0xFFBFBFBF),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold
             )
         }
     }
@@ -463,7 +485,10 @@ fun BottomBar(navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    BottomNavigation(backgroundColor = Color(0xFF1d7151)) {
+    BottomNavigation(
+        backgroundColor = Color(0xFF1d7151),
+        modifier = Modifier.height(70.dp)
+    ) {
         screens.forEach { screen ->
             BottomNavigationItem(
                 label = { Text(screen.title) },

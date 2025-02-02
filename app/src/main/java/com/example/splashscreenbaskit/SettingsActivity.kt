@@ -56,15 +56,14 @@ fun SettingsActivity () {
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color(0xFF1D7151), RoundedCornerShape(bottomStart = 180.dp, bottomEnd = 180.dp))
-                .padding(10.dp)
-                .height(340.dp)
-                .width(400.dp),
+                //.padding(10.dp)
+                .height(350.dp),
             contentAlignment = Alignment.Center
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(
                     painter = painterResource(id = R.drawable.baskitlogo_white),
-                    contentDescription = "Basket Icon",
+                    contentDescription = "Baskit Icon",
                     tint = Color.White,
                     modifier = Modifier.height(170.dp)
                 )
