@@ -114,6 +114,9 @@ fun LoginActivity(navController: NavController) {
             )
         }
 
+        Spacer(modifier = Modifier.height(6.dp))
+
+
         Row(modifier = Modifier.padding(1.dp)) {
             options.forEach { text ->
                 Row(
@@ -163,7 +166,7 @@ fun LoginActivity(navController: NavController) {
         ) {
             Text(
                 text = "Don't have an account?",
-                fontSize = 12.sp,
+                fontSize = 14.sp,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
 

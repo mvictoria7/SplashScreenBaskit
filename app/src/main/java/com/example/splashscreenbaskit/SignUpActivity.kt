@@ -2,6 +2,7 @@ package com.example.splashscreenbaskit
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -78,10 +79,10 @@ fun SignUpActivity(navController: NavController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(25.dp))
 
             Image(
-                painter = painterResource(id = R.drawable.signup_image),
+                painter = painterResource(id = R.drawable.baskit_logo),
                 contentDescription = "Sign Up image",
                 modifier = Modifier.size(100.dp)
             )
@@ -107,10 +108,9 @@ fun SignUpActivity(navController: NavController) {
                 OutlinedTextField(
                     value = firstName,
                     onValueChange = { firstName = it },
-                    label = { Text(text = "First Name") },
+                    label = { Text(text = "First Name")},
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(10.dp),
-
 
                 )
 
@@ -124,7 +124,7 @@ fun SignUpActivity(navController: NavController) {
                 )
             }
 
-            Spacer(modifier = Modifier.height(5.dp))
+            Spacer(modifier = Modifier.height(2.dp))
 
             OutlinedTextField(
                 value = birthday,
@@ -142,7 +142,7 @@ fun SignUpActivity(navController: NavController) {
                 shape = RoundedCornerShape(10.dp)
             )
 
-            Spacer(modifier = Modifier.height(5.dp))
+            Spacer(modifier = Modifier.height(2.dp))
 
             // username field
             OutlinedTextField(
@@ -152,11 +152,11 @@ fun SignUpActivity(navController: NavController) {
                 leadingIcon = {
                     Icon(imageVector = Icons.Default.Person, contentDescription = "Person Icon")
                 },
-                modifier = Modifier.fillMaxWidth(0.8f),
+                modifier = Modifier.fillMaxWidth(0.8f) ,
                 shape = RoundedCornerShape(10.dp)
             )
 
-            Spacer(modifier = Modifier.height(5.dp))
+            Spacer(modifier = Modifier.height(2.dp))
 
             // number field
             OutlinedTextField(
@@ -170,7 +170,7 @@ fun SignUpActivity(navController: NavController) {
                 shape = RoundedCornerShape(10.dp)
             )
 
-            Spacer(modifier = Modifier.height(5.dp))
+            Spacer(modifier = Modifier.height(2.dp))
 
             // Email field
             OutlinedTextField(
@@ -184,7 +184,7 @@ fun SignUpActivity(navController: NavController) {
                 shape = RoundedCornerShape(10.dp)
             )
 
-            Spacer(modifier = Modifier.height(5.dp))
+            Spacer(modifier = Modifier.height(2.dp))
 
             // Password field
             OutlinedTextField(
@@ -199,7 +199,7 @@ fun SignUpActivity(navController: NavController) {
                 visualTransformation = PasswordVisualTransformation()
             )
 
-            Spacer(modifier = Modifier.height(5.dp))
+            Spacer(modifier = Modifier.height(2.dp))
 
             // Confirm Password field
             OutlinedTextField(
@@ -213,7 +213,7 @@ fun SignUpActivity(navController: NavController) {
                     )
                 },
                 modifier = Modifier.fillMaxWidth(0.8f),
-                shape = RoundedCornerShape(10.dp),
+                shape = RoundedCornerShape(10.dp) ,
                 visualTransformation = PasswordVisualTransformation()
             )
 
@@ -236,7 +236,7 @@ fun SignUpActivity(navController: NavController) {
                 Text(text = "Agree to Terms and Conditions")
             }
 
-            //Spacer(modifier = Modifier.width(15.dp))
+            Spacer(modifier = Modifier.width(10.dp))
 
             // Sign Up button
             Button(
@@ -261,7 +261,7 @@ fun SignUpActivity(navController: NavController) {
                 Text(text = "Sign up")
             }
 
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
             //Already have an account
             Row(
@@ -284,7 +284,7 @@ fun SignUpActivity(navController: NavController) {
                     Text(
                         text = "Log In",
                         color = Color(0xFF1d7151),
-                        fontSize = 12.sp,
+                        fontSize = 14.sp,
                         fontWeight = FontWeight.Medium,
                         style = TextStyle(textDecoration = TextDecoration.Underline)
                     )

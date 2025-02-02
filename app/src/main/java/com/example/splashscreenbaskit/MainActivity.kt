@@ -8,11 +8,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.myapplication.design.loginregister.LoginActivity
 import com.example.splashscreenbaskit.ui.theme.SplashScreenBaskitTheme
 
@@ -25,6 +23,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             SplashScreenBaskitTheme {
+
                 val navController = rememberNavController()
 
                 NavHost(navController = navController, startDestination = "OnBoardingScreen") {
