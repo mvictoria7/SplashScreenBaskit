@@ -35,6 +35,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -66,10 +67,10 @@ data class Fruits(
 //)
 
 val sampleProducts = listOf(
-    Vendor("Vendor 1", R.drawable.testimg),
-    Vendor("Vendor 2", R.drawable.testimg),
-    Vendor("Vendor 3", R.drawable.testimg),
-    Vendor("Vendor 4", R.drawable.testimg),
+    Vendor("Product 1", R.drawable.testimg),
+    Vendor("Product 2", R.drawable.testimg),
+    Vendor("Product 3", R.drawable.testimg),
+    Vendor("Product 4", R.drawable.testimg),
 
     )
 
@@ -107,13 +108,18 @@ fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavContr
     ) {
         items(categories) { category ->
             TextButton(
-                modifier = Modifier.padding(0.dp),
+                modifier = Modifier
+                    .padding(5.dp)
+                    .background(
+                    color = if (selectedCategory.value == category) Color(0xFF1d7151) else Color.Transparent,
+                    shape = RoundedCornerShape(10.dp)
+                ),
                 onClick = { selectedCategory.value = category}
             ) {
                 Text(
                     text = category,
                     color = if (selectedCategory.value == category) Color(0xFF8C8C8C) else Color(0xFFBFBFBF),
-                    fontSize = 14.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -348,7 +354,7 @@ fun VendorGrid(products: List<Vendor>, navController: NavController) {
                                     .clip(RoundedCornerShape(10.dp))
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            Text(vendor.name, fontWeight = FontWeight.Bold, fontSize = 16.sp, modifier = Modifier.padding(8.dp))
+                            Text(vendor.name, fontWeight = FontWeight.SemiBold, fontSize = 16.sp, modifier = Modifier.padding(8.dp))
                         }
                     }
                 }
@@ -385,7 +391,7 @@ fun SearchBar() {
                     Text(
                         text = "Search food, vegetable, etc.",
                         color = Color.Gray,
-                        fontSize = 12.sp
+                        fontSize = 14.sp
                     )
                 }
                 innerTextField()
@@ -410,7 +416,7 @@ fun SliderCard() {
             .height(155.dp),
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             SlideImg(modifier = Modifier.fillMaxSize())
@@ -425,8 +431,8 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White)
-            .padding(bottom = 2.dp)
-            .size(width = 100.dp , height = 45.dp),
+            .padding(bottom = 0.dp)
+            .size(width = 100.dp , height = 50.dp),
         horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         TextButton(
@@ -436,7 +442,7 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
             Text(
                 "DAGUPAN",
                 color = if (selectedLocation.value == "Dagupan") Color(0xFF8C8C8C) else Color(0xFFBFBFBF),
-                fontSize = 14.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
         }
@@ -448,7 +454,7 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
             Text(
                 "CALASIAO",
                 color = if (selectedLocation.value == "Calasiao") Color(0xFF8C8C8C) else Color(0xFFBFBFBF),
-                fontSize = 14.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
         }

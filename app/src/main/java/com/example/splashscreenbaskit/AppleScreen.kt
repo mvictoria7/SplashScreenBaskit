@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -19,6 +20,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.ui.theme.SplashScreenBaskitTheme
+
+@Preview
+@Composable
+fun AppleScreenPreview() {
+    AppleScreen(navController =  rememberNavController())
+}
 
 @Composable
 fun AppleScreen(navController: NavController) {
@@ -73,11 +80,11 @@ fun AppleScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(15.dp)
+                .padding(top = 30.dp, start = 25.dp, end = 25.dp)
         ) {
             Text(
                 text = "Apple",
-                fontSize = 24.sp,
+                fontSize = 30.sp,
                 fontWeight = FontWeight.Bold
             )
 
@@ -99,16 +106,56 @@ fun AppleScreen(navController: NavController) {
                     tint = Color.Black,
                     modifier = Modifier.size(25.dp)
                 )
+
+                Spacer(modifier = Modifier.padding(start = 115.dp) )
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = { if (quantity > 1) quantity-- },
+                        modifier = Modifier
+                            .background(color = Color.LightGray, shape = CircleShape)
+                            .size(35.dp)) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.minus),
+                            contentDescription = "Minus",
+                            tint = Color.Black,
+                            modifier = Modifier.size(12.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(10.dp))
+
+                    Text(
+                        text = "$quantity",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                    )
+
+                    Spacer(modifier = Modifier.width(10.dp))
+
+                    IconButton(
+                        onClick = { quantity++ },
+                        modifier = Modifier
+                            .background(color = Color.LightGray, shape = CircleShape)
+                            .size(35.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.add),
+                            contentDescription = "Add",
+                            tint = Color.Black,
+                            modifier = Modifier.size(12.dp)
+                        )
+                    }
+                }
             }
 
             Text(
                 text = "₱ ${"%.2f".format(priceForWeight)}",
-                fontSize = 20.sp,
+                fontSize = 24.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.Gray
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
             // Quantity selection
             Row(
@@ -117,42 +164,27 @@ fun AppleScreen(navController: NavController) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Product Description",
-                    fontSize = 20.sp,
+                    text = "Seller Description",
+                    fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(onClick = { if (quantity > 1) quantity-- }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.minus),
-                            contentDescription = "Minus",
-                            tint = Color.Black,
-                            modifier = Modifier.size(16.dp)
-                        )
-                    }
-                    Text(
-                        text = "$quantity",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                    )
-                    IconButton(onClick = { quantity++ }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.add),
-                            contentDescription = "Add",
-                            tint = Color.Black,
-                            modifier = Modifier.size(16.dp)
-                        )
-                    }
-                }
             }
 
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = "Fresh apples, perfect for a healthy snack!",
-                fontSize = 18.sp,
-                color = Color.Gray
+                text = "Martha Rosario (Aling Martha’s)",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = Color.Black
+            )
+
+            Text(
+                text = "0900-000-0000",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Light,
+                color = Color.Black
             )
 
             Spacer(modifier = Modifier.height(50.dp))
@@ -185,20 +217,21 @@ fun AppleScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color(0xFF1D7151))
-                .padding(16.dp),
+                .height(110.dp)
+                .padding(25.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     text = "Total Price",
-                    fontSize = 16.sp,
+                    fontSize = 18.sp,
                     color = Color.White,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.SemiBold
                 )
                 Text(
                     text = "₱ ${"%.2f".format(totalPrice)}",
-                    fontSize = 15.sp,
+                    fontSize = 26.sp,
                     color = Color.White,
                     fontWeight = FontWeight.Bold
                 )
@@ -212,10 +245,11 @@ fun AppleScreen(navController: NavController) {
                         Toast.makeText(context, "Error adding to basket", Toast.LENGTH_SHORT).show()
                     }
                 },
-                shape = RoundedCornerShape(20.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.White)
+                shape = RoundedCornerShape(30.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White),
+                modifier = Modifier.height(70.dp) .width(180.dp)
             ) {
-                Text(text = "Add to Basket", color = Color.Black, fontWeight = FontWeight.Bold)
+                Text(text = "Add to Basket", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 20.sp)
             }
 
         }

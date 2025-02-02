@@ -3,11 +3,13 @@ package com.example.splashscreenbaskit
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -51,7 +53,7 @@ fun OrangeScreen(navController: NavHostController) {
                 .height(300.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.apple),
+                painter = painterResource(id = R.drawable.orange),
                 contentDescription = "Orange",
                 modifier = Modifier.fillMaxSize()
             )
@@ -75,11 +77,11 @@ fun OrangeScreen(navController: NavHostController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(15.dp)
+                .padding(top = 30.dp, start = 25.dp, end = 25.dp)
         ) {
             Text(
                 text = "Orange",
-                fontSize = 24.sp,
+                fontSize = 30.sp,
                 fontWeight = FontWeight.Bold
             )
 
@@ -101,16 +103,56 @@ fun OrangeScreen(navController: NavHostController) {
                     tint = Color.Black,
                     modifier = Modifier.size(25.dp)
                 )
+
+                Spacer(modifier = Modifier.padding(start = 115.dp) )
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = { if (quantity > 1) quantity-- },
+                        modifier = Modifier
+                            .background(color = Color.LightGray, shape = CircleShape)
+                            .size(35.dp)) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.minus),
+                            contentDescription = "Minus",
+                            tint = Color.Black,
+                            modifier = Modifier.size(12.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(10.dp))
+
+                    Text(
+                        text = "$quantity",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                    )
+
+                    Spacer(modifier = Modifier.width(10.dp))
+
+                    IconButton(
+                        onClick = { quantity++ },
+                        modifier = Modifier
+                            .background(color = Color.LightGray, shape = CircleShape)
+                            .size(35.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.add),
+                            contentDescription = "Add",
+                            tint = Color.Black,
+                            modifier = Modifier.size(12.dp)
+                        )
+                    }
+                }
             }
 
             Text(
                 text = "₱ ${"%.2f".format(priceForWeight)}",
-                fontSize = 20.sp,
+                fontSize = 24.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.Gray
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
             // Quantity selection
             Row(
@@ -119,42 +161,27 @@ fun OrangeScreen(navController: NavHostController) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Product Description",
-                    fontSize = 20.sp,
+                    text = "Seller Description",
+                    fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(onClick = { if (quantity > 1) quantity-- }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.minus),
-                            contentDescription = "Minus",
-                            tint = Color.Black,
-                            modifier = Modifier.size(16.dp)
-                        )
-                    }
-                    Text(
-                        text = "$quantity",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                    )
-                    IconButton(onClick = { quantity++ }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.add),
-                            contentDescription = "Add",
-                            tint = Color.Black,
-                            modifier = Modifier.size(16.dp)
-                        )
-                    }
-                }
             }
 
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = "Fresh oranges, perfect for a healthy snack!",
-                fontSize = 18.sp,
-                color = Color.Gray
+                text = "Martha Rosario (Aling Martha’s)",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = Color.Black
+            )
+
+            Text(
+                text = "0900-000-0000",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Light,
+                color = Color.Black
             )
 
             Spacer(modifier = Modifier.height(50.dp))
@@ -188,36 +215,38 @@ fun OrangeScreen(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color(0xFF1D7151))
-                .padding(16.dp),
+                .height(110.dp)
+                .padding(25.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     text = "Total Price",
                     fontSize = 16.sp,
                     color = Color.White,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.SemiBold,
+                    //modifier = Modifier.padding(start = 0.dp)
                 )
+                Spacer(modifier = Modifier.height(7.dp))
                 Text(
                     text = "₱ ${"%.2f".format(totalPrice)}",
-                    fontSize = 15.sp,
+                    fontSize = 26.sp,
                     color = Color.White,
                     fontWeight = FontWeight.Bold
                 )
             }
             Button(
                 onClick = { navController.navigate("LoginActivity") },
-                shape = RoundedCornerShape(20.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.White)
+                shape = RoundedCornerShape(30.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White),
+                modifier = Modifier.height(70.dp) .width(180.dp)
             ) {
                 Text(
                     text = "Add to Basket",
                     color = Color.Black,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
                 )
             }
         }
