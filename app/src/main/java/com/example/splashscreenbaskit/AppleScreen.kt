@@ -69,7 +69,7 @@ fun AppleScreen(navController: NavController) {
                 contentScale = ContentScale.Crop
             )
             IconButton(
-                onClick = {  },
+                onClick = { },
                 modifier = Modifier
                     .padding(top = 45.dp, start = 25.dp)
                     .align(Alignment.TopStart)
@@ -259,7 +259,7 @@ fun AppleScreen(navController: NavController) {
             Button(
                 onClick = {
                     try {
-                        navController.navigate("AddToCart/${selectedWeight}/${quantity}/${"%.2f".format(totalPrice)}")
+                        navController.navigate("CartApple/${selectedWeight}/${quantity}/${"%.2f".format(totalPrice)}")
                         Toast.makeText(context, "Added to basket!", Toast.LENGTH_SHORT).show()
                     } catch (e: Exception) {
                         Toast.makeText(context, "Error adding to basket", Toast.LENGTH_SHORT).show()

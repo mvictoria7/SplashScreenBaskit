@@ -40,7 +40,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.splashscreenbaskit.AccountActivity
-import com.example.splashscreenbaskit.AddToCartScreen
+import com.example.splashscreenbaskit.CartAppleScreen
+import com.example.splashscreenbaskit.CartOrangeScreen
 import com.example.splashscreenbaskit.AppleScreen
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.SlideImg
@@ -204,7 +205,7 @@ fun HomeScreen() {
                 OrangeScreen(navController)
             }
             composable(
-                "AddToCart/{selectedWeight}/{quantity}/{totalPrice}",
+                "CartApple/{selectedWeight}/{quantity}/{totalPrice}",
                 arguments = listOf(
                     navArgument("selectedWeight") { type = NavType.StringType },
                     navArgument("quantity") { type = NavType.IntType },
@@ -214,9 +215,21 @@ fun HomeScreen() {
                 val selectedWeight = backStackEntry.arguments?.getString("selectedWeight") ?: "1 pc"
                 val quantity = backStackEntry.arguments?.getInt("quantity") ?: 0
                 val totalPrice = backStackEntry.arguments?.getString("totalPrice")?.toDoubleOrNull() ?: 0.0
-                AddToCartScreen(navController, selectedWeight, quantity, totalPrice)
+                CartAppleScreen(navController, selectedWeight, quantity, totalPrice)
             }
-
+            composable(
+                "CartOrange/{selectedWeight}/{quantity}/{totalPrice}",
+                arguments = listOf(
+                    navArgument("selectedWeight") { type = NavType.StringType },
+                    navArgument("quantity") { type = NavType.IntType },
+                    navArgument("totalPrice") { type = NavType.StringType }
+                )
+            ) { backStackEntry ->
+                val selectedWeight = backStackEntry.arguments?.getString("selectedWeight") ?: "1 pc"
+                val quantity = backStackEntry.arguments?.getInt("quantity") ?: 0
+                val totalPrice = backStackEntry.arguments?.getString("totalPrice")?.toDoubleOrNull() ?: 0.0
+                CartOrangeScreen(navController, selectedWeight, quantity, totalPrice)
+            }
         }
     }
 }

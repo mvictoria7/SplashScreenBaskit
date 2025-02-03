@@ -1,5 +1,6 @@
 package com.example.splashscreenbaskit
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,6 +16,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +37,7 @@ fun OrangeScreen(navController: NavHostController) {
     var selectedWeight by remember { mutableStateOf("1 pc") }
     val basePrice = 32.25
     val priceIncrease = 30.0
+    val context = LocalContext.current
 
     val priceForWeight = when (selectedWeight) {
         "1 pc" -> basePrice
@@ -241,10 +244,9 @@ fun OrangeScreen(navController: NavHostController) {
                     text = "Total Price",
                     fontSize = 16.sp,
                     color = Color.White,
-                    fontWeight = FontWeight.SemiBold,
-                    //modifier = Modifier.padding(start = 0.dp)
+                    fontWeight = FontWeight.SemiBold
                 )
-                Spacer(modifier = Modifier.height(7.dp))
+
                 Text(
                     text = "₱ ${"%.2f".format(totalPrice)}",
                     fontSize = 26.sp,
@@ -253,17 +255,19 @@ fun OrangeScreen(navController: NavHostController) {
                 )
             }
             Button(
-                onClick = { navController.navigate("LoginActivity") },
+                onClick = {
+                    try {
+                        navController.navigate("CartOrange/${selectedWeight}/${quantity}/${"%.2f".format(totalPrice)}")
+                        Toast.makeText(context, "Added to basket!", Toast.LENGTH_SHORT).show()
+                    } catch (e: Exception) {
+                        Toast.makeText(context, "Error adding to basket", Toast.LENGTH_SHORT).show()
+                    }
+                },
                 shape = RoundedCornerShape(30.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White),
                 modifier = Modifier.height(70.dp) .width(180.dp)
             ) {
-                Text(
-                    text = "Add to Basket",
-                    color = Color.Black,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
-                )
+                Text(text = "Add to Basket", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 20.sp)
             }
         }
     }

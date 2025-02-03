@@ -51,20 +51,40 @@ class MainActivity : ComponentActivity() {
                     composable("AddToCart") {
                     }
 
-                    composable("AddToCart/{weight}/{quantity}/{totalPrice}") { backStackEntry ->
+                    composable("CartApple/{weight}/{quantity}/{totalPrice}") { backStackEntry ->
                         val weight = backStackEntry.arguments?.getString("weight") ?: "1 pc"
-                        val quantity = backStackEntry.arguments?.getString("quantity")?.toIntOrNull() ?: 0
-                        val totalPrice = backStackEntry.arguments?.getString("totalPrice")?.toDoubleOrNull() ?: 0.0
+                        val quantity =
+                            backStackEntry.arguments?.getString("quantity")?.toIntOrNull() ?: 0
+                        val totalPrice =
+                            backStackEntry.arguments?.getString("totalPrice")?.toDoubleOrNull()
+                                ?: 0.0
+
+                        composable("CartOrange/{weight}/{quantity}/{totalPrice}") { backStackEntry ->
+                            val weight = backStackEntry.arguments?.getString("weight") ?: "1 pc"
+                            val quantity =
+                                backStackEntry.arguments?.getString("quantity")?.toIntOrNull() ?: 0
+                            val totalPrice =
+                                backStackEntry.arguments?.getString("totalPrice")?.toDoubleOrNull()
+                                    ?: 0.0
 
 
-                        AddToCartScreen(
-                            navController = navController,
-                            selectedWeight = weight,
-                            quantity = quantity,
-                            totalPrice = totalPrice
-                        )
+                            CartAppleScreen(
+                                navController = navController,
+                                selectedWeight = weight,
+                                quantity = quantity,
+                                totalPrice = totalPrice
+                            )
+
+                            CartOrangeScreen(
+                                navController = navController,
+                                selectedWeight = weight,
+                                quantity = quantity,
+                                totalPrice = totalPrice
+
+                            )
+                        }
+
                     }
-
                 }
             }
         }
