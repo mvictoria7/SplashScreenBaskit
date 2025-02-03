@@ -49,8 +49,6 @@ fun OnboardingScreen(navController: NavController) {
             Column(modifier = Modifier.fillMaxSize()) {
                 WavyHeader(page = page, pagerState = pagerState)
 
-                Spacer(modifier = Modifier.height(16.dp))
-
                 OnboardingContent(
                     title = when (page) {
                         0 -> "Good Day!"
@@ -58,7 +56,7 @@ fun OnboardingScreen(navController: NavController) {
                         else -> "Welcome!"
                     },
                     description = when (page) {
-                        0 -> "At Baskit, we believe that shopping should be simple and stress-free. Start by creating a personalized grocery list tailored to your needs."
+                        0 -> "Shop simple and stress-free! Start by creating a personalized grocery list tailored to your needs."
                         1 -> "Why spend extra time in the market? Baskit lets you shop smarter by generating a code for effortless pickup, saving you both time and effort."
                         else -> "Convenience is at the heart of Baskit. Present your code in-store, collect your items with ease, and enjoy a seamless shopping experience."
                     }
@@ -68,8 +66,8 @@ fun OnboardingScreen(navController: NavController) {
 
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = 20.dp),
+                .fillMaxSize(),
+                //.padding(bottom = 20.dp),
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -78,9 +76,9 @@ fun OnboardingScreen(navController: NavController) {
             if (pagerState.currentPage == 2) {
                 Button(
                     onClick = {navController.navigate("SignUpActivity")},
-                    modifier = Modifier.height(50.dp),
-                    shape = RoundedCornerShape(10.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD9D9D9))
+                    modifier = Modifier.height(50.dp) .padding(end = 10.dp),
+                    //shape = RoundedCornerShape(10.dp),
+                    //colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD9D9D9))
                 ) {
                     Text(
                         text = "Get Started",
@@ -97,9 +95,10 @@ fun OnboardingScreen(navController: NavController) {
 @Composable
 fun PageIndicator(currentPage: Int, totalScreens: Int) {
     Row(
-        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterHorizontally),
         modifier = Modifier
-            .padding(top = 8.dp, bottom = 20.dp)
+            .padding(top = 8.dp, bottom = 80.dp)
             .fillMaxWidth()
     ) {
         repeat(totalScreens) { index ->
@@ -108,7 +107,7 @@ fun PageIndicator(currentPage: Int, totalScreens: Int) {
                     .size(10.dp)
                     //.padding(horizontal = 4.dp)
                     .background(
-                        color = if (index == currentPage) Color(0xAAFF9100) else Color.Gray,
+                        color = if (index == currentPage) Color(0xFFFFA52F) else Color(0xFFD9D9D9),
                         shape = CircleShape
                     )
             )
@@ -124,24 +123,23 @@ fun WavyHeader(page: Int, pagerState: PagerState) {
     Canvas(
         modifier = Modifier
             .fillMaxWidth()
-            .height(550.dp)
+            .height(500.dp)
     ) {
-        // Interpolating between pages for smooth transitions
         val offset = pagerState.currentPageOffset
 
         val gradient = Brush.verticalGradient(
             colors = when (page) {
-                0 -> listOf(Color(0xFF1d7151), Color(0xFF34a853))
-                1 -> listOf(Color(0xFF34a853), Color(0xFF1d7151))
-                else -> listOf(Color(0xFF1d7151), Color(0xFF34a853))
+                0 -> listOf(Color(0xFF34a853), Color(0xFF1d7151))
+                1 -> listOf(Color(0xFF1d7151), Color(0xFF34a853))
+                else -> listOf(Color(0xFF34a853), Color(0xFF1d7151))
             }
         )
 
-        // Starting and ending heights for the wave based on page transitions
-        val startHeight = size.height * 0.8f
-        val controlHeight1 = size.height * (0.5f - offset * 0.3f)
-        val controlHeight2 = size.height * (0.9f + offset * 0.2f)
-        val endHeight = size.height * 0.8f
+        // Starting & ending heights for the wave
+        val startHeight = size.height * 1f
+        val controlHeight1 = size.height * (0.7f - offset * 0.3f)
+        val controlHeight2 = size.height * (1f + offset * 0.2f)
+        val endHeight = size.height * 1f
 
         val path = Path().apply {
             moveTo(0f, startHeight)
@@ -164,27 +162,27 @@ fun WavyHeader(page: Int, pagerState: PagerState) {
 
 @Composable
 fun OnboardingContent(title: String, description: String) {
+
+    Spacer(modifier = Modifier.height(80.dp))
+
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 20.dp),
+        modifier = Modifier.padding(start = 50.dp, end = 50.dp ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(20.dp))
-
         Text(
             text = title,
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
+            fontSize = 32.sp,
+            fontWeight = FontWeight.ExtraBold,
             color = Color.Black,
             textAlign = TextAlign.Center,
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         Text(
             text = description,
             fontSize = 16.sp,
-            color = Color.Gray,
+            fontWeight = FontWeight.Normal,
+            color = Color.Black,
             textAlign = TextAlign.Center
         )
     }

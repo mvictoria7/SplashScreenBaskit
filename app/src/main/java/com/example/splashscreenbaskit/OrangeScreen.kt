@@ -1,7 +1,9 @@
 package com.example.splashscreenbaskit
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,8 +11,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,24 +54,31 @@ fun OrangeScreen(navController: NavHostController) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp)
+                .height(330.dp)
+                .width(400.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.orange),
                 contentDescription = "Orange",
-                modifier = Modifier.fillMaxSize()
-            )
-            IconButton(
-                onClick = { /* Handle back action */ },
                 modifier = Modifier
-                    .padding(16.dp)
+                    .height(330.dp)
+                    .width(400.dp),
+                contentScale = ContentScale.Crop
+            )
+
+            IconButton(
+                onClick = {  },
+                modifier = Modifier
+                    .padding(top = 45.dp, start = 25.dp)
                     .align(Alignment.TopStart)
-                    .background(Color.White, shape = RoundedCornerShape(50))
+                    .size(35.dp)
+                    //.background(color = Color.White, shape = CircleShape)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.back),
                     contentDescription = "Back",
-                    tint = Color.Black
+                    //tint = Color.Black,
+                    modifier = Modifier.size(35.dp)
                 )
             }
         }
@@ -77,11 +88,11 @@ fun OrangeScreen(navController: NavHostController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 30.dp, start = 25.dp, end = 25.dp)
+                .padding(top = 20.dp, start = 25.dp, end = 25.dp)
         ) {
             Text(
                 text = "Orange",
-                fontSize = 30.sp,
+                fontSize = 32.sp,
                 fontWeight = FontWeight.Bold
             )
 
@@ -104,7 +115,7 @@ fun OrangeScreen(navController: NavHostController) {
                     modifier = Modifier.size(25.dp)
                 )
 
-                Spacer(modifier = Modifier.padding(start = 115.dp) )
+                Spacer(modifier = Modifier.padding(start = 90.dp) )
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     IconButton(onClick = { if (quantity > 1) quantity-- },
@@ -119,7 +130,7 @@ fun OrangeScreen(navController: NavHostController) {
                         )
                     }
 
-                    Spacer(modifier = Modifier.width(10.dp))
+                    Spacer(modifier = Modifier.width(15.dp))
 
                     Text(
                         text = "$quantity",
@@ -127,7 +138,7 @@ fun OrangeScreen(navController: NavHostController) {
                         fontWeight = FontWeight.Bold,
                     )
 
-                    Spacer(modifier = Modifier.width(10.dp))
+                    Spacer(modifier = Modifier.width(15.dp))
 
                     IconButton(
                         onClick = { quantity++ },
@@ -155,18 +166,12 @@ fun OrangeScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.height(40.dp))
 
             // Quantity selection
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
+            Text(
                     text = "Seller Description",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(vertical = 8.dp)
-                )
-            }
+            )
 
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -190,18 +195,29 @@ fun OrangeScreen(navController: NavHostController) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
+                //horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 listOf("1 pc", "1/4 kg", "1/2 kg", "1 kg").forEach { option ->
                     Button(
+                        modifier = Modifier
+                            .height(48.dp)
+                            .width(75.dp)
+                            //.clip(RoundedCornerShape(10.dp))
+                            .then(
+                                if (selectedWeight != option) Modifier
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .border(BorderStroke(1.dp, Color.LightGray))
+                                else Modifier
+                            ),
                         onClick = { selectedWeight = option },
-                        shape = RoundedCornerShape(15.dp),
+                        shape = RoundedCornerShape(10.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = if (selectedWeight == option) Color(0xFF1D7151) else Color.White,
-                            contentColor = if (selectedWeight == option) Color.White else Color.Black
+                            containerColor = if (selectedWeight == option) Color(0xFFD9D9D9) else Color.White,
+                            contentColor = Color.Black
                         ),
-                        elevation = ButtonDefaults.buttonElevation(8.dp)
+                        elevation = ButtonDefaults.buttonElevation(4.dp)
                     ) {
-                        Text(text = option)
+                        Text(text = option, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
                     }
                 }
             }
@@ -220,7 +236,7 @@ fun OrangeScreen(navController: NavHostController) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(horizontalAlignment = Alignment.Start) {
                 Text(
                     text = "Total Price",
                     fontSize = 16.sp,

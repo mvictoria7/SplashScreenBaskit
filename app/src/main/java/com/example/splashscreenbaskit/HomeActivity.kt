@@ -111,14 +111,14 @@ fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavContr
                 modifier = Modifier
                     .padding(5.dp)
                     .background(
-                    color = if (selectedCategory.value == category) Color(0xFF1d7151) else Color.Transparent,
-                    shape = RoundedCornerShape(10.dp)
-                ),
+                        color = if (selectedCategory.value == category) Color(0xFF1d7151) else Color.Transparent,
+                        shape = RoundedCornerShape(10.dp)
+                    ),
                 onClick = { selectedCategory.value = category}
             ) {
                 Text(
                     text = category,
-                    color = if (selectedCategory.value == category) Color(0xFF8C8C8C) else Color(0xFFBFBFBF),
+                    color = if (selectedCategory.value == category) Color(0xFFFFFFFF) else Color(0xFFBFBFBF),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -325,7 +325,7 @@ fun VendorGrid(products: List<Vendor>, navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 4.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 rowVendor.forEach { vendor ->
                     Card(
