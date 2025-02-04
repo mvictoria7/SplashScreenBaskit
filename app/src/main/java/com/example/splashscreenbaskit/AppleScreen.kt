@@ -1,10 +1,8 @@
 package com.example.splashscreenbaskit
 
 import android.widget.Toast
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,9 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -57,30 +53,24 @@ fun AppleScreen(navController: NavController) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(330.dp)
-                .width(400.dp)
+                .height(300.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.apple),
-                contentDescription = "Orange",
-                modifier = Modifier
-                    .height(330.dp)
-                    .width(400.dp),
-                contentScale = ContentScale.Crop
+                contentDescription = "Apple",
+                modifier = Modifier.fillMaxSize()
             )
             IconButton(
-                onClick = { },
+                onClick = { /* Handle back action */ },
                 modifier = Modifier
-                    .padding(top = 45.dp, start = 25.dp)
+                    .padding(16.dp)
                     .align(Alignment.TopStart)
-                    .size(35.dp)
-                    //.background(color = Color.White, shape = CircleShape)
+                    .background(Color.White, shape = RoundedCornerShape(50))
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.back),
                     contentDescription = "Back",
-                    //tint = Color.Black,
-                    modifier = Modifier.size(35.dp)
+                    tint = Color.Black
                 )
             }
         }
@@ -90,11 +80,11 @@ fun AppleScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 20.dp, start = 25.dp, end = 25.dp)
+                .padding(top = 30.dp, start = 25.dp, end = 25.dp)
         ) {
             Text(
                 text = "Apple",
-                fontSize = 32.sp,
+                fontSize = 30.sp,
                 fontWeight = FontWeight.Bold
             )
 
@@ -161,7 +151,7 @@ fun AppleScreen(navController: NavController) {
             Text(
                 text = "₱ ${"%.2f".format(priceForWeight)}",
                 fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.SemiBold,
                 color = Color.Gray
             )
 
@@ -204,27 +194,17 @@ fun AppleScreen(navController: NavController) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                listOf("1 pc","1/4 kg", "1/2 kg", "1 kg").forEach { option ->
+                listOf("1 pc", "1 kg").forEach { option ->
                     Button(
-                        modifier = Modifier
-                            .height(48.dp)
-                            .width(75.dp)
-                            //.clip(RoundedCornerShape(10.dp))
-                            .then(
-                                if (selectedWeight != option) Modifier
-                                    .clip(RoundedCornerShape(10.dp))
-                                    .border(BorderStroke(1.dp, Color.LightGray))
-                                else Modifier
-                            ),
                         onClick = { selectedWeight = option },
-                        shape = RoundedCornerShape(10.dp),
+                        shape = RoundedCornerShape(15.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = if (selectedWeight == option) Color(0xFFD9D9D9) else Color.White,
-                            contentColor = Color.Black
+                            containerColor = if (selectedWeight == option) Color(0xFF1D7151) else Color.White,
+                            contentColor = if (selectedWeight == option) Color.White else Color.Black
                         ),
-                        elevation = ButtonDefaults.buttonElevation(4.dp)
+                        elevation = ButtonDefaults.buttonElevation(8.dp)
                     ) {
-                        Text(text = option, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
+                        Text(text = option)
                     }
                 }
             }
@@ -242,10 +222,10 @@ fun AppleScreen(navController: NavController) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Column(horizontalAlignment = Alignment.Start) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     text = "Total Price",
-                    fontSize = 16.sp,
+                    fontSize = 18.sp,
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -259,7 +239,7 @@ fun AppleScreen(navController: NavController) {
             Button(
                 onClick = {
                     try {
-                        navController.navigate("CartApple/${selectedWeight}/${quantity}/${"%.2f".format(totalPrice)}")
+                        navController.navigate("AddToCart/${selectedWeight}/${quantity}/${"%.2f".format(totalPrice)}")
                         Toast.makeText(context, "Added to basket!", Toast.LENGTH_SHORT).show()
                     } catch (e: Exception) {
                         Toast.makeText(context, "Error adding to basket", Toast.LENGTH_SHORT).show()
