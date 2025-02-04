@@ -77,8 +77,8 @@ fun OnboardingScreen(navController: NavController) {
                 Button(
                     onClick = {navController.navigate("SignUpActivity")},
                     modifier = Modifier.height(50.dp) .padding(end = 10.dp),
-                    //shape = RoundedCornerShape(10.dp),
-                    //colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD9D9D9))
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD9D9D9))
                 ) {
                     Text(
                         text = "Get Started",
@@ -105,7 +105,7 @@ fun PageIndicator(currentPage: Int, totalScreens: Int) {
             Box(
                 modifier = Modifier
                     .size(10.dp)
-                    //.padding(horizontal = 4.dp)
+//                    .padding(horizontal = 4.dp)
                     .background(
                         color = if (index == currentPage) Color(0xFFFFA52F) else Color(0xFFD9D9D9),
                         shape = CircleShape
