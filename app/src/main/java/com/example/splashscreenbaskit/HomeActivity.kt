@@ -432,8 +432,8 @@ fun SliderCard() {
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            SlideImg(modifier = Modifier.fillMaxSize())
             PageIndicator(currentPage = 0, totalScreens = 3)
+            SlideImg(modifier = Modifier.fillMaxSize())
         }
     }
 }
@@ -444,8 +444,7 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White)
-            .padding(bottom = 0.dp)
-            .size(width = 100.dp , height = 50.dp),
+            .padding(bottom = 0.dp),
         horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         TextButton(
@@ -454,7 +453,7 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
         ) {
             Text(
                 "DAGUPAN",
-                color = if (selectedLocation.value == "Dagupan") Color(0xFF8C8C8C) else Color(0xFFBFBFBF),
+                color = if (selectedLocation.value == "Dagupan") Color.Black else Color(0xFFBFBFBF),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -466,13 +465,14 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
         ) {
             Text(
                 "CALASIAO",
-                color = if (selectedLocation.value == "Calasiao") Color(0xFF8C8C8C) else Color(0xFFBFBFBF),
+                color = if (selectedLocation.value == "Calasiao") Color.Black else Color(0xFFBFBFBF),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
         }
     }
 }
+
 
 @Composable
 fun CartScreen() {
@@ -510,11 +510,17 @@ fun BottomBar(navController: NavController) {
     ) {
         screens.forEach { screen ->
             BottomNavigationItem(
-                label = { Text(screen.title) },
+                label = {
+                    Text(
+                        text = screen.title,
+                        color = if (currentDestination?.route == screen.route) Color.White else Color.Gray
+                    )
+                },
                 icon = {
                     Icon(
                         imageVector = screen.icon,
-                        contentDescription = screen.title
+                        contentDescription = screen.title,
+                        tint = Color.White
                     )
                 },
                 selected = currentDestination?.route == screen.route,
