@@ -1,5 +1,6 @@
 package com.example.splashscreenbaskit
 
+import LoginRequest
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -48,6 +49,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
 //import com.example.myapplication.design.loginregister.LogInScreen
 
 @Preview(showBackground = true)
@@ -128,7 +133,18 @@ fun SignUpActivity(navController: NavController) {
 
             OutlinedTextField(
                 value = birthday,
-                onValueChange = { birthday = it },
+                onValueChange = { newValue ->
+                    val digitsOnly = newValue.filter { it.isDigit() }
+                    val formattedDate = buildString {
+                        for (i in digitsOnly.indices) {
+                            if (i == 2 || i == 4) append("/")
+                            append(digitsOnly[i])
+                        }
+                    }
+                    if (formattedDate.length <= 10) {
+                        birthday = formattedDate
+                    }
+                },
                 label = { Text("Birthday") },
                 placeholder = { Text("MM/DD/YYYY") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -260,6 +276,38 @@ fun SignUpActivity(navController: NavController) {
             ) {
                 Text(text = "Sign up")
             }
+
+//            Button(
+//                onClick = {
+//                    if (email.isNotBlank() && password.isNotBlank()) {
+//                        val request = LoginRequest(email, password)
+//
+////                        CoroutineScope(Dispatchers.Main).launch {
+////                            try {
+////                                val response = RetrofitInstance.instance.login(request)
+////                                if (response.isSuccessful) {
+////                                    val token = response.body()?.token
+////                                    Log.d("LoginSuccess", "Token: $token")
+////                                    navController.navigate("HomeActivity")
+////                                } else {
+////                                    Log.e("LoginFailed", "Error: ${response.message()}")
+////                                }
+////                            } catch (e: Exception) {
+////                                Log.e("LoginError", "Error: ${e.message}")
+////                            }
+////                        }
+//                    }
+//                },
+//                modifier = Modifier.fillMaxWidth(0.8f).height(50.dp),
+//                enabled = email.isNotBlank() && password.isNotBlank(),
+//                shape = RoundedCornerShape(10.dp),
+//                colors = ButtonDefaults.buttonColors(
+//                    containerColor = Color(0xFF1d7151),
+//                    contentColor = Color.White
+//                )
+//            ) {
+//                Text(text = "Sign Up")
+//            }
 
             Spacer(modifier = Modifier.height(30.dp))
 
