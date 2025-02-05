@@ -17,10 +17,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -56,7 +58,7 @@ fun OnboardingScreen(navController: NavController) {
                         else -> "Welcome!"
                     },
                     description = when (page) {
-                        0 -> "Shop simple and stress-free! Start by creating a personalized grocery list tailored to your needs."
+                        0 -> "Shop simple and stress-free! \nStart by creating a personalized grocery list tailored to your needs."
                         1 -> "Why spend extra time in the market? Baskit lets you shop smarter by generating a code for effortless pickup, saving you both time and effort."
                         else -> "Convenience is at the heart of Baskit. Present your code in-store, collect your items with ease, and enjoy a seamless shopping experience."
                     }
@@ -65,20 +67,16 @@ fun OnboardingScreen(navController: NavController) {
         }
 
         Column(
-            modifier = Modifier
-                .fillMaxSize(),
-                //.padding(bottom = 20.dp),
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             PageIndicator(currentPage = pagerState.currentPage, totalScreens = 3)
 
             if (pagerState.currentPage == 2) {
-                Button(
+                TextButton(
                     onClick = {navController.navigate("SignUpActivity")},
-                    modifier = Modifier.height(50.dp) .padding(end = 10.dp),
-                    shape = RoundedCornerShape(10.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD9D9D9))
+                    modifier = Modifier.padding(bottom = 30.dp)
                 ) {
                     Text(
                         text = "Get Started",
@@ -174,7 +172,7 @@ fun OnboardingContent(title: String, description: String) {
             fontSize = 32.sp,
             fontWeight = FontWeight.ExtraBold,
             color = Color.Black,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(20.dp))
 

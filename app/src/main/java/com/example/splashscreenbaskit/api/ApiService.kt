@@ -1,4 +1,4 @@
-package com.example.splashscreenbaskit.api
+/*package com.example.splashscreenbaskit.api
 
 import com.example.splashscreenbaskit.model.AuthenticationLogin
 import com.example.splashscreenbaskit.model.AuthenticationLoginResponse
@@ -14,4 +14,4 @@ interface ApiService {
 
    // @GET("users")
 
-}
+}*/

@@ -68,10 +68,14 @@ data class Fruits(
 //)
 
 val sampleProducts = listOf(
-    Vendor("Product 1", R.drawable.testimg),
-    Vendor("Product 2", R.drawable.testimg),
-    Vendor("Product 3", R.drawable.testimg),
-    Vendor("Product 4", R.drawable.testimg),
+    Vendor("Product 1", R.drawable.food),
+    Vendor("Product 2", R.drawable.food),
+    Vendor("Product 3", R.drawable.food),
+    Vendor("Product 4", R.drawable.food),
+    Vendor("Product 5", R.drawable.food),
+    Vendor("Product 6", R.drawable.food),
+    Vendor("Product 7", R.drawable.food),
+    Vendor("Product 8", R.drawable.food)
 
     )
 
@@ -112,8 +116,8 @@ fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavContr
                 modifier = Modifier
                     .padding(5.dp)
                     .background(
-                        color = if (selectedCategory.value == category) Color(0xFF1d7151) else Color.Transparent,
-                        shape = RoundedCornerShape(10.dp)
+                        color = if (selectedCategory.value == category) Color(0xFF5CC163) else Color.Transparent,
+                        shape = RoundedCornerShape(15.dp)
                     ),
                 onClick = { selectedCategory.value = category}
             ) {
@@ -264,8 +268,6 @@ fun HomeContent(navController: NavController) {
                     .padding(bottom = 16.dp)
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
-
             Text(
                 text = "Shop Smarter, Not Harder",
                 fontSize = 12.sp,
@@ -282,13 +284,18 @@ fun HomeContent(navController: NavController) {
 
             SliderCard()
 
-            Spacer(modifier = Modifier.height(120.dp))
+            Spacer(modifier = Modifier.height(150.dp))
 
             when (selectedCategory.value) {
                 "Fruits" -> FruitGrid(
                     listOf(
                         Fruits("Apple", R.drawable.apple),
-                        Fruits("Orange", R.drawable.orange)
+                        Fruits("Orange", R.drawable.orange),
+                        Fruits("Banana", R.drawable.testimg),
+                        Fruits("Mango", R.drawable.testimg),
+                        Fruits("Grapes", R.drawable.testimg),
+                        Fruits("Pineapple", R.drawable.testimg)
+
                     ),
                     navController // Pass navController to FruitGrid
                 )
