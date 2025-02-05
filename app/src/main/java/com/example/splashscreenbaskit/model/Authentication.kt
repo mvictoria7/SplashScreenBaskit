@@ -1,13 +1,11 @@
-package com.example.splashscreenbaskit.model
+import retrofit2.Call
+import retrofit2.http.Body
+import retrofit2.http.POST
 
-import com.google.gson.annotations.SerializedName
+data class LoginRequest(val email: String, val password: String)
+data class LoginResponse(val token: String, val message: String)
 
-data class  AuthenticationLogin(
-    val username: String,
-    val password: String
-)
-
-data class AuthenticationLoginResponse(
-    @SerializedName("access_token")
-    val accessToken: String
-)
+interface Authentication {
+    @POST("login")
+    fun login(@Body request: LoginRequest): Call<LoginResponse>
+}

@@ -1,6 +1,13 @@
     package com.example.myapplication.design.loginregister
 
+import LoginRequest
+import LoginResponse
+import RetrofitInstance
 import android.util.Log
+import android.widget.Toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -139,17 +146,28 @@ fun LoginActivity(navController: NavController) {
 
         Button(
             onClick = {
-                navController.navigate( "HomeActivity")
-                Log.i("Credential", "Email: $email, Password: $password")},
-            modifier = Modifier.fillMaxWidth(0.8f)
-                .height(50.dp),
+                if (email.isNotBlank() && password.isNotBlank()) {
+                    val request = LoginRequest(email, password)
+                    RetrofitInstance.instance.login(request).enqueue(object : Callback<LoginResponse> {
+                        override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                            if (response.isSuccessful) {
+                                val token = response.body()?.token
+                                navController.navigate("HomeActivity")
+                            } else {
+                                Log.e("LoginFailed", "Error: ${response.message()}")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                            Log.e("LoginError", "Error: ${t.message}")
+                        }
+                    })
+                }
+            },
+            modifier = Modifier.fillMaxWidth(0.8f).height(50.dp),
             enabled = email.isNotBlank() && password.isNotBlank(),
             shape = RoundedCornerShape(10.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF1d7151),
-                contentColor = Color.White
-            )
-
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151), contentColor = Color.White)
         ) {
             Text(text = "Login")
         }
@@ -182,6 +200,5 @@ fun LoginActivity(navController: NavController) {
             }
         }
     }
-//haahaa//
 }
 
