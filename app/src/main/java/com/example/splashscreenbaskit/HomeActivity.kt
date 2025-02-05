@@ -291,10 +291,10 @@ fun HomeContent(navController: NavController) {
                     listOf(
                         Fruits("Apple", R.drawable.apple),
                         Fruits("Orange", R.drawable.orange),
-                        Fruits("Banana", R.drawable.testimg),
-                        Fruits("Mango", R.drawable.testimg),
-                        Fruits("Grapes", R.drawable.testimg),
-                        Fruits("Pineapple", R.drawable.testimg)
+                        Fruits("Banana", R.drawable.banana),
+                        Fruits("Mango", R.drawable.mango),
+                        Fruits("Grapes", R.drawable.grapes),
+                        Fruits("Pineapple", R.drawable.pineapple)
 
                     ),
                     navController // Pass navController to FruitGrid
@@ -319,12 +319,12 @@ fun HomeContent(navController: NavController) {
 @Composable
 fun VendorDetailScreen(vendorName: String) {
     val products = listOf(
-        Fruits("Apple", R.drawable.testimg),
-        Fruits("Orange", R.drawable.testimg),
-        Fruits("Banana", R.drawable.testimg),
-        Fruits("Mango", R.drawable.testimg),
-        Fruits("Grapes", R.drawable.testimg),
-        Fruits("Pineapple", R.drawable.testimg)
+        Fruits("Apple", R.drawable.apple),
+        Fruits("Orange", R.drawable.orange),
+        Fruits("Banana", R.drawable.banana),
+        Fruits("Mango", R.drawable.mango),
+        Fruits("Grapes", R.drawable.grapes),
+        Fruits("Pineapple", R.drawable.pineapple)
     )
 
     Column(

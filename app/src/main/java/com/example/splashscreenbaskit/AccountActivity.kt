@@ -103,7 +103,7 @@ fun AccountActivity(navController: NavController) {
             modifier = Modifier
                 .height(680.dp)
                 .width(420.dp)
-                .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+                .clip(RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp))
                 .align(Alignment.BottomCenter)
                 .background(Color.White)
         ) {
@@ -114,7 +114,7 @@ fun AccountActivity(navController: NavController) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(40.dp),
+                    .padding(start = 40.dp, end = 40.dp, top = 50.dp),
                 verticalArrangement = Arrangement.Center
             ) {
 
@@ -133,7 +133,7 @@ fun AccountActivity(navController: NavController) {
 
                     Text(
                         text = "Username",
-                        fontSize = 12.sp,
+                        fontSize = 14.sp,
                         color = Color.Gray,
                         fontWeight = FontWeight.Normal
                     )
@@ -175,7 +175,7 @@ fun AccountActivity(navController: NavController) {
 
                     Text(
                         text = "Birthdate",
-                        fontSize = 12.sp,
+                        fontSize = 14.sp,
                         color = Color.Gray,
                         fontWeight = FontWeight.Normal
                     )
@@ -216,7 +216,7 @@ fun AccountActivity(navController: NavController) {
 
                     Text(
                         text = "Email",
-                        fontSize = 12.sp,
+                        fontSize = 14.sp,
                         color = Color.Gray,
                         fontWeight = FontWeight.Normal
                     )
@@ -256,7 +256,7 @@ fun AccountActivity(navController: NavController) {
 
                     Text(
                         text = "Password",
-                        fontSize = 12.sp,
+                        fontSize = 14.sp,
                         color = Color.Gray,
                         fontWeight = FontWeight.Normal
                     )

@@ -11,11 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -55,7 +52,7 @@ fun SettingsActivity () {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFF1D7151), RoundedCornerShape(bottomStart = 180.dp, bottomEnd = 180.dp))
+                .background(Color(0xFF1D7151), RoundedCornerShape(bottomStart = 150.dp, bottomEnd = 150.dp))
                 //.padding(10.dp)
                 .height(350.dp),
             contentAlignment = Alignment.Center
