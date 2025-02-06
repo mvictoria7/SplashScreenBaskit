@@ -1,6 +1,5 @@
 package com.example.splashscreenbaskit
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,13 +25,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
-
-//ayusin pa dis
 
 @Preview(showBackground = true)
 @Composable
-fun NotificationsActivity () {
+fun NotificationsActivityPreview() {
+    NotificationsActivity(navController = rememberNavController())
+}
+@Composable
+fun NotificationsActivity(navController: NavHostController) {
 
     Column (
         modifier = Modifier

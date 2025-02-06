@@ -47,7 +47,9 @@ fun LoginActivity() {
 @Composable
 fun LoginActivity(navController: NavController) {
     var email by remember { mutableStateOf("") }
+    //var  isErrorInEmail by remember { mutableStateOf(false) }
     var password by remember { mutableStateOf("") }
+    //var  isErrorInPassword by remember { mutableStateOf(false) }
     val options = listOf("Guest", "Tagabili")
     var selectedOption by remember { mutableStateOf(options[0]) }
 
@@ -90,6 +92,12 @@ fun LoginActivity(navController: NavController) {
             onValueChange = { email = it },
             leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = null) },
             label = { Text(text = "Username or Email") },
+            placeholder = {Text(text = "Enter your email address")},
+            /*supportingText = {
+                if (isErrorInEmail) {
+                    Text(text = "Enter a valid email address")
+                }
+            },*/
             modifier = Modifier.fillMaxWidth(0.8f),
             shape = RoundedCornerShape(10.dp)
         )
@@ -101,6 +109,11 @@ fun LoginActivity(navController: NavController) {
             onValueChange = { password = it },
             leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = null) },
             label = { Text(text = "Password") },
+            /*supportingText = {
+                if (isErrorInEmail) {
+                    Text(text = "Password must contain ______")
+                }
+            },*/
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(0.8f),
             shape = RoundedCornerShape(10.dp)

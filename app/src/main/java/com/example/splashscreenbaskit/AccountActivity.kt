@@ -70,7 +70,7 @@ fun AccountActivity(navController: NavController) {
         ) {
 
             IconButton(
-                onClick = { },
+                onClick = { navController.navigate("NotificationsActivity") },
                 enabled = true,
                 modifier = Modifier
                     .padding(top = 5.dp, end = 0.dp)
@@ -84,7 +84,7 @@ fun AccountActivity(navController: NavController) {
             }
 
             IconButton(
-                onClick = { },
+                onClick = { navController.navigate("SettingsActivity") },
                 enabled = true,
                 modifier = Modifier.padding(5.dp).size(50.dp)
             ) {
