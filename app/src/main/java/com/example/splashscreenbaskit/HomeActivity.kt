@@ -43,9 +43,11 @@ import com.example.splashscreenbaskit.AccountActivity
 import com.example.splashscreenbaskit.CartAppleScreen
 import com.example.splashscreenbaskit.CartOrangeScreen
 import com.example.splashscreenbaskit.AppleScreen
+import com.example.splashscreenbaskit.NotificationsActivity
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.SlideImg
 import com.example.splashscreenbaskit.OrangeScreen
+import com.example.splashscreenbaskit.SettingsActivity
 
 
 // Data classes
@@ -202,6 +204,12 @@ fun HomeScreen() {
             composable(BottomBarScreen.Account.route) {
                 AccountActivity()
             }
+            composable("NotificationsActivity") {
+                NotificationsActivity(navController)
+            }
+            composable("SettingsActivity") {
+                SettingsActivity(navController)
+            }
             composable("AppleScreen") {
                 AppleScreen(navController)
             }
@@ -237,10 +245,6 @@ fun HomeScreen() {
         }
     }
 }
-
-
-
-
 @Composable
 fun HomeContent(navController: NavController) {
     val selectedCategory = remember { mutableStateOf<String?>(null) }
@@ -254,7 +258,7 @@ fun HomeContent(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .verticalScroll(scrollState)
+                .verticalScroll(scrollState) // Make sure everything is scrollable
                 .padding(horizontal = 30.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -284,7 +288,13 @@ fun HomeContent(navController: NavController) {
 
             SliderCard()
 
-            Spacer(modifier = Modifier.height(150.dp))
+            Spacer(modifier = Modifier.height(30.dp))
+
+            // Move the LocationSelector and CategoryRow inside the scrollable Column
+            LocationSelector(selectedLocation)
+            CategoryRow(selectedCategory, navController)
+
+            Spacer(modifier = Modifier.height(20.dp))
 
             when (selectedCategory.value) {
                 "Fruits" -> FruitGrid(
@@ -295,27 +305,14 @@ fun HomeContent(navController: NavController) {
                         Fruits("Mango", R.drawable.mango),
                         Fruits("Grapes", R.drawable.grapes),
                         Fruits("Pineapple", R.drawable.pineapple)
-
                     ),
-                    navController // Pass navController to FruitGrid
+                    navController
                 )
                 else -> VendorGrid(sampleProducts, navController)
             }
-
-
         }
     }
-
-    Column (modifier = Modifier.padding(top = 410.dp, start = 10.dp)
-    ) {
-        LocationSelector(selectedLocation)
-
-        CategoryRow(selectedCategory, navController)
-
-        Spacer(modifier = Modifier.height(80.dp))
-    }
 }
-
 @Composable
 fun VendorDetailScreen(vendorName: String) {
     val products = listOf(
@@ -488,16 +485,6 @@ fun CartScreen() {
         modifier = Modifier.fillMaxSize()
     ) {
         Text(text = "Cart Screen", fontSize = 20.sp)
-    }
-}
-
-@Composable
-fun AccountScreen() {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Text(text = "Account Screen", fontSize = 20.sp)
     }
 }
 
