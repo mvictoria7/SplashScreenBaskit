@@ -1,6 +1,7 @@
 package com.example.splashscreenbaskit
 
 import android.content.Intent
+import android.graphics.Paint.Align
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -27,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.*
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Preview(showBackground = true)
 @Composable
@@ -48,28 +50,31 @@ fun OnboardingScreen(navController: NavController) {
             state = pagerState,
             modifier = Modifier.fillMaxSize()
         ) { page ->
-            Column(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally) {
+
                 WavyHeader(page = page, pagerState = pagerState)
 
                 OnboardingContent(
                     title = when (page) {
-                        0 -> "Good Day!"
+                        0 -> "Welcome"
                         1 -> "Shop Smarter,\nNot Harder"
-                        else -> "Welcome!"
+                        else -> "One-stop Pickup"
                     },
                     description = when (page) {
-                        0 -> "Shop simple and stress-free! \nStart by creating a personalized grocery list tailored to your needs."
-                        1 -> "Why spend extra time in the market? Baskit lets you shop smarter by generating a code for effortless pickup, saving you both time and effort."
-                        else -> "Convenience is at the heart of Baskit. Present your code in-store, collect your items with ease, and enjoy a seamless shopping experience."
+                        0 -> "Enjoy a fun experience\nof personalized market shopping!"
+                        1 -> "Add items to your basket and let\nour Tagabili do the work for you"
+                        else -> "Pick your orders up from\nour branches in one-go!"
                     }
                 )
             }
         }
 
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize() .padding(end = 20.dp),
             verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.End
         ) {
             PageIndicator(currentPage = pagerState.currentPage, totalScreens = 3)
 
@@ -165,7 +170,8 @@ fun OnboardingContent(title: String, description: String) {
 
     Column(
         modifier = Modifier.padding(start = 50.dp, end = 50.dp ),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         Text(
             text = title,

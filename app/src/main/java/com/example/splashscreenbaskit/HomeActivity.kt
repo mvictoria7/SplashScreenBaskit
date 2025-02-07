@@ -13,41 +13,43 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.TextButton
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.splashscreenbaskit.AccountActivity
+import com.example.splashscreenbaskit.AppleScreen
 import com.example.splashscreenbaskit.CartAppleScreen
 import com.example.splashscreenbaskit.CartOrangeScreen
-import com.example.splashscreenbaskit.AppleScreen
 import com.example.splashscreenbaskit.NotificationsActivity
-import com.example.splashscreenbaskit.R
-import com.example.splashscreenbaskit.SlideImg
 import com.example.splashscreenbaskit.OrangeScreen
+import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.SettingsActivity
+import com.example.splashscreenbaskit.SlideImg
 
 
 // Data classes
@@ -108,26 +110,28 @@ fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavContr
     val categories = listOf("SHOP", "Vegetables", "Fruits", "Meats", "Fish", "Spices", "Frozen Foods")
 
     LazyRow(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 2.dp),
+        modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         items(categories) { category ->
             TextButton(
                 modifier = Modifier
-                    .padding(5.dp)
                     .background(
                         color = if (selectedCategory.value == category) Color(0xFF5CC163) else Color.Transparent,
                         shape = RoundedCornerShape(15.dp)
-                    ),
+                    )
+                    .wrapContentHeight()
+                    .heightIn(min = 24.dp)
+                    .fillMaxWidth(),
                 onClick = { selectedCategory.value = category}
             ) {
                 Text(
                     text = category,
                     color = if (selectedCategory.value == category) Color(0xFFFFFFFF) else Color(0xFFBFBFBF),
                     fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         }
@@ -292,9 +296,10 @@ fun HomeContent(navController: NavController) {
 
             // Move the LocationSelector and CategoryRow inside the scrollable Column
             LocationSelector(selectedLocation)
+
             CategoryRow(selectedCategory, navController)
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(5.dp))
 
             when (selectedCategory.value) {
                 "Fruits" -> FruitGrid(
@@ -355,9 +360,10 @@ fun VendorGrid(products: List<Vendor>, navController: NavController) {
                         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
 
                     ) {
-                        Column( modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 5.dp),
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 5.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center,
                         ) {
@@ -447,8 +453,7 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White)
-            .padding(bottom = 0.dp),
+            .background(Color.White),
         horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         TextButton(
@@ -500,7 +505,7 @@ fun BottomBar(navController: NavController) {
 
     BottomNavigation(
         backgroundColor = Color(0xFF1d7151),
-        modifier = Modifier.height(70.dp)
+        modifier = Modifier.height(80.dp)
     ) {
         screens.forEach { screen ->
             BottomNavigationItem(
@@ -510,12 +515,24 @@ fun BottomBar(navController: NavController) {
                         color = if (currentDestination?.route == screen.route) Color.White else Color.Gray
                     )
                 },
+
                 icon = {
-                    Icon(
-                        imageVector = screen.icon,
-                        contentDescription = screen.title,
-                        tint = Color.White
-                    )
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .size(50.dp) // Adjust size of the circle
+                            .background(
+                                color = if (currentDestination?.route == screen.route) Color.Green else Color.White, // Green for selected, White for unselected
+                                shape = CircleShape
+                            )
+                            .padding(6.dp) // Padding for the icon inside the circle
+                    ) {
+                        Icon(
+                            imageVector = screen.icon,
+                            contentDescription = screen.title,
+                            tint = if (currentDestination?.route == screen.route) Color.White else Color.Gray
+                        )
+                    }
                 },
                 selected = currentDestination?.route == screen.route,
                 onClick = {
@@ -528,6 +545,7 @@ fun BottomBar(navController: NavController) {
                     }
                 }
             )
+
         }
     }
 }
