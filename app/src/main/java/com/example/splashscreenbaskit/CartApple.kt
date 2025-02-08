@@ -4,10 +4,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
-
+@Preview(showBackground = true)
+@Composable
+fun CartApple(navController: NavHostController) {
+    CartApple(navController = rememberNavController())
+}
 @Composable
 fun CartAppleScreen(
     navController: NavController,

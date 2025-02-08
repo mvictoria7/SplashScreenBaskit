@@ -101,7 +101,7 @@ fun AppleScreen(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(vertical = 4.dp)
             ) {
-                repeat(4) {
+                /*repeat(4) {
                     Icon(
                         painter = painterResource(id = R.drawable.star),
                         contentDescription = "Star",
@@ -114,7 +114,7 @@ fun AppleScreen(navController: NavController) {
                     contentDescription = "Star Outline",
                     tint = Color.Black,
                     modifier = Modifier.size(25.dp)
-                )
+                )*/
 
                 Spacer(modifier = Modifier.padding(start = 115.dp) )
 

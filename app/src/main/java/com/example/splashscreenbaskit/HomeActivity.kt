@@ -365,7 +365,7 @@ fun VendorGrid(products: List<Vendor>, navController: NavController) {
                                 .fillMaxWidth()
                                 .padding(top = 5.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center,
+                            verticalArrangement = Arrangement.Center
                         ) {
                             Image(
                                 painter = painterResource(id = vendor.imageRes),
@@ -458,7 +458,7 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
     ) {
         TextButton(
             onClick = { selectedLocation.value = "Dagupan" },
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(top = 8.dp)
         ) {
             Text(
                 "DAGUPAN",
@@ -522,7 +522,7 @@ fun BottomBar(navController: NavController) {
                         modifier = Modifier
                             .size(50.dp) // Adjust size of the circle
                             .background(
-                                color = if (currentDestination?.route == screen.route) Color.Green else Color.White, // Green for selected, White for unselected
+                                color = if (currentDestination?.route == screen.route) Color.Gray else Color.White, // Green for selected, White for unselected
                                 shape = CircleShape
                             )
                             .padding(6.dp) // Padding for the icon inside the circle

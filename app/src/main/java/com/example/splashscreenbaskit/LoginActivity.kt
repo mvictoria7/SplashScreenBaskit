@@ -130,7 +130,11 @@ fun LoginActivity(navController: NavController) {
                 ) {
                     RadioButton(
                         selected = (text == selectedOption),
-                        onClick = { selectedOption = text }
+                        onClick = { selectedOption = text },
+                        /*colors = RadioButtonDefaults.colors(
+                            checkedColor = Color.Green,
+                            uncheckedColor = Color.LightGray,
+                        )*/
                     )
                     Text(
                         text = text,

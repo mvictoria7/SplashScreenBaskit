@@ -53,9 +53,9 @@ class MainActivity : ComponentActivity() {
                     composable("NotificationsActivity") {
                         NotificationsActivity(navController)
                     }
-                    composable("SettingsActivity") {
-                        SettingsActivity(navController)
-                    }
+                    /*composable("CartApple") {
+                        CartApple(navController)
+                    }*/
 
                     composable("CartApple/{weight}/{quantity}/{totalPrice}") { backStackEntry ->
                         val weight = backStackEntry.arguments?.getString("weight") ?: "1 pc"
