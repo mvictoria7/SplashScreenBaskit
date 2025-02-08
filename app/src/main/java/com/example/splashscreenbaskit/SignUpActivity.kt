@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -97,6 +98,7 @@ fun SignUpActivity(navController: NavController) {
             Text(
                 text = "Create your account",
                 color = Color.Gray,
+                fontFamily = poppinsFontFamily,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(top = 5.dp)
@@ -113,7 +115,7 @@ fun SignUpActivity(navController: NavController) {
                 OutlinedTextField(
                     value = firstName,
                     onValueChange = { firstName = it },
-                    label = { Text(text = "First Name")},
+                    label = { Text(text = "First Name", fontFamily = poppinsFontFamily)},
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(10.dp),
 
@@ -123,7 +125,7 @@ fun SignUpActivity(navController: NavController) {
                 OutlinedTextField(
                     value = lastName,
                     onValueChange = { lastName = it },
-                    label = { Text(text = "Last Name") },
+                    label = { Text(text = "Last Name", fontFamily = poppinsFontFamily) },
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(10.dp)
                 )
@@ -145,7 +147,7 @@ fun SignUpActivity(navController: NavController) {
                         birthday = formattedDate
                     }
                 },
-                label = { Text("Birthday") },
+                label = { Text("Birthday", fontFamily = poppinsFontFamily) },
                 placeholder = { Text("MM/DD/YYYY") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 leadingIcon = {
@@ -164,7 +166,7 @@ fun SignUpActivity(navController: NavController) {
             OutlinedTextField(
                 value = userName,
                 onValueChange = { userName = it },
-                label = { Text(text = "Username") },
+                label = { Text(text = "Username", fontFamily = poppinsFontFamily,) },
                 leadingIcon = {
                     Icon(imageVector = Icons.Default.Person, contentDescription = "Person Icon")
                 },
@@ -178,7 +180,7 @@ fun SignUpActivity(navController: NavController) {
             OutlinedTextField(
                 value = contactNumber,
                 onValueChange = { contactNumber = it },
-                label = { Text(text = "Contact Number") },
+                label = { Text(text = "Contact Number", fontFamily = poppinsFontFamily) },
                 leadingIcon = {
                     Icon(imageVector = Icons.Default.Phone, contentDescription = "Phone Icon")
                 },
@@ -192,7 +194,7 @@ fun SignUpActivity(navController: NavController) {
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text(text = "Email") },
+                label = { Text(text = "Email", fontFamily = poppinsFontFamily,) },
                 leadingIcon = {
                     Icon(imageVector = Icons.Default.Email, contentDescription = "Email Icon")
                 },
@@ -206,7 +208,7 @@ fun SignUpActivity(navController: NavController) {
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text(text = "Password") },
+                label = { Text(text = "Password", fontFamily = poppinsFontFamily) },
                 leadingIcon = {
                     Icon(imageVector = Icons.Default.Lock, contentDescription = "Password Icon")
                 },
@@ -221,7 +223,7 @@ fun SignUpActivity(navController: NavController) {
             OutlinedTextField(
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
-                label = { Text(text = "Confirm Password") },
+                label = { Text(text = "Confirm Password", fontFamily = poppinsFontFamily,) },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Lock,
@@ -249,7 +251,8 @@ fun SignUpActivity(navController: NavController) {
                     onCheckedChange = { isChecked = it }
                 )
                 Spacer(modifier = Modifier.width(2.dp))
-                Text(text = "Agree to Terms and Conditions")
+
+                Text(text = "Agree to Terms and Conditions", fontFamily = poppinsFontFamily, fontSize = 12.sp)
             }
 
             Spacer(modifier = Modifier.width(10.dp))
@@ -274,7 +277,7 @@ fun SignUpActivity(navController: NavController) {
                 enabled = firstName.isNotBlank() && lastName.isNotBlank() &&
                         email.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()
             ) {
-                Text(text = "Sign up")
+                Text(text = "Sign up", fontFamily = poppinsFontFamily)
             }
 
 //            Button(
@@ -320,6 +323,7 @@ fun SignUpActivity(navController: NavController) {
             ) {
                 Text(
                     text = "Already have an account?",
+                    fontFamily = poppinsFontFamily,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.align(Alignment.CenterVertically)
@@ -332,6 +336,7 @@ fun SignUpActivity(navController: NavController) {
                     Text(
                         text = "Log In",
                         color = Color(0xFF1d7151),
+                        fontFamily = poppinsFontFamily,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Medium,
                         style = TextStyle(textDecoration = TextDecoration.Underline)

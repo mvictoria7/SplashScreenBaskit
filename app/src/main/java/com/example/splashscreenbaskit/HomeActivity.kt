@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
@@ -50,6 +51,7 @@ import com.example.splashscreenbaskit.OrangeScreen
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.SettingsActivity
 import com.example.splashscreenbaskit.SlideImg
+import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
 
 // Data classes
@@ -111,7 +113,7 @@ fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavContr
 
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(5.dp)
+        horizontalArrangement = Arrangement.spacedBy(1.dp)
     ) {
         items(categories) { category ->
             TextButton(
@@ -130,6 +132,7 @@ fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavContr
                     color = if (selectedCategory.value == category) Color(0xFFFFFFFF) else Color(0xFFBFBFBF),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
+                    fontFamily = poppinsFontFamily,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -278,6 +281,7 @@ fun HomeContent(navController: NavController) {
 
             Text(
                 text = "Shop Smarter, Not Harder",
+                fontFamily = poppinsFontFamily,
                 fontSize = 12.sp,
                 color = Color.Black,
                 fontWeight = FontWeight.SemiBold,
@@ -296,6 +300,8 @@ fun HomeContent(navController: NavController) {
 
             // Move the LocationSelector and CategoryRow inside the scrollable Column
             LocationSelector(selectedLocation)
+
+            HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp), thickness = 2.dp)
 
             CategoryRow(selectedCategory, navController)
 
@@ -377,7 +383,12 @@ fun VendorGrid(products: List<Vendor>, navController: NavController) {
                                     .clip(RoundedCornerShape(10.dp))
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            Text(vendor.name, fontWeight = FontWeight.SemiBold, fontSize = 16.sp, modifier = Modifier.padding(8.dp))
+
+                            Text(vendor.name,
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 16.sp,
+                                fontFamily = poppinsFontFamily,
+                                modifier = Modifier.padding(8.dp))
                         }
                     }
                 }
@@ -414,7 +425,8 @@ fun SearchBar() {
                     Text(
                         text = "Search food, vegetable, etc.",
                         color = Color.Gray,
-                        fontSize = 14.sp
+                        fontSize = 14.sp,
+                        fontFamily = poppinsFontFamily
                     )
                 }
                 innerTextField()
@@ -463,8 +475,9 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
             Text(
                 "DAGUPAN",
                 color = if (selectedLocation.value == "Dagupan") Color.Black else Color(0xFFBFBFBF),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
+                fontSize = 16.sp,fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.Bold,
+                style = TextStyle(fontFamily = poppinsFontFamily)
             )
         }
 
@@ -476,7 +489,8 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
                 "CALASIAO",
                 color = if (selectedLocation.value == "Calasiao") Color.Black else Color(0xFFBFBFBF),
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                style = TextStyle(fontFamily = poppinsFontFamily)
             )
         }
     }
@@ -512,6 +526,7 @@ fun BottomBar(navController: NavController) {
                 label = {
                     Text(
                         text = screen.title,
+                        fontFamily = poppinsFontFamily,
                         color = if (currentDestination?.route == screen.route) Color.White else Color.Gray
                     )
                 },

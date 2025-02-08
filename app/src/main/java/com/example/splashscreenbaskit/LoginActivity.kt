@@ -37,6 +37,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
+import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
 @Preview(showBackground = true)
 @Composable
@@ -73,6 +74,7 @@ fun LoginActivity(navController: NavController) {
         Text(
             text = "Log into your account",
             color = Color.Gray,
+            fontFamily = poppinsFontFamily,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
@@ -84,7 +86,7 @@ fun LoginActivity(navController: NavController) {
             value = email,
             onValueChange = { email = it },
             leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = null) },
-            label = { Text(text = "Username or Email") },
+            label = { Text(text = "Username or Email", fontFamily = poppinsFontFamily) },
             modifier = Modifier.fillMaxWidth(0.8f),
             shape = RoundedCornerShape(10.dp)
         )
@@ -95,7 +97,7 @@ fun LoginActivity(navController: NavController) {
             value = password,
             onValueChange = { password = it },
             leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = null) },
-            label = { Text(text = "Password") },
+            label = { Text(text = "Password", fontFamily = poppinsFontFamily) },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(0.8f),
             shape = RoundedCornerShape(10.dp)
@@ -111,6 +113,7 @@ fun LoginActivity(navController: NavController) {
         ) {
             Text(
                 text = "Forgot password?",
+                fontFamily = poppinsFontFamily,
                 fontSize = 12.sp,
                 color = Color(0xFF4557FF),
                 modifier = Modifier.clickable {
@@ -138,6 +141,7 @@ fun LoginActivity(navController: NavController) {
                     )
                     Text(
                         text = text,
+                        fontFamily = poppinsFontFamily,
                         modifier = Modifier.padding(start = 1.dp)
                     )
                 }
@@ -158,7 +162,7 @@ fun LoginActivity(navController: NavController) {
                 contentColor = Color.White
             )
         ) {
-            Text(text = "Login")
+            Text(text = "Login", fontFamily = poppinsFontFamily)
         }
 //            onClick = {
 //                if (email.isNotBlank() && password.isNotBlank()) {
@@ -200,6 +204,7 @@ fun LoginActivity(navController: NavController) {
         ) {
             Text(
                 text = "Don't have an account?",
+                fontFamily = poppinsFontFamily,
                 fontSize = 14.sp,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
@@ -210,6 +215,7 @@ fun LoginActivity(navController: NavController) {
             ) {
                 Text(
                     text = "Sign Up", fontSize = 12.sp,
+                    fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.Medium,
                     style = TextStyle(textDecoration = TextDecoration.Underline),
                     color = Color(0xFF4557FF)

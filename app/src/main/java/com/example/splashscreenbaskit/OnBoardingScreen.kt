@@ -84,6 +84,7 @@ fun OnboardingScreen(navController: NavController) {
                     Text(
                         text = "Get Started",
                         color = Color.Black,
+                        fontFamily = poppinsFontFamily,
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp
                     )

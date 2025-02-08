@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.ui.theme.SplashScreenBaskitTheme
+import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
 @Preview
 @Composable
@@ -94,6 +95,7 @@ fun AppleScreen(navController: NavController) {
             Text(
                 text = "Apple",
                 fontSize = 32.sp,
+                fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.Bold
             )
 
@@ -116,7 +118,7 @@ fun AppleScreen(navController: NavController) {
                     modifier = Modifier.size(25.dp)
                 )*/
 
-                Spacer(modifier = Modifier.padding(start = 115.dp) )
+                Spacer(modifier = Modifier.padding(start = 225.dp) )
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     IconButton(onClick = { if (quantity > 1) quantity-- },
@@ -136,6 +138,7 @@ fun AppleScreen(navController: NavController) {
                     Text(
                         text = "$quantity",
                         fontSize = 20.sp,
+                        fontFamily = poppinsFontFamily,
                         fontWeight = FontWeight.Bold,
                     )
 
@@ -160,6 +163,7 @@ fun AppleScreen(navController: NavController) {
             Text(
                 text = "₱ ${"%.2f".format(priceForWeight)}",
                 fontSize = 24.sp,
+                fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.Bold,
                 color = Color.Gray
             )
@@ -175,6 +179,7 @@ fun AppleScreen(navController: NavController) {
                 Text(
                     text = "Seller Description",
                     fontSize = 24.sp,
+                    fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
@@ -184,14 +189,16 @@ fun AppleScreen(navController: NavController) {
 
             Text(
                 text = "Martha Rosario (Aling Martha’s)",
-                fontSize = 18.sp,
+                fontSize = 16.sp,
+                fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.Black
             )
 
             Text(
                 text = "0900-000-0000",
-                fontSize = 18.sp,
+                fontSize = 16.sp,
+                fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.Light,
                 color = Color.Black
             )
@@ -222,7 +229,10 @@ fun AppleScreen(navController: NavController) {
                             contentColor = Color.Black
                         ),
                     ) {
-                        Text(text = option, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
+                        Text(text = option,
+                            fontSize = 12.sp,
+                            fontFamily = poppinsFontFamily,
+                            fontWeight = FontWeight.SemiBold)
                     }
                 }
             }
@@ -245,14 +255,16 @@ fun AppleScreen(navController: NavController) {
                 Text(
                     text = "Total Price",
                     fontSize = 16.sp,
+                    fontFamily = poppinsFontFamily,
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold,
                     //modifier = Modifier.padding(start = 0.dp)
                 )
-                Spacer(modifier = Modifier.height(7.dp))
+                Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     text = "₱ ${"%.2f".format(totalPrice)}",
-                    fontSize = 26.sp,
+                    fontSize = 24.sp,
+                    fontFamily = poppinsFontFamily,
                     color = Color.White,
                     fontWeight = FontWeight.Bold
                 )
@@ -266,8 +278,9 @@ fun AppleScreen(navController: NavController) {
                 Text(
                     text = "Add to Basket",
                     color = Color.Black,
+                    fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
+                    fontSize = 18.sp
                 )
             }
         }

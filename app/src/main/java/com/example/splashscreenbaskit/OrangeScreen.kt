@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
 @Preview(showBackground = true)
 @Composable
@@ -53,11 +54,11 @@ fun OrangeScreen(navController: NavHostController) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp)
+                .height(330.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.orange),
-                contentDescription = "Orange",
+                contentDescription = "Apple",
                 modifier = Modifier
                     .height(330.dp)
                     .width(400.dp),
@@ -85,11 +86,12 @@ fun OrangeScreen(navController: NavHostController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 20.dp, start = 25.dp, end = 25.dp)
+                .padding(top = 10.dp, start = 25.dp, end = 25.dp)
         ) {
             Text(
                 text = "Orange",
                 fontSize = 32.sp,
+                fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.Bold
             )
 
@@ -97,7 +99,7 @@ fun OrangeScreen(navController: NavHostController) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(vertical = 4.dp)
             ) {
-                repeat(4) {
+                /*repeat(4) {
                     Icon(
                         painter = painterResource(id = R.drawable.star),
                         contentDescription = "Star",
@@ -110,9 +112,9 @@ fun OrangeScreen(navController: NavHostController) {
                     contentDescription = "Star Outline",
                     tint = Color.Black,
                     modifier = Modifier.size(25.dp)
-                )
+                )*/
 
-                Spacer(modifier = Modifier.padding(start = 115.dp) )
+                Spacer(modifier = Modifier.padding(start = 225.dp) )
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     IconButton(onClick = { if (quantity > 1) quantity-- },
@@ -132,6 +134,7 @@ fun OrangeScreen(navController: NavHostController) {
                     Text(
                         text = "$quantity",
                         fontSize = 20.sp,
+                        fontFamily = poppinsFontFamily,
                         fontWeight = FontWeight.Bold,
                     )
 
@@ -156,11 +159,12 @@ fun OrangeScreen(navController: NavHostController) {
             Text(
                 text = "₱ ${"%.2f".format(priceForWeight)}",
                 fontSize = 24.sp,
+                fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.Bold,
                 color = Color.Gray
             )
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             // Quantity selection
             Row(
@@ -171,23 +175,26 @@ fun OrangeScreen(navController: NavHostController) {
                 Text(
                     text = "Seller Description",
                     fontSize = 24.sp,
+                    fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
             }
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(5.dp))
 
             Text(
                 text = "Martha Rosario (Aling Martha’s)",
-                fontSize = 18.sp,
+                fontSize = 16.sp,
+                fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.Black
             )
 
             Text(
                 text = "0900-000-0000",
-                fontSize = 18.sp,
+                fontSize = 16.sp,
+                fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.Light,
                 color = Color.Black
             )
@@ -218,7 +225,10 @@ fun OrangeScreen(navController: NavHostController) {
                             contentColor = Color.Black
                         ),
                     ) {
-                        Text(text = option, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
+                        Text(text = option,
+                            fontSize = 12.sp,
+                            fontFamily = poppinsFontFamily,
+                            fontWeight = FontWeight.SemiBold)
                     }
                 }
             }
@@ -241,14 +251,16 @@ fun OrangeScreen(navController: NavHostController) {
                 Text(
                     text = "Total Price",
                     fontSize = 16.sp,
+                    fontFamily = poppinsFontFamily,
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold,
                     //modifier = Modifier.padding(start = 0.dp)
                 )
-                Spacer(modifier = Modifier.height(7.dp))
+                Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     text = "₱ ${"%.2f".format(totalPrice)}",
-                    fontSize = 26.sp,
+                    fontSize = 24.sp,
+                    fontFamily = poppinsFontFamily,
                     color = Color.White,
                     fontWeight = FontWeight.Bold
                 )
@@ -262,8 +274,9 @@ fun OrangeScreen(navController: NavHostController) {
                 Text(
                     text = "Add to Basket",
                     color = Color.Black,
+                    fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
+                    fontSize = 18.sp
                 )
             }
         }
