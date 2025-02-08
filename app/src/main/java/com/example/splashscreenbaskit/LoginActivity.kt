@@ -1,4 +1,4 @@
-    package com.example.myapplication.design.loginregister
+package com.example.myapplication.design.loginregister
 
 import LoginRequest
 import kotlinx.coroutines.CoroutineScope
@@ -47,16 +47,12 @@ fun LoginActivity() {
 @Composable
 fun LoginActivity(navController: NavController) {
     var email by remember { mutableStateOf("") }
-    //var  isErrorInEmail by remember { mutableStateOf(false) }
     var password by remember { mutableStateOf("") }
-    //var  isErrorInPassword by remember { mutableStateOf(false) }
     val options = listOf("Guest", "Tagabili")
     var selectedOption by remember { mutableStateOf(options[0]) }
-
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color.White
-    ) { }
+    var showDialog by remember { mutableStateOf(false) }
+    var newPassword by remember { mutableStateOf("") }
+    var showNewPasswordField by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -66,9 +62,6 @@ fun LoginActivity(navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        Spacer(modifier = Modifier.height(30.dp))
-
         Image(
             painter = painterResource(id = R.drawable.baskit_logo),
             contentDescription = "Login Image",
@@ -92,12 +85,6 @@ fun LoginActivity(navController: NavController) {
             onValueChange = { email = it },
             leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = null) },
             label = { Text(text = "Username or Email") },
-            placeholder = {Text(text = "Enter your email address")},
-            /*supportingText = {
-                if (isErrorInEmail) {
-                    Text(text = "Enter a valid email address")
-                }
-            },*/
             modifier = Modifier.fillMaxWidth(0.8f),
             shape = RoundedCornerShape(10.dp)
         )
@@ -109,18 +96,12 @@ fun LoginActivity(navController: NavController) {
             onValueChange = { password = it },
             leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = null) },
             label = { Text(text = "Password") },
-            /*supportingText = {
-                if (isErrorInEmail) {
-                    Text(text = "Password must contain ______")
-                }
-            },*/
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(0.8f),
             shape = RoundedCornerShape(10.dp)
         )
 
         Spacer(modifier = Modifier.height(4.dp))
-
 
         Row(
             modifier = Modifier
@@ -132,12 +113,14 @@ fun LoginActivity(navController: NavController) {
                 text = "Forgot password?",
                 fontSize = 12.sp,
                 color = Color(0xFF4557FF),
-                modifier = Modifier.clickable {  }
+                modifier = Modifier.clickable {
+                    Log.d("ForgotPassword", "Clicked!")
+                    showDialog = true
+                }
             )
         }
 
         Spacer(modifier = Modifier.height(6.dp))
-
 
         Row(modifier = Modifier.padding(1.dp)) {
             options.forEach { text ->
@@ -157,22 +140,19 @@ fun LoginActivity(navController: NavController) {
             }
         }
 
-
         Spacer(modifier = Modifier.height(10.dp))
 
         Button(
             onClick = {
-                navController.navigate( "HomeActivity")
-                Log.i("Credential", "Email: $email, Password: $password")},
-            modifier = Modifier.fillMaxWidth(0.8f)
-                .height(50.dp),
+                navController.navigate("HomeActivity")
+            },
+            modifier = Modifier.fillMaxWidth(0.8f).height(50.dp),
             enabled = email.isNotBlank() && password.isNotBlank(),
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF1d7151),
                 contentColor = Color.White
             )
-
         ) {
             Text(text = "Login")
         }
@@ -221,17 +201,49 @@ fun LoginActivity(navController: NavController) {
             )
 
             TextButton(
-                onClick = {  },
+                onClick = { },
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
-                Text(text = "Sign Up", fontSize = 12.sp,
+                Text(
+                    text = "Sign Up", fontSize = 12.sp,
                     fontWeight = FontWeight.Medium,
                     style = TextStyle(textDecoration = TextDecoration.Underline),
                     color = Color(0xFF4557FF)
                 )
-
             }
+        }
+
+        if (showDialog) {
+            AlertDialog(
+                onDismissRequest = { showDialog = false },
+                title = { Text(text = "Reset Password") },
+                text = {
+                    Column {
+                        Text("Enter a new password")
+                        OutlinedTextField(
+                            value = newPassword,
+                            onValueChange = { newPassword = it },
+                            label = { Text("New Password") },
+                            visualTransformation = PasswordVisualTransformation(),
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = {
+                        showDialog = false
+                        showNewPasswordField = true
+                        Log.d("ForgotPassword", "Password reset confirmed")
+                    }) {
+                        Text("Reset")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showDialog = false }) {
+                        Text("Cancel")
+                    }
+                }
+            )
         }
     }
 }
-
