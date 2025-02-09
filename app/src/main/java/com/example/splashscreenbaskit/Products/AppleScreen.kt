@@ -271,7 +271,15 @@ fun AppleScreen(navController: NavController) {
                 )
             }
             Button(
-                onClick = { navController.navigate("LoginActivity") },
+                onClick = {
+                    try {
+                        navController.navigate("CartApple/${selectedWeight}/${quantity}/${"%.2f".format(totalPrice)}")
+                        Toast.makeText(context, "Added to basket!", Toast.LENGTH_SHORT).show()
+                    } catch (e: Exception) {
+                        Toast.makeText(context, "Error adding to basket", Toast.LENGTH_SHORT).show()
+                    }
+                },
+
                 shape = RoundedCornerShape(30.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White),
                 modifier = Modifier.height(70.dp) .width(180.dp)

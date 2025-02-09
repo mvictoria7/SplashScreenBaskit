@@ -48,6 +48,7 @@ import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
 import com.example.splashscreenbaskit.Products.OrangeScreen
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.AccountDetails.SettingsActivity
+import com.example.splashscreenbaskit.Carts.CartApple
 import com.example.splashscreenbaskit.Home.SlideImg
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
@@ -220,6 +221,9 @@ fun HomeScreen() {
             }
             composable("OrangeScreen") {
                 OrangeScreen(navController)
+            }
+            composable("CartApple") {
+                CartApple(navController)
             }
             composable(
                 "CartApple/{selectedWeight}/{quantity}/{totalPrice}",

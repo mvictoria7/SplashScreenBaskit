@@ -10,7 +10,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
-@Preview(showBackground = true)
 @Composable
 fun CartApple(navController: NavHostController) {
     CartApple(navController = rememberNavController())

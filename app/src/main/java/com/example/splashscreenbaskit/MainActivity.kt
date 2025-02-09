@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.design.loginregister.LoginActivity
 import com.example.splashscreenbaskit.AccountDetails.AccountActivity
 import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
+import com.example.splashscreenbaskit.Carts.CartApple
 import com.example.splashscreenbaskit.Carts.CartAppleScreen
 import com.example.splashscreenbaskit.Carts.CartOrangeScreen
 import com.example.splashscreenbaskit.LoginSignup.OnboardingScreen
@@ -61,9 +62,6 @@ class MainActivity : ComponentActivity() {
                     composable("NotificationsActivity") {
                         NotificationsActivity(navController)
                     }
-                    /*composable("CartApple") {
-                        CartApple(navController)
-                    }*/
 
                     composable("CartApple/{weight}/{quantity}/{totalPrice}") { backStackEntry ->
                         val weight = backStackEntry.arguments?.getString("weight") ?: "1 pc"
