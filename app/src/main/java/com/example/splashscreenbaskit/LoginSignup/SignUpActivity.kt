@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -28,6 +29,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
+@Preview(showBackground = true)
+@Composable
+fun SignUpActivityPreview() {
+    SignUpActivity(navController =  rememberNavController())
+}
 @Composable
 fun SignUpActivity(navController: NavController) {
     var firstName by remember { mutableStateOf("") }
@@ -71,7 +77,7 @@ fun SignUpActivity(navController: NavController) {
                 modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
             )
 
-            //Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(5.dp))
 
             // Row for First Name and Last Name
             Row(
@@ -202,16 +208,14 @@ fun SignUpActivity(navController: NavController) {
                 visualTransformation = PasswordVisualTransformation()
             )
 
-
-
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(1.dp))
 
             TermsAndConditions(isChecked) { newValue -> isChecked = newValue }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             Button(
-                onClick = {
+                onClick = { navController.navigate("LoginActivity")
                     if (password != confirmPassword) {
                         Log.e("SignUp", "Passwords do not match")
                     } else {
@@ -286,8 +290,6 @@ fun SignUpActivity(navController: NavController) {
                         fontWeight = FontWeight.Medium,
                         style = TextStyle(textDecoration = TextDecoration.Underline)
                     )
-
-
                 }
             }
         }
@@ -299,10 +301,10 @@ fun SignUpActivity(navController: NavController) {
 fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
     var showDialog by remember { mutableStateOf(false) }
 
-    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+    Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.padding(start = 25.dp)
         ) {
             Checkbox(
                 checked = isChecked,
@@ -312,13 +314,14 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
             Text(
                 text = "Agree to Terms and Conditions",
                 fontSize = 12.sp,
-                modifier = Modifier.weight(1f)
-            )
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.Light            )
 
             IconButton(onClick = { showDialog = true }) {
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowDown,
-                    contentDescription = "Expand Terms"
+                    contentDescription = "Expand Terms",
+                    modifier = Modifier.padding(end = 20.dp)
                 )
             }
         }
@@ -336,7 +339,6 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(16.dp)
                             .verticalScroll(rememberScrollState()),
                         verticalArrangement = Arrangement.SpaceBetween
                     ) {
