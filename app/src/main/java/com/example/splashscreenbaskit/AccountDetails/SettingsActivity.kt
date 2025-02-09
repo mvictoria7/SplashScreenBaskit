@@ -1,4 +1,4 @@
-package com.example.splashscreenbaskit
+package com.example.splashscreenbaskit.AccountDetails
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.splashscreenbaskit.R
 
 
 @Preview(showBackground = true)

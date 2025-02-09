@@ -1,4 +1,4 @@
-package com.example.splashscreenbaskit
+package com.example.splashscreenbaskit.LoginSignup
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview

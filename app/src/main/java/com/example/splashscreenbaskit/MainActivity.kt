@@ -12,6 +12,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.design.loginregister.LoginActivity
+import com.example.splashscreenbaskit.AccountDetails.AccountActivity
+import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
+import com.example.splashscreenbaskit.Carts.CartAppleScreen
+import com.example.splashscreenbaskit.Carts.CartOrangeScreen
+import com.example.splashscreenbaskit.LoginSignup.OnboardingScreen
+import com.example.splashscreenbaskit.LoginSignup.SignUpActivity
+import com.example.splashscreenbaskit.Products.AppleScreen
+import com.example.splashscreenbaskit.Products.OrangeScreen
 import com.example.splashscreenbaskit.ui.theme.SplashScreenBaskitTheme
 
 class MainActivity : ComponentActivity() {

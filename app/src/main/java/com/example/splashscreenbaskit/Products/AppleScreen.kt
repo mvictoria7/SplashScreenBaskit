@@ -1,4 +1,4 @@
-package com.example.splashscreenbaskit
+package com.example.splashscreenbaskit.Products
 
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.SplashScreenBaskitTheme
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 

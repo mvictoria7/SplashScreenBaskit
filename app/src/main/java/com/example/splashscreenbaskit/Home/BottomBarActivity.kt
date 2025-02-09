@@ -1,8 +1,5 @@
-package com.example.splashscreenbaskit
+package com.example.splashscreenbaskit.Home
 
-import android.graphics.drawable.Icon
-import android.health.connect.datatypes.ExerciseRoute
-import android.icu.text.CaseMap.Title
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home

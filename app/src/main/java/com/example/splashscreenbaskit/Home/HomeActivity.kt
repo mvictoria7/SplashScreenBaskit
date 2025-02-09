@@ -23,9 +23,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -42,15 +40,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.splashscreenbaskit.AccountActivity
-import com.example.splashscreenbaskit.AppleScreen
-import com.example.splashscreenbaskit.CartAppleScreen
-import com.example.splashscreenbaskit.CartOrangeScreen
-import com.example.splashscreenbaskit.NotificationsActivity
-import com.example.splashscreenbaskit.OrangeScreen
+import com.example.splashscreenbaskit.AccountDetails.AccountActivity
+import com.example.splashscreenbaskit.Products.AppleScreen
+import com.example.splashscreenbaskit.Carts.CartAppleScreen
+import com.example.splashscreenbaskit.Carts.CartOrangeScreen
+import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
+import com.example.splashscreenbaskit.Products.OrangeScreen
 import com.example.splashscreenbaskit.R
-import com.example.splashscreenbaskit.SettingsActivity
-import com.example.splashscreenbaskit.SlideImg
+import com.example.splashscreenbaskit.AccountDetails.SettingsActivity
+import com.example.splashscreenbaskit.Home.SlideImg
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
 
