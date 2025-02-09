@@ -46,7 +46,6 @@ fun OnboardingScreen(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(150.dp))
 
-                // Display corresponding onboarding image
                 OnboardingImage(page)
 
                 Spacer(modifier = Modifier.height(30.dp))
@@ -83,8 +82,9 @@ fun OnboardingScreen(navController: NavController) {
                 ) {
                     Text(
                         text = "Get Started",
-                        color = Color.Black,
                         fontFamily = poppinsFontFamily,
+                        color = Color.Black,
+                        //fontFamily = poppinsFontFamily,
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp
                     )
@@ -96,7 +96,6 @@ fun OnboardingScreen(navController: NavController) {
 
 @Composable
 fun OnboardingImage(page: Int) {
-    // Display image based on the page index
     val imageRes = when (page) {
         0 -> R.drawable.onboarding_img1
         1 -> R.drawable.onboarding_img2
@@ -106,13 +105,13 @@ fun OnboardingImage(page: Int) {
     Image(
         painter = painterResource(id = imageRes),
         contentDescription = null,
-        modifier = Modifier.fillMaxWidth().height(320.dp)
+        modifier = Modifier.fillMaxWidth().height(310.dp)
     )
 }
 
 @Composable
 fun OnboardingContent(title: String, description: String) {
-    Spacer(modifier = Modifier.height(80.dp))
+    Spacer(modifier = Modifier.height(65.dp))
 
     Column(
         modifier = Modifier.padding(start = 50.dp, end = 50.dp),
@@ -130,7 +129,7 @@ fun OnboardingContent(title: String, description: String) {
             color = Color.Black,
             textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
         Text(
             text = description,

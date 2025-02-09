@@ -65,7 +65,7 @@ fun LoginActivity(navController: NavController) {
             text = "Log into your account",
             color = Color.Gray,
             fontFamily = poppinsFontFamily,
-            fontSize = 16.sp,
+            fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(bottom = 5.dp)
@@ -184,7 +184,7 @@ fun LoginActivity(navController: NavController) {
 //            Text(text = "Login")
 //        }
 
-        Spacer(modifier = Modifier.height(150.dp))
+        Spacer(modifier = Modifier.height(170.dp))
 
         Row(
             modifier = Modifier
@@ -204,7 +204,7 @@ fun LoginActivity(navController: NavController) {
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Text(
-                    text = "Sign Up", fontSize = 12.sp,
+                    text = "Sign Up", fontSize = 14.sp,
                     fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.Medium,
                     style = TextStyle(textDecoration = TextDecoration.Underline),

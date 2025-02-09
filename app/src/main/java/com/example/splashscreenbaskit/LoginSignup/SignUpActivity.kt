@@ -93,12 +93,12 @@ fun SignUpActivity(navController: NavController) {
                 text = "Create your account",
                 color = Color.Gray,
                 fontFamily = poppinsFontFamily,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(top = 5.dp)
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
             )
 
-            Spacer(modifier = Modifier.height(15.dp))
+            //Spacer(modifier = Modifier.height(15.dp))
 
             // Row for First Name and Last Name
             Row(
