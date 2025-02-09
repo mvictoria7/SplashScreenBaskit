@@ -203,6 +203,57 @@ fun HomeScreen() {
             startDestination = BottomBarScreen.Home.route,
             modifier = Modifier.padding(paddingValues)
         ) {
+
+            composable(BottomBarScreen.Home.route) {
+                HomeContent(navController)
+            }
+            composable(BottomBarScreen.Cart.route) {
+                CartScreen()
+            }
+            composable(BottomBarScreen.Account.route) {
+                AccountActivity()
+            }
+            composable("NotificationsActivity") {
+                NotificationsActivity(navController)
+            }
+            composable("SettingsActivity") {
+                SettingsActivity(navController)
+            }
+            composable("AppleScreen") {
+                AppleScreen(navController)
+            }
+            composable("OrangeScreen") {
+                OrangeScreen(navController)
+            }
+            composable("CartApple") {
+                CartApple(navController)
+            }
+            composable(
+                "CartApple/{selectedWeight}/{quantity}/{totalPrice}",
+                arguments = listOf(
+                    navArgument("selectedWeight") { type = NavType.StringType },
+                    navArgument("quantity") { type = NavType.IntType },
+                    navArgument("totalPrice") { type = NavType.StringType }
+                )
+            ) { backStackEntry ->
+                val selectedWeight = backStackEntry.arguments?.getString("selectedWeight") ?: "1 pc"
+                val quantity = backStackEntry.arguments?.getInt("quantity") ?: 0
+                val totalPrice = backStackEntry.arguments?.getString("totalPrice")?.toDoubleOrNull() ?: 0.0
+                CartAppleScreen(navController, selectedWeight, quantity, totalPrice)
+            }
+            composable(
+                "CartOrange/{selectedWeight}/{quantity}/{totalPrice}",
+                arguments = listOf(
+                    navArgument("selectedWeight") { type = NavType.StringType },
+                    navArgument("quantity") { type = NavType.IntType },
+                    navArgument("totalPrice") { type = NavType.StringType }
+                )
+            ) { backStackEntry ->
+                val selectedWeight = backStackEntry.arguments?.getString("selectedWeight") ?: "1 pc"
+                val quantity = backStackEntry.arguments?.getInt("quantity") ?: 0
+                val totalPrice = backStackEntry.arguments?.getString("totalPrice")?.toDoubleOrNull() ?: 0.0
+                CartOrangeScreen(navController, selectedWeight, quantity, totalPrice)
+            }
         }
     }
 }
@@ -220,7 +271,7 @@ fun HomeContent(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .verticalScroll(scrollState) // Make sure everything is scrollable
+                .verticalScroll(scrollState)
                 .padding(horizontal = 30.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -279,6 +330,7 @@ fun HomeContent(navController: NavController) {
         }
     }
 }
+
 @Composable
 fun VendorDetailScreen(vendorName: String) {
     val products = listOf(
