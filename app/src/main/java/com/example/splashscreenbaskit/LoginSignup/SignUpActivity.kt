@@ -1,35 +1,16 @@
 package com.example.splashscreenbaskit.LoginSignup
 
+import android.app.AlertDialog
 import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Phone
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,7 +21,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -48,16 +28,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
-//import com.example.myapplication.design.loginregister.LogInScreen
-
-@Preview(showBackground = true)
-@Composable
-fun SignUpActivityPreview() {
-    SignUpActivity(navController =  rememberNavController())
-}
 @Composable
 fun SignUpActivity(navController: NavController) {
-
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var userName by remember { mutableStateOf("") }
@@ -67,6 +39,7 @@ fun SignUpActivity(navController: NavController) {
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var isChecked by remember { mutableStateOf(false) }
+    var showTerms by remember { mutableStateOf(false) }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -113,7 +86,7 @@ fun SignUpActivity(navController: NavController) {
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(10.dp),
 
-                )
+                    )
 
                 // Last Name field
                 OutlinedTextField(
@@ -229,52 +202,32 @@ fun SignUpActivity(navController: NavController) {
                 visualTransformation = PasswordVisualTransformation()
             )
 
-            Spacer(modifier = Modifier.height(1.dp))
 
-            // Terms and Conditions
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 25.dp, vertical = 0.dp),
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically
 
-            ) {
-                Checkbox(
-                    checked = isChecked,
-                    onCheckedChange = { isChecked = it }
-                )
-                Spacer(modifier = Modifier.width(2.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-                Text(text = "Agree to Terms and Conditions", fontFamily = poppinsFontFamily, fontSize = 12.sp)
-            }
+            TermsAndConditions(isChecked) { newValue -> isChecked = newValue }
 
-            Spacer(modifier = Modifier.width(10.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-            // Sign Up button
             Button(
                 onClick = {
                     if (password != confirmPassword) {
                         Log.e("SignUp", "Passwords do not match")
                     } else {
-                        Log.i(
-                            "Credential",
-                            "First Name: $firstName, Last Name: $lastName, Email: $email, Password: $password"
-                        )
+                        Log.i("SignUp", "User Registered: $email")
                     }
                 },
                 modifier = Modifier
                     .width(180.dp)
                     .height(50.dp),
-                shape = RoundedCornerShape(100.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151)),
                 enabled = firstName.isNotBlank() && lastName.isNotBlank() &&
                         email.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()
             ) {
                 Text(text = "Sign up", fontFamily = poppinsFontFamily)
             }
-
-//            Button(
+            //            Button(
 //                onClick = {
 //                    if (email.isNotBlank() && password.isNotBlank()) {
 //                        val request = LoginRequest(email, password)
@@ -306,9 +259,7 @@ fun SignUpActivity(navController: NavController) {
 //                Text(text = "Sign Up")
 //            }
 
-            Spacer(modifier = Modifier.height(30.dp))
 
-            //Already have an account
             Row(
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
@@ -343,9 +294,112 @@ fun SignUpActivity(navController: NavController) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
+    var showDialog by remember { mutableStateOf(false) }
 
+    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Checkbox(
+                checked = isChecked,
+                onCheckedChange = onCheckedChange
+            )
 
+            Text(
+                text = "Agree to Terms and Conditions",
+                fontSize = 12.sp,
+                modifier = Modifier.weight(1f)
+            )
 
+            IconButton(onClick = { showDialog = true }) {
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowDown,
+                    contentDescription = "Expand Terms"
+                )
+            }
+        }
 
+        if (showDialog) {
+            AlertDialog(
+                onDismissRequest = { showDialog = false },
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    shape = RoundedCornerShape(0.dp),
+                    color = Color.White
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp)
+                            .verticalScroll(rememberScrollState()),
+                        verticalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Terms and Conditions",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp,
+                            color = Color.Black
+                        )
 
+                        Spacer(modifier = Modifier.height(8.dp))
 
+                        Text(
+                            text = """
+                                Welcome to Baskit! These Terms and Conditions govern your use of our delivery app and services.
+                                By accessing or using Baskit, you agree to comply with these terms.
+
+                                You must be at least 18 years old to use Baskit and agree to provide accurate personal information when creating an account.
+                                You are responsible for maintaining the confidentiality of your login details.
+                                Orders placed through the app are subject to availability and acceptance by merchants.
+                                Prices displayed on the app include applicable charges unless stated otherwise, and payment must be completed before order confirmation.
+
+                                Delivery times are estimated and may vary due to unforeseen circumstances.
+                                Users must provide accurate delivery addresses, and if a recipient is unavailable, the order may be canceled or rescheduled at the user’s cost.
+                                Orders can only be canceled before they are accepted by the merchant.
+                                Refunds, if applicable, will be processed according to Baskit’s refund policy.
+
+                                Users must not misuse the app, engage in fraud, or harass others.
+                                Baskit reserves the right to suspend or terminate accounts that violate these terms.
+                                We act as an intermediary between users and merchants and are not responsible for product quality.
+                                Additionally, we are not liable for delays or losses due to factors beyond our control.
+
+                                By using Baskit, you agree to our Privacy Policy regarding data collection and usage.
+                                We reserve the right to update these terms at any time, and continued use of the app signifies acceptance of any modifications.
+                                If you have any questions or concerns, please contact us at Baskit.
+                            """.trimIndent(),
+                            fontSize = 12.sp,
+                            color = Color.Gray
+                        )
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            Button(
+                                onClick = { onCheckedChange(false); showDialog = false },
+                                colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+                            ) {
+                                Text("Decline")
+                            }
+
+                            Button(
+                                onClick = { onCheckedChange(true); showDialog = false },
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151))
+                            ) {
+                                Text("Accept")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
