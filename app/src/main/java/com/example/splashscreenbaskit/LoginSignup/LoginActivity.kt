@@ -1,4 +1,4 @@
-package com.example.myapplication.design.loginregister
+package com.example.splashscreenbaskit.LoginSignup
 
 import android.util.Log
 import androidx.compose.foundation.Image

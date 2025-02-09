@@ -11,12 +11,12 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.myapplication.design.loginregister.LoginActivity
 import com.example.splashscreenbaskit.AccountDetails.AccountActivity
 import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
 import com.example.splashscreenbaskit.Carts.CartApple
 import com.example.splashscreenbaskit.Carts.CartAppleScreen
 import com.example.splashscreenbaskit.Carts.CartOrangeScreen
+import com.example.splashscreenbaskit.LoginSignup.LoginActivity
 import com.example.splashscreenbaskit.LoginSignup.OnboardingScreen
 import com.example.splashscreenbaskit.LoginSignup.SignUpActivity
 import com.example.splashscreenbaskit.Products.AppleScreen
