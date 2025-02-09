@@ -20,6 +20,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -301,104 +302,123 @@ fun SignUpActivity(navController: NavController) {
 fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
     var showDialog by remember { mutableStateOf(false) }
 
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(start = 25.dp)
+    Surface (){
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+
         ) {
-            Checkbox(
-                checked = isChecked,
-                onCheckedChange = onCheckedChange
-            )
-
-            Text(
-                text = "Agree to Terms and Conditions",
-                fontSize = 12.sp,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Light            )
-
-            IconButton(onClick = { showDialog = true }) {
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowDown,
-                    contentDescription = "Expand Terms",
-                    modifier = Modifier.padding(end = 20.dp)
-                )
-            }
-        }
-
-        if (showDialog) {
-            AlertDialog(
-                onDismissRequest = { showDialog = false },
-                modifier = Modifier.fillMaxSize()
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(start = 25.dp)
             ) {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    shape = RoundedCornerShape(0.dp),
-                    color = Color.White
+                Checkbox(
+                    checked = isChecked,
+                    onCheckedChange = onCheckedChange
+                )
+
+                Text(
+                    text = "Agree to Terms and Conditions",
+                    fontSize = 12.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.Light            )
+
+                IconButton(onClick = { showDialog = true }) {
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowDown,
+                        contentDescription = "Expand Terms",
+                        modifier = Modifier.padding(end = 20.dp)
+                    )
+                }
+            }
+
+            if (showDialog) {
+                AlertDialog(
+                    onDismissRequest = { showDialog = false },
+                    modifier = Modifier.fillMaxSize()
                 ) {
                     Column(
                         modifier = Modifier
-                            .fillMaxSize()
+                            .padding(top = 70.dp, start = 40.dp, end = 40.dp, bottom = 80.dp)
+                            .fillMaxWidth()
                             .verticalScroll(rememberScrollState()),
                         verticalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
                             text = "Terms and Conditions",
                             fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp,
+                            fontSize = 24.sp,
+                            fontFamily = poppinsFontFamily,
                             color = Color.Black
                         )
 
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(40.dp))
+
+                        Text(
+                            text = "Welcome to Baskit!\nThese Terms and Conditions govern your use\nof our delivery app and services.".trimIndent(),
+                            fontSize = 12.sp,
+                            fontFamily = poppinsFontFamily,
+                            textAlign = TextAlign.Center,
+                            color = Color.Black
+                        )
+
+                        Spacer(modifier = Modifier.height(40.dp))
+
+                        Text (text = "Terms",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            fontFamily = poppinsFontFamily
+                        )
+
+                        Spacer(modifier = Modifier.height(5.dp))
 
                         Text(
                             text = """
-                                Welcome to Baskit! These Terms and Conditions govern your use of our delivery app and services.
-                                By accessing or using Baskit, you agree to comply with these terms.
+                      You must be at least 18 years old to use Baskit and agree to provide accurate personal information when creating an account.
+                      You are responsible for maintaining the confidentiality of your login details.
+                      Orders placed through the app are subject to availability and acceptance by merchants.
+                      Prices displayed on the app include applicable charges unless stated otherwise, and payment must be completed before order confirmation.
 
-                                You must be at least 18 years old to use Baskit and agree to provide accurate personal information when creating an account.
-                                You are responsible for maintaining the confidentiality of your login details.
-                                Orders placed through the app are subject to availability and acceptance by merchants.
-                                Prices displayed on the app include applicable charges unless stated otherwise, and payment must be completed before order confirmation.
+                      Delivery times are estimated and may vary due to unforeseen circumstances.
+                      Users must provide accurate delivery addresses, and if a recipient is unavailable, the order may be canceled or rescheduled at the user’s cost.
+                      Orders can only be canceled before they are accepted by the merchant.
+                      Refunds, if applicable, will be processed according to Baskit’s refund policy.
 
-                                Delivery times are estimated and may vary due to unforeseen circumstances.
-                                Users must provide accurate delivery addresses, and if a recipient is unavailable, the order may be canceled or rescheduled at the user’s cost.
-                                Orders can only be canceled before they are accepted by the merchant.
-                                Refunds, if applicable, will be processed according to Baskit’s refund policy.
+                      Users must not misuse the app, engage in fraud, or harass others.
+                      Baskit reserves the right to suspend or terminate accounts that violate these terms.
+                      We act as an intermediary between users and merchants and are not responsible for product quality.
+                      Additionally, we are not liable for delays or losses due to factors beyond our control.
 
-                                Users must not misuse the app, engage in fraud, or harass others.
-                                Baskit reserves the right to suspend or terminate accounts that violate these terms.
-                                We act as an intermediary between users and merchants and are not responsible for product quality.
-                                Additionally, we are not liable for delays or losses due to factors beyond our control.
-
-                                By using Baskit, you agree to our Privacy Policy regarding data collection and usage.
-                                We reserve the right to update these terms at any time, and continued use of the app signifies acceptance of any modifications.
-                                If you have any questions or concerns, please contact us at Baskit.
-                            """.trimIndent(),
+                      By using Baskit, you agree to our Privacy Policy regarding data collection and usage.
+                      We reserve the right to update these terms at any time, and continued use of the app signifies acceptance of any modifications.
+                      If you have any questions or concerns, please contact us at Baskit.
+                      """.trimIndent(),
                             fontSize = 12.sp,
-                            color = Color.Gray
+                            fontFamily = poppinsFontFamily,
+                            color = Color.Black
                         )
 
-                        Spacer(modifier = Modifier.height(16.dp))
+                    }
 
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceEvenly
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        Button(
+                            onClick = { onCheckedChange(false); showDialog = false },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
                         ) {
-                            Button(
-                                onClick = { onCheckedChange(false); showDialog = false },
-                                colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
-                            ) {
-                                Text("Decline")
-                            }
-
-                            Button(
-                                onClick = { onCheckedChange(true); showDialog = false },
-                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151))
-                            ) {
-                                Text("Accept")
-                            }
+                            Text("Decline")
                         }
+
+                        Button(
+                            onClick = { onCheckedChange(true); showDialog = false },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151))
+                        ) {
+                            Text("Accept")
+                        }
+
                     }
                 }
             }

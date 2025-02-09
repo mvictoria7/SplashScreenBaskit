@@ -45,13 +45,14 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.splashscreenbaskit.AccountDetails.AccountActivity
 import com.example.splashscreenbaskit.Products.AppleScreen
-import com.example.splashscreenbaskit.Carts.CartAppleScreen
+import com.example.splashscreenbaskit.Carts.CartApple
 import com.example.splashscreenbaskit.Carts.CartOrangeScreen
 import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
 import com.example.splashscreenbaskit.Products.OrangeScreen
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.AccountDetails.SettingsActivity
 import com.example.splashscreenbaskit.Carts.CartApple
+import com.example.splashscreenbaskit.Carts.CartAppleScreen
 import com.example.splashscreenbaskit.Home.SlideImg
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 

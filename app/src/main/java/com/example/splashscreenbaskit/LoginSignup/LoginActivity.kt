@@ -50,15 +50,15 @@ fun LoginActivity(navController: NavController) {
             .fillMaxSize()
             .padding(horizontal = 16.dp)
             .background(Color.White),
-        verticalArrangement = Arrangement.Center,
+        //verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(90.dp))
+
         Image(
             painter = painterResource(id = R.drawable.baskit_logo),
             contentDescription = "Login Image",
-            modifier = Modifier
-                .size(200.dp)
-                .padding(bottom = 16.dp)
+            modifier = Modifier.size(220.dp)
         )
 
         Text(
@@ -66,7 +66,7 @@ fun LoginActivity(navController: NavController) {
             color = Color.Gray,
             fontFamily = poppinsFontFamily,
             fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight.SemiBold,
             modifier = Modifier
                 .padding(bottom = 5.dp)
                 .align(Alignment.CenterHorizontally),
@@ -184,7 +184,7 @@ fun LoginActivity(navController: NavController) {
 //            Text(text = "Login")
 //        }
 
-        Spacer(modifier = Modifier.height(170.dp))
+        Spacer(modifier = Modifier.height(130.dp))
 
         Row(
             modifier = Modifier

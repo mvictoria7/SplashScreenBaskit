@@ -78,7 +78,7 @@ fun AppleScreen(navController: NavController) {
                     .background(Color.White, shape = RoundedCornerShape(50))
             ) {
                 Icon(
-                    modifier = Modifier.size(15.dp),
+                    modifier = Modifier.size(20.dp),
                     painter = painterResource(id = R.drawable.back),
                     contentDescription = "Back",
                     tint = Color.Black
