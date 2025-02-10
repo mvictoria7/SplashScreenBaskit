@@ -1,5 +1,8 @@
-package com.example.splashscreenbaskit.LoginSignup
+/*package com.example.splashscreenbaskit.LoginSignup
 
+import android.annotation.SuppressLint
+import android.graphics.drawable.Icon
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,28 +13,99 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.ShoppingCart
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
 @Preview(showBackground = true)
 @Composable
 fun TermsActivityPreview() {
-    TermsActivity(navController = rememberNavController())
+    TermsActivity()
 }
 
+
+data class BottomNavItem(
+    val title : String,
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector,
+    //val hasNews: Boolean,
+    //val badgeCount: Int? = null
+)
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun TermsActivity(navController: NavController) {
+fun TermsActivity() {
+
+    val items = listOf(
+        BottomNavItem (
+            title = "Home",
+            selectedIcon = Icons.Filled.Home,
+            unselectedIcon = Icons.Outlined.Home,
+            //hasNews = false
+        ),
+        BottomNavItem (
+            title = "Basket",
+            selectedIcon = Icons.Filled.ShoppingCart,
+            unselectedIcon = Icons.Outlined.ShoppingCart,
+            //hasNews = false
+        ),
+        BottomNavItem (
+            title = "Account",
+            selectedIcon = Icons.Filled.Person,
+            unselectedIcon = Icons.Outlined.Person,
+            //hasNews = false
+        ),
+    )*/
+   // var selectedIconIndex by rememberSaveable { mutableStateOf(0) }
+    /*Surface (
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        Scaffold {
+            bottomBar = {
+                NavigationBar {
+                    items.forEachIndexed{ index, item ->
+                        NavigationBarItem(
+                            selected = selectedIconIndex == index ,
+                            onClick = {selectedIconIndex = index},
+                            icon = {}
+                        )
+                    }
+                }
+
+            }
+        }
+    }
+    
     Column(
         modifier = Modifier
             .padding(top = 70.dp, start = 40.dp, end = 40.dp, bottom = 80.dp)
@@ -95,3 +169,7 @@ fun TermsActivity(navController: NavController) {
 
     }
 }
+
+class NavBarItems {
+
+}*/

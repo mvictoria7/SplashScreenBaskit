@@ -58,7 +58,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    implementation ("androidx.navigation:navigation-compose:2.5.1")
+    implementation (libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -69,13 +69,13 @@ dependencies {
 
 
     val nav_version = "2.7.7"
-    implementation("androidx.navigation:navigation-compose:$nav_version")
-    implementation("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
-    implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
-    implementation ("com.google.accompanist:accompanist-pager:0.30.1")
-    implementation ("com.google.accompanist:accompanist-pager-indicators:0.30.1")
+    implementation(libs.androidx.navigation.compose.v277)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.adapter.rxjava2)
+    implementation(libs.logging.interceptor)
+    implementation (libs.accompanist.pager)
+    implementation (libs.accompanist.pager.indicators)
 
 }

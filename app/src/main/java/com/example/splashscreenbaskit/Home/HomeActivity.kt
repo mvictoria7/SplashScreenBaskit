@@ -57,6 +57,7 @@ import com.example.splashscreenbaskit.Home.SlideImg
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
 
+
 // Data classes
 data class Vendor(
     val name: String,
@@ -115,7 +116,7 @@ fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavContr
     val categories = listOf("SHOP", "Vegetables", "Fruits", "Meats", "Fish", "Spices", "Frozen Foods")
 
     LazyRow(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth() .padding(top = 10.dp, start = 8.dp, end = 10.dp),
         horizontalArrangement = Arrangement.spacedBy(1.dp)
     ) {
         items(categories) { category ->
@@ -123,11 +124,11 @@ fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavContr
                 modifier = Modifier
                     .background(
                         color = if (selectedCategory.value == category) Color(0xFF5CC163) else Color.Transparent,
-                        shape = RoundedCornerShape(15.dp)
+                        shape = RoundedCornerShape(20.dp)
                     )
                     .wrapContentHeight()
-                    .heightIn(min = 24.dp)
-                    .fillMaxWidth(),
+                    .heightIn(min = 24.dp),
+                    //.fillMaxWidth(),
                 onClick = { selectedCategory.value = category}
             ) {
                 Text(
@@ -271,9 +272,9 @@ fun HomeContent(navController: NavController) {
     ) {
         Column(
             modifier = Modifier
+                //.padding(horizontal = 30.dp)
                 .fillMaxWidth()
-                .verticalScroll(scrollState)
-                .padding(horizontal = 30.dp),
+                .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(45.dp))
@@ -360,7 +361,7 @@ fun VendorGrid(products: List<Vendor>, navController: NavController) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 4.dp),
+                    .padding(start = 30.dp, end = 30.dp, bottom = 10.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 rowVendor.forEach { vendor ->
@@ -369,6 +370,7 @@ fun VendorGrid(products: List<Vendor>, navController: NavController) {
                         modifier = Modifier
                             .weight(1f)
                             .height(170.dp)
+                            .width(154.dp)
                             .padding(4.dp),
                         shape = RoundedCornerShape(10.dp),
                         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -414,7 +416,8 @@ fun SearchBar() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.dp),
+            .height(50.dp)
+            .padding(start = 30.dp, end = 30.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         BasicTextField(
@@ -456,7 +459,8 @@ fun SliderCard() {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(155.dp),
+            .height(155.dp)
+            .padding(start = 30.dp, end = 30.dp),
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
@@ -472,6 +476,7 @@ fun SliderCard() {
 fun LocationSelector(selectedLocation: MutableState<String?>) {
     Row(
         modifier = Modifier
+            .padding(start = 8.dp)
             .fillMaxWidth()
             .background(Color.White),
         horizontalArrangement = Arrangement.spacedBy(5.dp)
@@ -482,7 +487,7 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
         ) {
             Text(
                 "DAGUPAN",
-                color = if (selectedLocation.value == "Dagupan") Color.Black else Color(0xFFBFBFBF),
+                color = if (selectedLocation.value == "Dagupan") Color.Gray else Color(0xFFBFBFBF),
                 fontSize = 16.sp,fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.Bold,
                 style = TextStyle(fontFamily = poppinsFontFamily)
@@ -495,7 +500,7 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
         ) {
             Text(
                 "CALASIAO",
-                color = if (selectedLocation.value == "Calasiao") Color.Black else Color(0xFFBFBFBF),
+                color = if (selectedLocation.value == "Calasiao") Color.Gray else Color(0xFFBFBFBF),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 style = TextStyle(fontFamily = poppinsFontFamily)
@@ -545,7 +550,7 @@ fun BottomBar(navController: NavController) {
                         modifier = Modifier
                             .size(50.dp) // Adjust size of the circle
                             .background(
-                                color = if (currentDestination?.route == screen.route) Color.Gray else Color.White, // Green for selected, White for unselected
+                                color = if (currentDestination?.route == screen.route) Color.Gray else Color.White,
                                 shape = CircleShape
                             )
                             .padding(6.dp) // Padding for the icon inside the circle

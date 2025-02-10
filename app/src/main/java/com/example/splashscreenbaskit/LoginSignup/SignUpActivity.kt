@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,6 +16,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -318,13 +320,13 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(start = 25.dp)
+                modifier = Modifier.padding(start = 25.dp) .background(Color.White)
             ) {
                 Checkbox(
                     checked = isChecked,
-                    onCheckedChange = {}, // Prevent manual checking
+                    onCheckedChange = {},
                     colors = CheckboxDefaults.colors(
-                        checkedColor = Color(0xFF1d7151), // Green when checked
+                        checkedColor = Color(0xFF1d7151),
                         uncheckedColor = Color.Gray
                     )
                 )
@@ -352,16 +354,19 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                     ) {
                         Column(
                             modifier = Modifier
+                                .background(Color.White)
                                 .fillMaxSize()
-                                .padding(horizontal = 5.dp, vertical = 5.dp),
+                                .padding(vertical = 5.dp),
+                                //.padding(top = 70.dp, start = 40.dp, end = 40.dp, bottom = 80.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                         Text(
+                            modifier = Modifier.padding(top = 70.dp),
                             text = "Terms and Conditions",
                             fontWeight = FontWeight.Bold,
                             fontSize = 24.sp,
                             fontFamily = poppinsFontFamily,
-                            color = Color.White,
+                            color = Color.Black,
                             textAlign = TextAlign.Center
                         )
 
@@ -369,9 +374,9 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
 
                         Box(
                             modifier = Modifier
-                                .weight(1f) // Ensures scrolling area takes full width
+                                .weight(1f)
                                 .verticalScroll(scrollState)
-                                .padding(horizontal = 4.dp)
+                                .padding(horizontal = 4.dp),
                         ) {
                             Column {
                                 Text(
@@ -379,7 +384,7 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                                     fontSize = 15.sp,
                                     fontFamily = poppinsFontFamily,
                                     textAlign = TextAlign.Center,
-                                    color = Color.White
+                                    color = Color.Black
                                 )
 
                                 Spacer(modifier = Modifier.height(40.dp))
@@ -389,7 +394,7 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                                     fontSize = 20.sp,
                                     fontWeight = FontWeight.SemiBold,
                                     fontFamily = poppinsFontFamily,
-                                    color = Color.White
+                                    color = Color.Black
                                 )
 
                                 Spacer(modifier = Modifier.height(5.dp))
@@ -417,8 +422,8 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                       """.trimIndent(),
                                     fontSize = 15.sp,
                                     fontFamily = poppinsFontFamily,
-                                    textAlign = TextAlign.Justify,
-                                    color = Color.White
+                                    //textAlign = TextAlign.Justify,
+                                    color = Color.Black
                                 )
                             }
                         }
@@ -431,23 +436,25 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                             horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
                             Button(
+                                modifier = Modifier.clip(RoundedCornerShape(10.dp)),
                                 onClick = {
                                     onCheckedChange(false)
                                     showDialog = false
                                 },
                                 colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
-                                enabled = hasReachedBottom // Disable until scrolled to end
+                                enabled = hasReachedBottom
                             ) {
                                 Text("Decline")
                             }
 
                             Button(
+                                modifier = Modifier.clip(RoundedCornerShape(10.dp)),
                                 onClick = {
                                     onCheckedChange(true)
                                     showDialog = false
                                 },
                                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151)),
-                                enabled = hasReachedBottom // Disable until scrolled to end
+                                enabled = hasReachedBottom
                             ) {
                                 Text("Accept")
                             }
