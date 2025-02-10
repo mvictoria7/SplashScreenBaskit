@@ -24,6 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
@@ -53,12 +55,12 @@ fun LoginActivity(navController: NavController) {
         //verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(90.dp))
+        Spacer(modifier = Modifier.height(130.dp))
 
         Image(
-            painter = painterResource(id = R.drawable.baskit_logo),
+            painter = painterResource(id = R.drawable.baskit_white),
             contentDescription = "Login Image",
-            modifier = Modifier.size(220.dp)
+            modifier = Modifier.width(230.dp) .height(200.dp)
         )
 
         Text(
@@ -93,7 +95,6 @@ fun LoginActivity(navController: NavController) {
             shape = RoundedCornerShape(10.dp)
         )
 
-        Spacer(modifier = Modifier.height(4.dp))
 
         Row(
             modifier = Modifier
@@ -113,32 +114,7 @@ fun LoginActivity(navController: NavController) {
             )
         }
 
-        Spacer(modifier = Modifier.height(6.dp))
-
-        Row(modifier = Modifier.padding(1.dp)) {
-            options.forEach { text ->
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(vertical = 1.dp)
-                ) {
-                    RadioButton(
-                        selected = (text == selectedOption),
-                        onClick = { selectedOption = text },
-                        /*colors = RadioButtonDefaults.colors(
-                            checkedColor = Color.Green,
-                            uncheckedColor = Color.LightGray,
-                        )*/
-                    )
-                    Text(
-                        text = text,
-                        fontFamily = poppinsFontFamily,
-                        modifier = Modifier.padding(start = 1.dp)
-                    )
-                }
-            }
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         Button(
             onClick = {
@@ -184,7 +160,7 @@ fun LoginActivity(navController: NavController) {
 //            Text(text = "Login")
 //        }
 
-        Spacer(modifier = Modifier.height(130.dp))
+        Spacer(modifier = Modifier.height(150.dp))
 
         Row(
             modifier = Modifier
@@ -200,7 +176,7 @@ fun LoginActivity(navController: NavController) {
             )
 
             TextButton(
-                onClick = { },
+                onClick = { navController.navigate("SignUpctivity") },
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Text(
