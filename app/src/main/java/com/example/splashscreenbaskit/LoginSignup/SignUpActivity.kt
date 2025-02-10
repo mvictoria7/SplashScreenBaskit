@@ -345,18 +345,10 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                 }
             }
 
-
-            if (showDialog) {
-                AlertDialog(
-                    onDismissRequest = { showDialog = false },
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Surface(
-                        modifier = Modifier
-                            .fillMaxWidth(0.9f) // Wider dialog
-                            .padding(horizontal = 5.dp, vertical = 5.dp), // Less padding
-                        shape = RoundedCornerShape(12.dp),
-                        color = Color.White
+                if (showDialog) {
+                    AlertDialog(
+                        onDismissRequest = { showDialog = false },
+                        modifier = Modifier.fillMaxSize()
                     ) {
                         Column(
                             modifier = Modifier
@@ -364,46 +356,46 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                                 .padding(horizontal = 5.dp, vertical = 5.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Text(
-                                text = "Terms and Conditions",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 24.sp,
-                                fontFamily = poppinsFontFamily,
-                                color = Color.Black,
-                                textAlign = TextAlign.Center
-                            )
+                        Text(
+                            text = "Terms and Conditions",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 24.sp,
+                            fontFamily = poppinsFontFamily,
+                            color = Color.White,
+                            textAlign = TextAlign.Center
+                        )
 
-                            Spacer(modifier = Modifier.height(40.dp))
+                        Spacer(modifier = Modifier.height(40.dp))
 
-                            Box(
-                                modifier = Modifier
-                                    .weight(1f) // Ensures scrolling area takes full width
-                                    .verticalScroll(scrollState)
-                                    .padding(horizontal = 4.dp)
-                            ) {
-                                Column {
-                                    Text(
-                                        text = "Welcome to Baskit!\nThese Terms and Conditions govern your use\nof our delivery app and services.".trimIndent(),
-                                        fontSize = 15.sp,
-                                        fontFamily = poppinsFontFamily,
-                                        textAlign = TextAlign.Center,
-                                        color = Color.Black
-                                    )
+                        Box(
+                            modifier = Modifier
+                                .weight(1f) // Ensures scrolling area takes full width
+                                .verticalScroll(scrollState)
+                                .padding(horizontal = 4.dp)
+                        ) {
+                            Column {
+                                Text(
+                                    text = "Welcome to Baskit!\nThese Terms and Conditions govern your use\nof our delivery app and services.".trimIndent(),
+                                    fontSize = 15.sp,
+                                    fontFamily = poppinsFontFamily,
+                                    textAlign = TextAlign.Center,
+                                    color = Color.White
+                                )
 
-                                    Spacer(modifier = Modifier.height(40.dp))
+                                Spacer(modifier = Modifier.height(40.dp))
 
-                                    Text(
-                                        text = "Terms",
-                                        fontSize = 20.sp,
-                                        fontWeight = FontWeight.SemiBold,
-                                        fontFamily = poppinsFontFamily,
-                                        color = Color.Black
-                                    )
+                                Text(
+                                    text = "Terms",
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontFamily = poppinsFontFamily,
+                                    color = Color.White
+                                )
 
-                                    Spacer(modifier = Modifier.height(5.dp))
+                                Spacer(modifier = Modifier.height(5.dp))
 
-                                    Text(
-                                        text = """
+                                Text(
+                                    text = """
                       You must be at least 18 years old to use Baskit and agree to provide accurate personal information when creating an account.
                       You are responsible for maintaining the confidentiality of your login details.
                       Orders placed through the app are subject to availability and acceptance by merchants.
@@ -423,46 +415,41 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                       We reserve the right to update these terms at any time, and continued use of the app signifies acceptance of any modifications.
                       If you have any questions or concerns, please contact us at Baskit.
                       """.trimIndent(),
-                                        fontSize = 15.sp,
-                                        fontFamily = poppinsFontFamily,
-                                        textAlign = TextAlign.Justify,
-                                        color = Color.Black
-                                    )
-                                }
+                                    fontSize = 15.sp,
+                                    fontFamily = poppinsFontFamily,
+                                    textAlign = TextAlign.Justify,
+                                    color = Color.White
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        // Buttons are ALWAYS visible but DISABLED until scrolled to the end
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            Button(
+                                onClick = {
+                                    onCheckedChange(false)
+                                    showDialog = false
+                                },
+                                colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+                                enabled = hasReachedBottom // Disable until scrolled to end
+                            ) {
+                                Text("Decline")
                             }
 
-                            Spacer(modifier = Modifier.height(20.dp))
-
-                            // Buttons are ALWAYS visible but DISABLED until scrolled to the end
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceEvenly
+                            Button(
+                                onClick = {
+                                    onCheckedChange(true)
+                                    showDialog = false
+                                },
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151)),
+                                enabled = hasReachedBottom // Disable until scrolled to end
                             ) {
-                                Button(
-                                    onClick = {
-                                        onCheckedChange(false)
-                                        showDialog = false
-                                    },
-                                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
-                                    enabled = hasReachedBottom // Disable until scrolled to end
-                                ) {
-                                    Text("Decline")
-                                }
-
-                                Button(
-                                    onClick = {
-                                        onCheckedChange(true)
-                                        showDialog = false
-                                    },
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = Color(
-                                            0xFF1d7151
-                                        )
-                                    ),
-                                    enabled = hasReachedBottom // Disable until scrolled to end
-                                ) {
-                                    Text("Accept")
-                                }
+                                Text("Accept")
                             }
                         }
                     }
