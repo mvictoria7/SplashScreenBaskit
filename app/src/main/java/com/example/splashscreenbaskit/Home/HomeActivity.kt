@@ -307,7 +307,7 @@ fun HomeContent(navController: NavController) {
 
             LocationSelector(selectedLocation)
 
-            HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp), thickness = 2.dp)
+            HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp, horizontal = 10.dp), thickness = 2.dp)
 
             CategoryRow(selectedCategory, navController)
 
