@@ -91,17 +91,23 @@ fun SignUpActivity(navController: NavController) {
                 // First Name field
                 OutlinedTextField(
                     value = firstName,
-                    onValueChange = { firstName = it },
+                    onValueChange = { if (it.all { char -> char.isLetter() }) {
+                        firstName = it
+                        }
+                    },
                     label = { Text(text = "First Name", fontFamily = poppinsFontFamily)},
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(10.dp),
 
-                    )
+                )
 
                 // Last Name field
                 OutlinedTextField(
                     value = lastName,
-                    onValueChange = { lastName = it },
+                    onValueChange = { if (it.all { char -> char.isLetter() }) {
+                        lastName = it
+                    }
+                    },
                     label = { Text(text = "Last Name", fontFamily = poppinsFontFamily) },
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(10.dp)
@@ -168,9 +174,14 @@ fun SignUpActivity(navController: NavController) {
             Spacer(modifier = Modifier.height(2.dp))
 
             // Email field
+            val emailRegex = "[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
             OutlinedTextField(
                 value = email,
-                onValueChange = { email = it },
+                onValueChange = {
+                    if (it.matches(emailRegex.toRegex())) {
+                        email = it
+                    }
+                },
                 label = { Text(text = "Email", fontFamily = poppinsFontFamily,) },
                 leadingIcon = {
                     Icon(imageVector = Icons.Default.Email, contentDescription = "Email Icon")
@@ -288,7 +299,7 @@ fun SignUpActivity(navController: NavController) {
                 ) {
                     Text(
                         text = "Log In",
-                        color = Color(0xFF1d7151),
+                        color = Color(0xFF4557FF),
                         fontFamily = poppinsFontFamily,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Medium,
@@ -335,7 +346,8 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                     text = "Agree to Terms and Conditions",
                     fontSize = 12.sp,
                     fontFamily = poppinsFontFamily,
-                    fontWeight = FontWeight.Light
+                    fontWeight = FontWeight.Light,
+                    color = Color(0xFF4557FF)
                 )
 
                 IconButton(onClick = { showDialog = true }) {

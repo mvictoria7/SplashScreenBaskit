@@ -116,8 +116,7 @@ fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavContr
     val categories = listOf("SHOP", "Vegetables", "Fruits", "Meats", "Fish", "Spices", "Frozen Foods")
 
     LazyRow(
-        modifier = Modifier.fillMaxWidth() .padding(top = 10.dp, start = 8.dp, end = 10.dp),
-        horizontalArrangement = Arrangement.spacedBy(1.dp)
+        modifier = Modifier.fillMaxWidth() .padding(top = 5.dp, start = 8.dp, end = 10.dp),
     ) {
         items(categories) { category ->
             TextButton(
@@ -125,16 +124,16 @@ fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavContr
                     .background(
                         color = if (selectedCategory.value == category) Color(0xFF5CC163) else Color.Transparent,
                         shape = RoundedCornerShape(20.dp)
+
                     )
                     .wrapContentHeight()
-                    .heightIn(min = 24.dp),
-                    //.fillMaxWidth(),
+                    .heightIn(min = 20.dp),
                 onClick = { selectedCategory.value = category}
             ) {
                 Text(
                     text = category,
                     color = if (selectedCategory.value == category) Color(0xFFFFFFFF) else Color(0xFFBFBFBF),
-                    fontSize = 16.sp,
+                    fontSize = 15.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = poppinsFontFamily,
                     textAlign = TextAlign.Center,
@@ -283,7 +282,7 @@ fun HomeContent(navController: NavController) {
                 painter = painterResource(id = R.drawable.baskit_logo),
                 contentDescription = "Logo",
                 modifier = Modifier
-                    .size(80.dp)
+                    .size(70.dp)
                     .padding(bottom = 16.dp)
             )
 
@@ -296,7 +295,7 @@ fun HomeContent(navController: NavController) {
                 modifier = Modifier.offset(y = (-20).dp)
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            //Spacer(modifier = Modifier.height(10.dp))
 
             SearchBar()
 
@@ -304,9 +303,8 @@ fun HomeContent(navController: NavController) {
 
             SliderCard()
 
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(15.dp))
 
-            // Move the LocationSelector and CategoryRow inside the scrollable Column
             LocationSelector(selectedLocation)
 
             HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp), thickness = 2.dp)
@@ -424,6 +422,7 @@ fun SearchBar() {
             value = searchText,
             onValueChange = { searchText = it },
             modifier = Modifier
+                .height(50.dp)
                 .weight(1f)
                 .background(
                     color = Color(0xFFF5F5F5),
@@ -432,15 +431,20 @@ fun SearchBar() {
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             singleLine = true,
             decorationBox = { innerTextField ->
-                if (searchText.text.isEmpty()) {
-                    Text(
-                        text = "Search food, vegetable, etc.",
-                        color = Color.Gray,
-                        fontSize = 14.sp,
-                        fontFamily = poppinsFontFamily
-                    )
+                Box(
+                    contentAlignment = Alignment.CenterStart, // Center horizontally
+                    modifier = Modifier.fillMaxWidth() // Make the Box fill the available width
+                ) {
+                    if (searchText.text.isEmpty()) {
+                        Text(
+                            text = "Search food, vegetable, etc.",
+                            color = Color.Gray,
+                            fontSize = 14.sp,
+                            fontFamily = poppinsFontFamily
+                        )
+                    }
+                    innerTextField() // This ensures the inner text field is still drawn
                 }
-                innerTextField()
             }
         )
 
@@ -463,7 +467,7 @@ fun SliderCard() {
             .padding(start = 30.dp, end = 30.dp),
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             PageIndicator(currentPage = 0, totalScreens = 3)
@@ -483,12 +487,11 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
     ) {
         TextButton(
             onClick = { selectedLocation.value = "Dagupan" },
-            modifier = Modifier.padding(top = 8.dp)
         ) {
             Text(
                 "DAGUPAN",
                 color = if (selectedLocation.value == "Dagupan") Color.Gray else Color(0xFFBFBFBF),
-                fontSize = 16.sp,fontFamily = poppinsFontFamily,
+                fontSize = 15.sp,fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.Bold,
                 style = TextStyle(fontFamily = poppinsFontFamily)
             )
@@ -496,12 +499,11 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
 
         TextButton(
             onClick = { selectedLocation.value = "Calasiao" },
-            modifier = Modifier.padding(8.dp)
         ) {
             Text(
                 "CALASIAO",
                 color = if (selectedLocation.value == "Calasiao") Color.Gray else Color(0xFFBFBFBF),
-                fontSize = 16.sp,
+                fontSize = 15.sp,
                 fontWeight = FontWeight.Bold,
                 style = TextStyle(fontFamily = poppinsFontFamily)
             )
