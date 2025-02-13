@@ -196,15 +196,22 @@ fun FruitGrid(fruits: List<Fruits>, navController: NavController) {
 @Composable
 fun HomeScreen() {
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
     Scaffold(
-        bottomBar = { BottomBar(navController = navController) }
+        bottomBar = {
+            if (currentRoute != "AppleScreen" && currentRoute != "OrangeScreen") {
+                BottomBar(navController = navController)
+            }
+
+        }
     ) { paddingValues ->
         NavHost(
             navController = navController,
             startDestination = BottomBarScreen.Home.route,
             modifier = Modifier.padding(paddingValues)
         ) {
-
             composable(BottomBarScreen.Home.route) {
                 HomeContent(navController)
             }
