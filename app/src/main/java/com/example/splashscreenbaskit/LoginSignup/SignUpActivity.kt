@@ -88,6 +88,7 @@ fun SignUpActivity(navController: NavController) {
                 modifier = Modifier.fillMaxWidth(0.8f),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
+
                 // First Name field
                 OutlinedTextField(
                     value = firstName,
@@ -97,8 +98,7 @@ fun SignUpActivity(navController: NavController) {
                     },
                     label = { Text(text = "First Name", fontFamily = poppinsFontFamily)},
                     modifier = Modifier.weight(1f),
-                    shape = RoundedCornerShape(10.dp),
-
+                    shape = RoundedCornerShape(10.dp)
                 )
 
                 // Last Name field

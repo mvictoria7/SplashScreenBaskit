@@ -1,5 +1,6 @@
 package com.example.splashscreenbaskit.AccountDetails
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,10 +10,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -24,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
+import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
 
 @Preview(showBackground = true)
@@ -51,27 +57,62 @@ fun SettingsActivity(navController: NavHostController) {
             .background(Color.White)
     ){
 
-        //circle header
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFF1D7151), RoundedCornerShape(bottomStart = 150.dp, bottomEnd = 150.dp))
-                //.padding(10.dp)
-                .height(350.dp),
-            contentAlignment = Alignment.Center
+                .fillMaxSize()
+                .background(Color.White)
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
+            IconButton(
+                onClick = { navController.navigate("HomeActivity") },
+                modifier = Modifier
+                    .padding(top = 45.dp, start = 25.dp)
+                    .size(35.dp)
+                    .background(Color.White, shape = RoundedCornerShape(50))
+            ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.baskitlogo_white),
-                    contentDescription = "Baskit Icon",
-                    tint = Color.White,
-                    modifier = Modifier.height(170.dp)
+                    modifier = Modifier.size(20.dp),
+                    painter = painterResource(id = R.drawable.back),
+                    contentDescription = "Back",
+                    tint = Color.Black
                 )
-                Text(
-                    text = "Shop Smarter, Not Harder",
-                    color = Color.White,
-                    fontSize = 16.sp
-                )
+            }
+
+            Image(
+                painter = painterResource(id = R.drawable.settings_img),
+                contentDescription = null,
+                modifier = Modifier
+                    .height(170.dp)
+                    .padding( start = 20.dp)
+                    .offset(x = 60.dp,y = (100).dp)
+            )
+
+            // Inner Box
+            Box(
+                modifier = Modifier
+                    .height(680.dp)
+                    .width(420.dp)
+                    .padding(top = 160.dp)
+                    .clip(RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp))
+                    .align(Alignment.BottomCenter)
+                    .background(Color(0xFF1D7151))
+            ) {
+
+                Column(
+                    modifier = Modifier
+                        .padding(start = 40.dp, end = 40.dp, top = 50.dp),
+                    verticalArrangement = Arrangement.Center
+                ) {
+
+                    Text(
+                        text = "Settings",
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp,
+                        fontFamily = poppinsFontFamily
+                    )
+                }
             }
         }
     }
@@ -80,12 +121,6 @@ fun SettingsActivity(navController: NavHostController) {
         verticalArrangement = Arrangement.Center
     ) {
 
-        Text(
-            text = "Settings",
-            style = MaterialTheme.typography.headlineMedium,
-            color = Color.Black,
-            fontWeight = FontWeight.Black
-        )
 
         Spacer(modifier = Modifier.height(40.dp))
 
