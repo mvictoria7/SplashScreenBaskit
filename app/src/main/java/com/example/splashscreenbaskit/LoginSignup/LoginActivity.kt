@@ -176,7 +176,7 @@ fun LoginActivity(navController: NavController) {
             )
 
             TextButton(
-                onClick = { navController.navigate("SignUpctivity") },
+                onClick = { navController.navigate("SignUpActivity") },
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Text(

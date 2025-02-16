@@ -35,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
@@ -56,7 +57,7 @@ fun NotificationsActivity(navController: NavHostController) {
     ) {
 
         IconButton(
-            onClick = { navController.navigate("HomeActivity") },
+            onClick = { navController.popBackStack() },
             modifier = Modifier
                 .padding(top = 45.dp, start = 25.dp)
                 .size(35.dp)

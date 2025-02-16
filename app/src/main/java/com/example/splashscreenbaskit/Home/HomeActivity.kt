@@ -54,6 +54,7 @@ import com.example.splashscreenbaskit.AccountDetails.SettingsActivity
 import com.example.splashscreenbaskit.Carts.CartApple
 import com.example.splashscreenbaskit.Carts.CartAppleScreen
 import com.example.splashscreenbaskit.Home.SlideImg
+import com.example.splashscreenbaskit.LoginSignup.LoginActivity
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
 
@@ -122,9 +123,8 @@ fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavContr
             TextButton(
                 modifier = Modifier
                     .background(
-                        color = if (selectedCategory.value == category) Color(0xFF5CC163) else Color.Transparent,
-                        shape = RoundedCornerShape(20.dp)
-
+                        color = if (selectedCategory.value == category) Color(0xBB5CC163) else Color.Transparent,
+                        shape = RoundedCornerShape(20.dp),
                     )
                     .wrapContentHeight()
                     .heightIn(min = 20.dp),
@@ -219,13 +219,7 @@ fun HomeScreen() {
                 CartScreen()
             }
             composable(BottomBarScreen.Account.route) {
-                AccountActivity()
-            }
-            composable("NotificationsActivity") {
-                NotificationsActivity(navController)
-            }
-            composable("SettingsActivity") {
-                SettingsActivity(navController)
+                AccountActivity(navController)
             }
             composable("AppleScreen") {
                 AppleScreen(navController)
@@ -236,6 +230,8 @@ fun HomeScreen() {
             composable("CartApple") {
                 CartApple(navController)
             }
+
+
             composable(
                 "CartApple/{selectedWeight}/{quantity}/{totalPrice}",
                 arguments = listOf(
@@ -261,6 +257,15 @@ fun HomeScreen() {
                 val quantity = backStackEntry.arguments?.getInt("quantity") ?: 0
                 val totalPrice = backStackEntry.arguments?.getString("totalPrice")?.toDoubleOrNull() ?: 0.0
                 CartOrangeScreen(navController, selectedWeight, quantity, totalPrice)
+            }
+            composable("NotificationsActivity") {
+                NotificationsActivity(navController)
+            }
+            composable("SettingsActivity") {
+                SettingsActivity(navController)
+            }
+            composable ("LoginActivity") {
+                LoginActivity(navController)
             }
         }
     }
@@ -314,7 +319,7 @@ fun HomeContent(navController: NavController) {
 
             LocationSelector(selectedLocation)
 
-            HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp, horizontal = 10.dp), thickness = 2.dp)
+            HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp, horizontal = 4.dp), thickness = 2.dp)
 
             CategoryRow(selectedCategory, navController)
 

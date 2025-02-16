@@ -346,7 +346,7 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                     text = "Agree to Terms and Conditions",
                     fontSize = 12.sp,
                     fontFamily = poppinsFontFamily,
-                    fontWeight = FontWeight.Light,
+                    fontWeight = FontWeight.Normal,
                     color = Color(0xFF4557FF)
                 )
 

@@ -71,7 +71,7 @@ fun OrangeScreen(navController: NavController) {
                 contentScale = ContentScale.Crop
             )
             IconButton(
-                onClick = { navController.navigate("HomeActivity") },
+                onClick = { navController.popBackStack()  },
                 modifier = Modifier
                     .padding(top = 45.dp, start = 25.dp)
                     .align(Alignment.TopStart)

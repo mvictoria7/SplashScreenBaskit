@@ -21,7 +21,7 @@ fun CartAppleScreen(
     quantity: Int,
     totalPrice: Double
 ) {
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {4
         Text(text = "Selected Weight: $selectedWeight")
         Text(text = "Quantity: $quantity")
         Text(text = "Total Price: ₱${"%.2f".format(totalPrice)}")
