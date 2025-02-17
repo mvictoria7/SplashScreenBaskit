@@ -27,24 +27,14 @@ import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
 import com.example.splashscreenbaskit.Carts.CartItemView  // Import CartItem class from Carts package
-import com.example.splashscreenbaskit.viewmodel.CartItem
-
-@Preview
-@Composable
-fun AppleScreenPreview() {
-    AppleScreen(navController = rememberNavController())
-}
 
 @Composable
-fun AppleScreen(navController: NavController) {
-    var quantity by remember { mutableIntStateOf(1) }
-    var selectedWeight by remember { mutableStateOf("1 pc") }
+fun AppleScreen(navController: NavController, cartViewModel: CartViewModel) {
+    var quantity by remember { mutableStateOf(1) }
+    var selectedWeight by remember { mutableStateOf("0 pc") }
     val basePrice = 32.25
     val priceIncrease = 30.0
-    val context = LocalContext.current
-    val cartViewModel: CartViewModel = viewModel()  // Get the CartViewModel instance
 
-    // Calculate the price for the selected weight and quantity
     val priceForWeight = when (selectedWeight) {
         "1 pc" -> basePrice
         "1/4 kg" -> basePrice + priceIncrease
@@ -58,6 +48,7 @@ fun AppleScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
+            .padding(16.dp)
     ) {
         // Image section
         Box(
@@ -226,7 +217,7 @@ fun AppleScreen(navController: NavController) {
                             weight = selectedWeight,
                             quantity = quantity,
                             price = totalPrice,
-                            imageRes = R.drawable.apple
+                            image = R.drawable.apple.toString()
                         )
                     )
                     navController.navigate("CartScreen")
@@ -240,3 +231,11 @@ fun AppleScreen(navController: NavController) {
         }
     }
 }
+
+data class CartItem(
+    val name: String,
+    val weight: String,
+    val quantity: Int,
+    val price: Double,
+    val image: String
+)
