@@ -1,9 +1,10 @@
-package com.example.splashscreenbaskit.Carts  // Make sure this matches your folder structure
+package com.example.splashscreenbaskit.Carts
 
 data class CartItem(
+    val id: Int,            // Unique ID for each item
     val name: String,
     val weight: String,
-    var quantity: Int,
     var price: Double,
-    val imageRes: Int
+    var quantity: Int,      // Quantity is mutable to update it later
+    val imageRes: Int       // Resource ID for the image
 )

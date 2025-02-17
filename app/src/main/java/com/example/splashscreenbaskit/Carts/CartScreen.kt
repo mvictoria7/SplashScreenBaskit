@@ -9,17 +9,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.foundation.clickable
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import com.example.splashscreenbaskit.R
 
 @Composable
 fun CartScreen(cartViewModel: CartViewModel, navController: NavController) {
@@ -50,9 +52,12 @@ fun CartScreen(cartViewModel: CartViewModel, navController: NavController) {
         } else {
             LazyColumn {
                 items(cartItems) { item ->
-                    CartItemView(item, onRemoveItem = {
-                        cartViewModel.removeFromCart(item)
-                    })
+                    CartItemView(
+                        item = item,
+                        onRemoveItem = { cartViewModel.removeFromCart(item) },
+                        onIncreaseQuantity = { cartViewModel.increaseQuantity(item) },
+                        onDecreaseQuantity = { cartViewModel.decreaseQuantity(item) }
+                    )
                 }
             }
         }
@@ -77,7 +82,7 @@ fun CartScreen(cartViewModel: CartViewModel, navController: NavController) {
 }
 
 @Composable
-fun CartItemView(item: CartItem, onRemoveItem: () -> Unit) {
+fun CartItemView(item: CartItem, onRemoveItem: () -> Unit, onIncreaseQuantity: () -> Unit, onDecreaseQuantity: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -102,8 +107,42 @@ fun CartItemView(item: CartItem, onRemoveItem: () -> Unit) {
             modifier = Modifier.padding(end = 8.dp)
         )
 
-        Button(onClick = onRemoveItem) {
-            Text(text = "Remove")
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            // Minus button
+            IconButton(onClick = onDecreaseQuantity) {
+                Icon(
+                    painter = painterResource(id = R.drawable.minus),
+                    contentDescription = "Decrease Quantity",
+                    tint = Color.Black,
+                    modifier = Modifier.size(15.dp)
+                )
+            }
+
+            // Quantity text
+            Text(
+                text = item.quantity.toString(),
+                fontSize = 18.sp,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+
+            // Plus button
+            IconButton(onClick = onIncreaseQuantity) {
+                Icon(
+                    painter = painterResource(id = R.drawable.add),
+                    contentDescription = "Increase Quantity",
+                    tint = Color.Black,
+                    modifier = Modifier.size(15.dp)
+                )
+            }
+
+            // Delete button
+            IconButton(onClick = onRemoveItem) {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Delete Item",
+                    tint = Color.Red
+                )
+            }
         }
     }
 }

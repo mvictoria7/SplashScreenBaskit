@@ -1,4 +1,3 @@
-// In CartViewModel.kt (in the ViewModel package)
 package com.example.splashscreenbaskit.viewmodel
 
 import androidx.lifecycle.ViewModel
@@ -26,5 +25,23 @@ class CartViewModel : ViewModel() {
     // Remove an item from the cart
     fun removeFromCart(item: CartItem) {
         _cartItems.remove(item)
+    }
+
+    // Increase the quantity of an item in the cart
+    fun increaseQuantity(item: CartItem) {
+        val updatedItem = item.copy(quantity = item.quantity + 1)
+        val updatedItems = _cartItems.map { if (it.id == item.id) updatedItem else it }
+        _cartItems.clear()
+        _cartItems.addAll(updatedItems)
+    }
+
+    // Decrease the quantity of an item in the cart
+    fun decreaseQuantity(item: CartItem) {
+        if (item.quantity > 1) {
+            val updatedItem = item.copy(quantity = item.quantity - 1)
+            val updatedItems = _cartItems.map { if (it.id == item.id) updatedItem else it }
+            _cartItems.clear()
+            _cartItems.addAll(updatedItems)
+        }
     }
 }
