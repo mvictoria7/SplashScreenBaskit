@@ -1,4 +1,3 @@
-
 package com.example.splashscreenbaskit
 
 import HomeScreen
@@ -13,9 +12,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.AccountDetails.AccountActivity
 import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
-import com.example.splashscreenbaskit.Carts.CartApple
-import com.example.splashscreenbaskit.Carts.CartAppleScreen
-import com.example.splashscreenbaskit.Carts.CartOrangeScreen
+import com.example.splashscreenbaskit.Carts.CartItemView
+import com.example.splashscreenbaskit.Carts.CartScreen
 import com.example.splashscreenbaskit.LoginSignup.LoginActivity
 import com.example.splashscreenbaskit.LoginSignup.OnboardingScreen
 import com.example.splashscreenbaskit.LoginSignup.SignUpActivity
@@ -32,8 +30,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             SplashScreenBaskitTheme {
-
                 val navController = rememberNavController()
+
 
                 NavHost(navController = navController, startDestination = "OnBoardingScreen") {
                     composable("OnBoardingScreen") {
@@ -57,45 +55,11 @@ class MainActivity : ComponentActivity() {
                     composable("OrangeScreen") {
                         OrangeScreen(navController)
                     }
-                    composable("AddToCart") {
+                    composable("CartScreen") {
+                        CartScreen()
                     }
                     composable("NotificationsActivity") {
                         NotificationsActivity(navController)
-                    }
-
-                    composable("CartApple/{weight}/{quantity}/{totalPrice}") { backStackEntry ->
-                        val weight = backStackEntry.arguments?.getString("weight") ?: "1 pc"
-                        val quantity =
-                            backStackEntry.arguments?.getString("quantity")?.toIntOrNull() ?: 0
-                        val totalPrice =
-                            backStackEntry.arguments?.getString("totalPrice")?.toDoubleOrNull()
-                                ?: 0.0
-
-                        composable("CartOrange/{weight}/{quantity}/{totalPrice}") { backStackEntry ->
-                            val weight = backStackEntry.arguments?.getString("weight") ?: "1 pc"
-                            val quantity =
-                                backStackEntry.arguments?.getString("quantity")?.toIntOrNull() ?: 0
-                            val totalPrice =
-                                backStackEntry.arguments?.getString("totalPrice")?.toDoubleOrNull()
-                                    ?: 0.0
-
-
-                            CartAppleScreen(
-                                navController = navController,
-                                selectedWeight = weight,
-                                quantity = quantity,
-                                totalPrice = totalPrice
-                            )
-
-                            CartOrangeScreen(
-                                navController = navController,
-                                selectedWeight = weight,
-                                quantity = quantity,
-                                totalPrice = totalPrice
-
-                            )
-                        }
-
                     }
                 }
             }

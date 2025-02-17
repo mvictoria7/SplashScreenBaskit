@@ -53,6 +53,7 @@ import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.AccountDetails.SettingsActivity
 import com.example.splashscreenbaskit.Carts.CartApple
 import com.example.splashscreenbaskit.Carts.CartAppleScreen
+import com.example.splashscreenbaskit.Carts.CartScreen
 import com.example.splashscreenbaskit.Home.SlideImg
 import com.example.splashscreenbaskit.LoginSignup.LoginActivity
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
@@ -234,36 +235,8 @@ fun HomeScreen() {
             composable("OrangeScreen") {
                 OrangeScreen(navController)
             }
-            composable("CartApple") {
-                CartApple(navController)
-            }
-
-
-            composable(
-                "CartApple/{selectedWeight}/{quantity}/{totalPrice}",
-                arguments = listOf(
-                    navArgument("selectedWeight") { type = NavType.StringType },
-                    navArgument("quantity") { type = NavType.IntType },
-                    navArgument("totalPrice") { type = NavType.StringType }
-                )
-            ) { backStackEntry ->
-                val selectedWeight = backStackEntry.arguments?.getString("selectedWeight") ?: "1 pc"
-                val quantity = backStackEntry.arguments?.getInt("quantity") ?: 0
-                val totalPrice = backStackEntry.arguments?.getString("totalPrice")?.toDoubleOrNull() ?: 0.0
-                CartAppleScreen(navController, selectedWeight, quantity, totalPrice)
-            }
-            composable(
-                "CartOrange/{selectedWeight}/{quantity}/{totalPrice}",
-                arguments = listOf(
-                    navArgument("selectedWeight") { type = NavType.StringType },
-                    navArgument("quantity") { type = NavType.IntType },
-                    navArgument("totalPrice") { type = NavType.StringType }
-                )
-            ) { backStackEntry ->
-                val selectedWeight = backStackEntry.arguments?.getString("selectedWeight") ?: "1 pc"
-                val quantity = backStackEntry.arguments?.getInt("quantity") ?: 0
-                val totalPrice = backStackEntry.arguments?.getString("totalPrice")?.toDoubleOrNull() ?: 0.0
-                CartOrangeScreen(navController, selectedWeight, quantity, totalPrice)
+            composable("CartScreen") {
+                CartScreen()
             }
             composable("NotificationsActivity") {
                 NotificationsActivity(navController)
@@ -531,15 +504,6 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
 }
 
 
-@Composable
-fun CartScreen() {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Text(text = "Cart Screen", fontSize = 20.sp)
-    }
-}
 
 @Composable
 fun BottomBar(navController: NavController) {

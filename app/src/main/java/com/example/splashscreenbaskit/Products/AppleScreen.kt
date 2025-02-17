@@ -1,6 +1,5 @@
 package com.example.splashscreenbaskit.Products
 
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,13 +23,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
-import com.example.splashscreenbaskit.ui.theme.SplashScreenBaskitTheme
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.splashscreenbaskit.viewmodel.CartViewModel
+import com.example.splashscreenbaskit.Carts.CartItemView  // Import CartItem class from Carts package
+import com.example.splashscreenbaskit.viewmodel.CartItem
 
 @Preview
 @Composable
 fun AppleScreenPreview() {
-    AppleScreen(navController =  rememberNavController())
+    AppleScreen(navController = rememberNavController())
 }
 
 @Composable
@@ -40,7 +42,9 @@ fun AppleScreen(navController: NavController) {
     val basePrice = 32.25
     val priceIncrease = 30.0
     val context = LocalContext.current
+    val cartViewModel: CartViewModel = viewModel()  // Get the CartViewModel instance
 
+    // Calculate the price for the selected weight and quantity
     val priceForWeight = when (selectedWeight) {
         "1 pc" -> basePrice
         "1/4 kg" -> basePrice + priceIncrease
@@ -104,22 +108,7 @@ fun AppleScreen(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(vertical = 4.dp)
             ) {
-                /*repeat(4) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.star),
-                        contentDescription = "Star",
-                        tint = Color(0xFFFFC107),
-                        modifier = Modifier.size(25.dp)
-                    )
-                }
-                Icon(
-                    painter = painterResource(id = R.drawable.star_outline),
-                    contentDescription = "Star Outline",
-                    tint = Color.Black,
-                    modifier = Modifier.size(25.dp)
-                )*/
-
-                Spacer(modifier = Modifier.padding(start = 225.dp) )
+                Spacer(modifier = Modifier.padding(start = 225.dp))
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     IconButton(onClick = { if (quantity > 1) quantity-- },
@@ -171,42 +160,6 @@ fun AppleScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            // Quantity selection
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = "Seller Description",
-                    fontSize = 24.sp,
-                    fontFamily = poppinsFontFamily,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(vertical = 8.dp)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Text(
-                text = "Martha Rosario (Aling Martha’s)",
-                fontSize = 16.sp,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.SemiBold,
-                color = Color.Black
-            )
-
-            Text(
-                text = "0900-000-0000",
-                fontSize = 16.sp,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Light,
-                color = Color.Black
-            )
-
-            Spacer(modifier = Modifier.height(50.dp))
-
-            // Weight options
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -216,7 +169,6 @@ fun AppleScreen(navController: NavController) {
                         modifier = Modifier
                             .height(48.dp)
                             .width(75.dp)
-                            //.clip(RoundedCornerShape(10.dp))
                             .then(
                                 if (selectedWeight != option) Modifier
                                     .clip(RoundedCornerShape(10.dp))
@@ -230,19 +182,14 @@ fun AppleScreen(navController: NavController) {
                             contentColor = Color.Black
                         ),
                     ) {
-                        Text(text = option,
-                            fontSize = 12.sp,
-                            fontFamily = poppinsFontFamily,
-                            fontWeight = FontWeight.SemiBold)
+                        Text(text = option, fontSize = 12.sp, fontFamily = poppinsFontFamily, fontWeight = FontWeight.SemiBold)
                     }
                 }
             }
-
         }
 
         Spacer(modifier = Modifier.weight(1f))
 
-        // Footer section
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -258,8 +205,7 @@ fun AppleScreen(navController: NavController) {
                     fontSize = 16.sp,
                     fontFamily = poppinsFontFamily,
                     color = Color.White,
-                    fontWeight = FontWeight.SemiBold,
-                    //modifier = Modifier.padding(start = 0.dp)
+                    fontWeight = FontWeight.SemiBold
                 )
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
@@ -270,27 +216,26 @@ fun AppleScreen(navController: NavController) {
                     fontWeight = FontWeight.Bold
                 )
             }
+
             Button(
                 onClick = {
-                    try {
-                        navController.navigate("CartApple/${selectedWeight}/${quantity}/${"%.2f".format(totalPrice)}")
-                        Toast.makeText(context, "Added to basket!", Toast.LENGTH_SHORT).show()
-                    } catch (e: Exception) {
-                        Toast.makeText(context, "Error adding to basket", Toast.LENGTH_SHORT).show()
-                    }
+                    // Add the item to the cart
+                    cartViewModel.addToCart(
+                        CartItem(
+                            name = "Apple",
+                            weight = selectedWeight,
+                            quantity = quantity,
+                            price = totalPrice,
+                            imageRes = R.drawable.apple
+                        )
+                    )
+                    navController.navigate("CartScreen")
                 },
-
                 shape = RoundedCornerShape(30.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White),
-                modifier = Modifier.height(70.dp) .width(180.dp)
+                modifier = Modifier.height(70.dp).width(180.dp)
             ) {
-                Text(
-                    text = "Add to Basket",
-                    color = Color.Black,
-                    fontFamily = poppinsFontFamily,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
-                )
+                Text(text = "Add to Basket", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 18.sp)
             }
         }
     }

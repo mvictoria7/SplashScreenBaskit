@@ -9,6 +9,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.splashscreenbaskit.viewmodel.CartViewModel
+
 
 @Composable
 fun CartApple(navController: NavHostController) {
