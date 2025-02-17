@@ -33,34 +33,25 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.splashscreenbaskit.AccountDetails.AccountActivity
 import com.example.splashscreenbaskit.Products.AppleScreen
-import com.example.splashscreenbaskit.Carts.CartApple
-import com.example.splashscreenbaskit.Carts.CartOrangeScreen
 import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
 import com.example.splashscreenbaskit.Products.OrangeScreen
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.AccountDetails.SettingsActivity
-import com.example.splashscreenbaskit.Carts.CartApple
-import com.example.splashscreenbaskit.Carts.CartAppleScreen
 import com.example.splashscreenbaskit.Carts.CartScreen
 import com.example.splashscreenbaskit.Home.SlideImg
 import com.example.splashscreenbaskit.LoginSignup.LoginActivity
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
-
-
-
-
+import com.example.splashscreenbaskit.viewmodel.CartViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 // Data classes
 data class Vendor(
     val name: String,
@@ -194,12 +185,12 @@ fun FruitGrid(fruits: List<Fruits>, navController: NavController) {
     }
 }
 
-@Preview(showBackground = true)
 @Composable
 fun HomeScreen() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+    val cartViewModel: CartViewModel = viewModel()
 
     Scaffold(
         bottomBar = {
@@ -218,7 +209,7 @@ fun HomeScreen() {
                 HomeContent(navController)
             }
             composable(BottomBarScreen.Cart.route) {
-                CartScreen()
+                CartScreen(cartViewModel = cartViewModel)
             }
             composable(BottomBarScreen.Account.route) {
                 AccountActivity(navController)
@@ -230,13 +221,14 @@ fun HomeScreen() {
                 SettingsActivity(navController)
             }
             composable("AppleScreen") {
-                AppleScreen(navController)
+                // Pass CartViewModel to AppleScreen
+                AppleScreen(navController = navController, cartViewModel = cartViewModel)
             }
             composable("OrangeScreen") {
                 OrangeScreen(navController)
             }
             composable("CartScreen") {
-                CartScreen()
+                CartScreen(cartViewModel = cartViewModel)
             }
             composable("NotificationsActivity") {
                 NotificationsActivity(navController)
