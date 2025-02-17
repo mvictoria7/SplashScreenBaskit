@@ -25,6 +25,7 @@
     import com.example.splashscreenbaskit.R
     import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
     import androidx.lifecycle.viewmodel.compose.viewModel
+    import com.example.splashscreenbaskit.Carts.CartItem
     import com.example.splashscreenbaskit.viewmodel.CartViewModel
     
 

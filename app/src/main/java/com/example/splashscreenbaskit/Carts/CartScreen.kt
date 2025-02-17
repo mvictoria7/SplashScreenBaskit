@@ -18,13 +18,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
-import com.example.splashscreenbaskit.Products.CartItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 
 @Composable
 fun CartScreen(cartViewModel: CartViewModel, navController: NavController) {
-    val cartItems = cartViewModel.cartItems
+    val cartItems by remember { mutableStateOf(cartViewModel.cartItems) }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         // Back button and title

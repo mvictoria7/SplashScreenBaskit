@@ -25,6 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.splashscreenbaskit.Carts.CartItem
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
 
 
@@ -216,7 +217,7 @@ fun AppleScreen(navController: NavController, cartViewModel: CartViewModel) {
                             name = "Apple",
                             weight = selectedWeight,
                             quantity = quantity,
-                            price = totalPrice,
+                            price = priceForWeight * quantity,
                             imageRes = R.drawable.apple
                         )
                     )
@@ -231,11 +232,3 @@ fun AppleScreen(navController: NavController, cartViewModel: CartViewModel) {
         }
     }
 }
-
-data class CartItem(
-    val name: String,
-    val weight: String,
-    val quantity: Int,
-    val price: Double,
-    val imageRes: Int
-)
