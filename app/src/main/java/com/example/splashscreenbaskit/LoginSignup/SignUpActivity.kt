@@ -94,12 +94,12 @@ fun SignUpActivity(navController: NavController) {
                     value = firstName,
                     onValueChange = { if (it.all { char -> char.isLetter() }) {
                         firstName = it
-                        }
+                    }
                     },
                     label = { Text(text = "First Name", fontFamily = poppinsFontFamily)},
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(10.dp)
-                )
+                    )
 
                 // Last Name field
                 OutlinedTextField(
@@ -359,19 +359,19 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                 }
             }
 
-                if (showDialog) {
-                    AlertDialog(
-                        onDismissRequest = { showDialog = false },
-                        modifier = Modifier.fillMaxSize()
+            if (showDialog) {
+                AlertDialog(
+                    onDismissRequest = { showDialog = false },
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .background(Color.White)
+                            .fillMaxSize()
+                            .padding(vertical = 5.dp),
+                        //.padding(top = 70.dp, start = 40.dp, end = 40.dp, bottom = 80.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Column(
-                            modifier = Modifier
-                                .background(Color.White)
-                                .fillMaxSize()
-                                .padding(vertical = 5.dp),
-                                //.padding(top = 70.dp, start = 40.dp, end = 40.dp, bottom = 80.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
                         Text(
                             modifier = Modifier.padding(top = 70.dp),
                             text = "Terms and Conditions",

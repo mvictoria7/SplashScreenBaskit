@@ -59,6 +59,7 @@ import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
 
 
+
 // Data classes
 data class Vendor(
     val name: String,
@@ -220,6 +221,12 @@ fun HomeScreen() {
             }
             composable(BottomBarScreen.Account.route) {
                 AccountActivity(navController)
+            }
+            composable("NotificationsActivity") {
+                NotificationsActivity(navController)
+            }
+            composable("SettingsActivity") {
+                SettingsActivity(navController)
             }
             composable("AppleScreen") {
                 AppleScreen(navController)

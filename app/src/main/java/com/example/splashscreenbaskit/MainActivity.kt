@@ -1,7 +1,6 @@
 
 package com.example.splashscreenbaskit
 
-import HomeContent
 import HomeScreen
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -14,7 +13,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.AccountDetails.AccountActivity
 import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
-import com.example.splashscreenbaskit.AccountDetails.SettingsActivity
 import com.example.splashscreenbaskit.Carts.CartApple
 import com.example.splashscreenbaskit.Carts.CartAppleScreen
 import com.example.splashscreenbaskit.Carts.CartOrangeScreen
@@ -63,9 +61,6 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("NotificationsActivity") {
                         NotificationsActivity(navController)
-                    }
-                    composable("SettingsActivity") {
-                        SettingsActivity(navController)
                     }
 
                     composable("CartApple/{weight}/{quantity}/{totalPrice}") { backStackEntry ->

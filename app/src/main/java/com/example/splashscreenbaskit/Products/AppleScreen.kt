@@ -70,7 +70,7 @@ fun AppleScreen(navController: NavController) {
                 contentScale = ContentScale.Crop
             )
             IconButton(
-                onClick = { navController.popBackStack()  },
+                onClick = { navController.popBackStack() },
                 modifier = Modifier
                     .padding(top = 45.dp, start = 25.dp)
                     .align(Alignment.TopStart)
@@ -104,7 +104,6 @@ fun AppleScreen(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(vertical = 4.dp)
             ) {
-
                 /*repeat(4) {
                     Icon(
                         painter = painterResource(id = R.drawable.star),
