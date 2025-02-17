@@ -26,12 +26,12 @@ import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
-import com.example.splashscreenbaskit.Carts.CartItemView  // Import CartItem class from Carts package
+
 
 @Composable
 fun AppleScreen(navController: NavController, cartViewModel: CartViewModel) {
-    var quantity by remember { mutableStateOf(1) }
-    var selectedWeight by remember { mutableStateOf("0 pc") }
+    var quantity by remember { mutableStateOf(0) }
+    var selectedWeight by remember { mutableStateOf("1 pc") }
     val basePrice = 32.25
     val priceIncrease = 30.0
 
@@ -217,7 +217,7 @@ fun AppleScreen(navController: NavController, cartViewModel: CartViewModel) {
                             weight = selectedWeight,
                             quantity = quantity,
                             price = totalPrice,
-                            image = R.drawable.apple.toString()
+                            imageRes = R.drawable.apple
                         )
                     )
                     navController.navigate("CartScreen")
@@ -237,5 +237,5 @@ data class CartItem(
     val weight: String,
     val quantity: Int,
     val price: Double,
-    val image: String
+    val imageRes: Int
 )

@@ -1,32 +1,41 @@
 package com.example.splashscreenbaskit.Carts
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.foundation.clickable
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavController
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.ui.text.font.FontWeight
 import com.example.splashscreenbaskit.Products.CartItem
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 
 @Composable
-fun CartScreen(cartViewModel: CartViewModel) {
+fun CartScreen(cartViewModel: CartViewModel, navController: NavController) {
     val cartItems = cartViewModel.cartItems
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        // Back button
-        Spacer(modifier = Modifier.height(10.dp))
-
-        // Center "My Basket" title
+        // Back button and title
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+            verticalAlignment = Alignment.CenterVertically
         ) {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
+            }
+            Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = "My Basket",
                 fontSize = 24.sp,
@@ -43,7 +52,6 @@ fun CartScreen(cartViewModel: CartViewModel) {
             LazyColumn {
                 items(cartItems) { item ->
                     CartItemView(item, onRemoveItem = {
-                        // Remove item from cart via the ViewModel
                         cartViewModel.removeFromCart(item)
                     })
                 }
@@ -74,17 +82,27 @@ fun CartItemView(item: CartItem, onRemoveItem: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp)
+            .padding(10.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(
-            text = "${item.name} - ${item.weight} x ${item.quantity}",
-            fontSize = 18.sp,
-            modifier = Modifier.weight(1f)
-        )
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = item.name,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "${item.weight} x ${item.quantity}",
+                fontSize = 16.sp
+            )
+        }
+
         Text(
             text = "₱${"%.2f".format(item.price * item.quantity)}",
-            fontSize = 18.sp
+            fontSize = 18.sp,
+            modifier = Modifier.padding(end = 8.dp)
         )
+
         Button(onClick = onRemoveItem) {
             Text(text = "Remove")
         }

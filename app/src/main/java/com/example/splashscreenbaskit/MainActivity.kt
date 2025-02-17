@@ -7,10 +7,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.splashscreenbaskit.AccountDetails.AccountActivity
 import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
 import com.example.splashscreenbaskit.Carts.CartScreen
@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
 
                 // Initialize CartViewModel here
-                val cartViewModel: CartViewModel = viewModel()
+                var cartViewModel: CartViewModel = viewModel()
 
                 NavHost(navController = navController, startDestination = "OnBoardingScreen") {
                     composable("OnBoardingScreen") {
@@ -57,11 +57,11 @@ class MainActivity : ComponentActivity() {
                         AppleScreen(navController = navController, cartViewModel = cartViewModel)
                     }
                     composable("OrangeScreen") {
-                        OrangeScreen(navController = navController)
+                        OrangeScreen(navController = navController, cartViewModel = cartViewModel)
                     }
                     composable("CartScreen") {
                         // Pass CartViewModel to CartScreen
-                        CartScreen(cartViewModel = cartViewModel,)
+                        CartScreen(cartViewModel = cartViewModel, navController = navController)
                     }
                     composable("NotificationsActivity") {
                         NotificationsActivity(navController)

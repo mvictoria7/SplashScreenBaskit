@@ -209,7 +209,7 @@ fun HomeScreen() {
                 HomeContent(navController)
             }
             composable(BottomBarScreen.Cart.route) {
-                CartScreen(cartViewModel = cartViewModel)
+                CartScreen(cartViewModel = cartViewModel, navController = navController)
             }
             composable(BottomBarScreen.Account.route) {
                 AccountActivity(navController)
@@ -225,10 +225,10 @@ fun HomeScreen() {
                 AppleScreen(navController = navController, cartViewModel = cartViewModel)
             }
             composable("OrangeScreen") {
-                OrangeScreen(navController)
+                OrangeScreen(navController = navController, cartViewModel = cartViewModel)
             }
             composable("CartScreen") {
-                CartScreen(cartViewModel = cartViewModel)
+                CartScreen(cartViewModel = cartViewModel, navController = navController)
             }
             composable("NotificationsActivity") {
                 NotificationsActivity(navController)
