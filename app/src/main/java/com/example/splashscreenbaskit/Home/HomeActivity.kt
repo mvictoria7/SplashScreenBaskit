@@ -149,13 +149,16 @@ fun FruitGrid(fruits: List<Fruits>, navController: NavController) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 4.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+                    .padding(start = 30.dp, end = 30.dp, bottom = 10.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 rowFruits.forEach { fruit ->
                     Card(
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F0F0)),
                         modifier = Modifier
                             .weight(1f)
+                            .height(170.dp)
+                            .width(154.dp)
                             .padding(4.dp)
                             .clickable {
                                 if (fruit.name == "Apple") {
@@ -181,16 +184,30 @@ fun FruitGrid(fruits: List<Fruits>, navController: NavController) {
                         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                     ) {
                         Column(
-                            modifier = Modifier.padding(8.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 5.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
                         ) {
                             Image(
                                 painter = painterResource(id = fruit.imageRes),
                                 contentDescription = "Fruit Image",
-                                modifier = Modifier.size(120.dp)
+                                modifier = Modifier
+                                    .height(100.dp)
+                                    .width(135.dp)
+                                    .padding(top = 8.dp)
+                                    .clip(RoundedCornerShape(10.dp))
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            Text(fruit.name, fontWeight = FontWeight.Bold)
+
+                            Text(
+                                fruit.name,
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 16.sp,
+                                fontFamily = poppinsFontFamily,
+                                modifier = Modifier.padding(8.dp)
+                            )
                         }
                     }
                 }

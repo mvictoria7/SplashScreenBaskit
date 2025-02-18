@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -23,7 +24,6 @@ import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import com.example.splashscreenbaskit.Carts.CartItem
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
-
 
 @Composable
 fun AppleScreen(navController: NavController, cartViewModel: CartViewModel) {
@@ -194,7 +194,7 @@ fun AppleScreen(navController: NavController, cartViewModel: CartViewModel) {
                             .width(75.dp)
                             .then(
                                 if (selectedWeight != option) Modifier
-                                    .clip(RoundedCornerShape(10.dp))
+                                    .clip(RoundedCornerShape(15.dp))
                                     .border(BorderStroke(1.dp, Color.LightGray))
                                 else Modifier
                             ),
