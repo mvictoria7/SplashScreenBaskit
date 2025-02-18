@@ -23,12 +23,12 @@ class CartViewModel : ViewModel() {
     }
 
 
-    // Remove an item from the cart
+    // Remove an item
     fun removeFromCart(item: CartItem) {
         _cartItems.remove(item)
     }
 
-    // Increase the quantity of an item in the cart
+    // Increase the quantity
     fun increaseQuantity(item: CartItem) {
         val updatedItem = item.copy(quantity = item.quantity + 1)
         val updatedItems = _cartItems.map { if (it.id == item.id) updatedItem else it }

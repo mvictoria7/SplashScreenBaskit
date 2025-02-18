@@ -354,7 +354,8 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                     Icon(
                         imageVector = Icons.Default.KeyboardArrowDown,
                         contentDescription = "Expand Terms",
-                        modifier = Modifier.padding(end = 20.dp)
+                        modifier = Modifier.padding(end = 20.dp),
+                        tint = Color(0xFF4557FF)
                     )
                 }
             }
