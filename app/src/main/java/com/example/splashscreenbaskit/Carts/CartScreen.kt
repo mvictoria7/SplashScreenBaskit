@@ -26,34 +26,35 @@ import androidx.compose.material.icons.filled.Delete
 fun CartScreen(cartViewModel: CartViewModel, navController: NavController) {
     val cartItems by remember { mutableStateOf(cartViewModel.cartItems) }
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        // Title Bar
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = { navController.popBackStack() }) {
-                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
+    Box(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        // Main content (scrollable list of items)
+        Column(modifier = Modifier.fillMaxSize().padding(bottom = 120.dp)) { // Extra space for the footer
+            // Title Bar
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
+                }
+                Spacer(modifier = Modifier.weight(1f))
+                Text(
+                    text = "My Basket",
+                    fontSize = 24.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                )
+                Spacer(modifier = Modifier.weight(1f))
             }
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = "My Basket",
-                fontSize = 24.sp,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.align(Alignment.CenterVertically)
-            )
-            Spacer(modifier = Modifier.weight(1f))
-        }
 
-        Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
-        // Make the list scrollable while keeping total and checkout fixed
-        Box(modifier = Modifier.weight(1f)) {
             if (cartItems.isEmpty()) {
                 Text(text = "Your basket is empty.", fontSize = 18.sp)
             } else {
-                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                // LazyColumn for scrolling cart items
+                LazyColumn {
                     items(cartItems) { item ->
                         CartItemView(
                             item = item,
@@ -66,26 +67,35 @@ fun CartScreen(cartViewModel: CartViewModel, navController: NavController) {
             }
         }
 
-        // Fixed Total and Checkout Button
+        // Fixed footer content
         val totalPrice = cartItems.sumOf { it.price * it.quantity }
+        val totalItems = cartItems.sumOf { it.quantity }
+
+
         Column(
             modifier = Modifier
+                .align(Alignment.BottomCenter)
                 .fillMaxWidth()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(16.dp)
         ) {
             Text(
+                text = "ITEMS: $totalItems",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+            Text(
                 text = "Total: ₱${"%.2f".format(totalPrice)}",
-                fontSize = 20.sp,
+                fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF6CBF5F), // Green color
-                modifier = Modifier.align(Alignment.Start)
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             )
             Spacer(modifier = Modifier.height(10.dp))
             Button(
                 onClick = { /* Checkout logic */ },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6CBF5F)),
-                modifier = Modifier.fillMaxWidth(0.9f)
+                modifier = Modifier.align(Alignment.CenterHorizontally).fillMaxWidth(0.9f)
             ) {
                 Text(text = "Checkout", color = Color.White, fontSize = 20.sp)
             }
@@ -97,8 +107,12 @@ fun CartScreen(cartViewModel: CartViewModel, navController: NavController) {
 @Composable
 fun CartItemView(item: CartItem, onRemoveItem: () -> Unit, onIncreaseQuantity: () -> Unit, onDecreaseQuantity: () -> Unit) {
     Card(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
-        elevation = CardDefaults.cardElevation(4.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        elevation = CardDefaults.cardElevation(6.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White), // White Card
+        shape = MaterialTheme.shapes.medium
     ) {
         Column(modifier = Modifier.padding(10.dp)) {
             Row(
@@ -107,7 +121,7 @@ fun CartItemView(item: CartItem, onRemoveItem: () -> Unit, onIncreaseQuantity: (
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.apple), // Placeholder image
+                    painter = painterResource(id = item.imageResId),
                     contentDescription = "Product Image",
                     modifier = Modifier.size(50.dp)
                 )

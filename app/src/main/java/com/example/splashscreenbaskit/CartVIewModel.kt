@@ -22,6 +22,7 @@ class CartViewModel : ViewModel() {
         }
     }
 
+
     // Remove an item from the cart
     fun removeFromCart(item: CartItem) {
         _cartItems.remove(item)

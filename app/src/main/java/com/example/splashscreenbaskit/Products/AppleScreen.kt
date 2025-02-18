@@ -27,7 +27,7 @@ import com.example.splashscreenbaskit.viewmodel.CartViewModel
 
 @Composable
 fun AppleScreen(navController: NavController, cartViewModel: CartViewModel) {
-    var quantity by remember { mutableStateOf(0) }
+    var quantity by remember { mutableStateOf(1) }
     var selectedWeight by remember { mutableStateOf("1 pc") }
     val basePrice = 32.25
     val priceIncrease = 30.0
@@ -217,7 +217,7 @@ fun AppleScreen(navController: NavController, cartViewModel: CartViewModel) {
                             weight = selectedWeight,
                             quantity = quantity,
                             price = priceForWeight * quantity,
-                            imageRes = R.drawable.apple
+                            imageResId = R.drawable.apple
                         )
                     )
                     navController.navigate("CartScreen")

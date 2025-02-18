@@ -6,5 +6,5 @@ data class CartItem(
     val weight: String,
     var price: Double,
     var quantity: Int,      // Quantity is mutable to update it later
-    val imageRes: Int       // Resource ID for the image
+    val imageResId: Int       // Resource ID for the image
 )

@@ -269,7 +269,7 @@
                                 weight = selectedWeight,
                                 quantity = quantity,
                                 price = priceForWeight * quantity,
-                                imageRes = R.drawable.orange
+                                imageResId = R.drawable.orange
                             )
                         )
                         navController.navigate("CartScreen")
