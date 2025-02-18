@@ -26,7 +26,7 @@ import com.example.splashscreenbaskit.viewmodel.CartViewModel
 
 
 @Composable
-fun AppleScreen(navController: NavController, cartViewModel: CartViewModel) {
+fun MangoScreen(navController: NavController, cartViewModel: CartViewModel) {
     var quantity by remember { mutableStateOf(1) }
     var selectedWeight by remember { mutableStateOf("1 pc") }
     val basePrice = 32.25
@@ -54,8 +54,8 @@ fun AppleScreen(navController: NavController, cartViewModel: CartViewModel) {
                 .height(300.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.apple),
-                contentDescription = "Apple",
+                painter = painterResource(id = R.drawable.mango),
+                contentDescription = "Mango",
                 modifier = Modifier
                     .height(330.dp)
                     .width(400.dp),
@@ -86,7 +86,7 @@ fun AppleScreen(navController: NavController, cartViewModel: CartViewModel) {
                 .padding(top = 20.dp, start = 25.dp, end = 25.dp)
         ) {
             Text(
-                text = "Apple",
+                text = "Mango",
                 fontSize = 32.sp,
                 fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.Bold
@@ -248,11 +248,11 @@ fun AppleScreen(navController: NavController, cartViewModel: CartViewModel) {
                     cartViewModel.addToCart(
                         CartItem(
                             id = itemId, // Assign a unique ID to the item
-                            name = "Apple",
+                            name = "Mango",
                             weight = selectedWeight,
                             quantity = quantity,
                             price = priceForWeight * quantity,
-                            imageResId = R.drawable.apple
+                            imageResId = R.drawable.mango
                         )
                     )
                     navController.navigate("CartScreen")

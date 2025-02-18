@@ -52,6 +52,11 @@ import com.example.splashscreenbaskit.LoginSignup.LoginActivity
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.splashscreenbaskit.Products.BananaScreen
+import com.example.splashscreenbaskit.Products.GrapesScreen
+import com.example.splashscreenbaskit.Products.MangoScreen
+import com.example.splashscreenbaskit.Products.PineappleScreen
+
 // Data classes
 data class Vendor(
     val name: String,
@@ -159,6 +164,18 @@ fun FruitGrid(fruits: List<Fruits>, navController: NavController) {
                                 if (fruit.name == "Orange") {
                                     navController.navigate("OrangeScreen")
                                 }
+                                if (fruit.name == "Banana") {
+                                    navController.navigate("BananaScreen")
+                                }
+                                if (fruit.name == "Mango") {
+                                    navController.navigate("MangoScreen")
+                                }
+                                if (fruit.name == "Grapes") {
+                                    navController.navigate("GrapesScreen")
+                                }
+                                if (fruit.name == "Pineapple") {
+                                    navController.navigate("PineappleScreen")
+                                }
                             },
                         shape = RoundedCornerShape(10.dp),
                         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -194,7 +211,8 @@ fun HomeScreen() {
 
     Scaffold(
         bottomBar = {
-            if (currentRoute != "AppleScreen" && currentRoute != "OrangeScreen") {
+            if (currentRoute != "AppleScreen" && currentRoute != "OrangeScreen" && currentRoute != "BananaScreen"
+                && currentRoute != "MangoScreen" && currentRoute != "GrapesScreen" && currentRoute != "PineappleScreen") {
                 BottomBar(navController = navController)
             }
 
@@ -226,6 +244,18 @@ fun HomeScreen() {
             }
             composable("OrangeScreen") {
                 OrangeScreen(navController = navController, cartViewModel = cartViewModel)
+            }
+            composable("BananaScreen") {
+                BananaScreen(navController = navController, cartViewModel = cartViewModel)
+            }
+            composable("MangoScreen") {
+                MangoScreen(navController = navController, cartViewModel = cartViewModel)
+            }
+            composable("GrapesScreen") {
+                GrapesScreen(navController = navController, cartViewModel = cartViewModel)
+            }
+            composable("PineappleScreen") {
+                PineappleScreen(navController = navController, cartViewModel = cartViewModel)
             }
             composable("CartScreen") {
                 CartScreen(cartViewModel = cartViewModel, navController = navController)

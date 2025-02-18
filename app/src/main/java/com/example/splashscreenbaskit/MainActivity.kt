@@ -18,7 +18,11 @@ import com.example.splashscreenbaskit.LoginSignup.LoginActivity
 import com.example.splashscreenbaskit.LoginSignup.OnboardingScreen
 import com.example.splashscreenbaskit.LoginSignup.SignUpActivity
 import com.example.splashscreenbaskit.Products.AppleScreen
+import com.example.splashscreenbaskit.Products.BananaScreen
+import com.example.splashscreenbaskit.Products.GrapesScreen
+import com.example.splashscreenbaskit.Products.MangoScreen
 import com.example.splashscreenbaskit.Products.OrangeScreen
+import com.example.splashscreenbaskit.Products.PineappleScreen
 import com.example.splashscreenbaskit.ui.theme.SplashScreenBaskitTheme
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
 
@@ -58,6 +62,18 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("OrangeScreen") {
                         OrangeScreen(navController = navController, cartViewModel = cartViewModel)
+                    }
+                    composable("BananaScreen") {
+                        BananaScreen(navController = navController, cartViewModel = cartViewModel)
+                    }
+                    composable("MangoScreen") {
+                        MangoScreen(navController = navController, cartViewModel = cartViewModel)
+                    }
+                    composable("GrapesScreen") {
+                        GrapesScreen(navController = navController, cartViewModel = cartViewModel)
+                    }
+                    composable("PineappleScreen") {
+                        PineappleScreen(navController = navController, cartViewModel = cartViewModel)
                     }
                     composable("CartScreen") {
                         // Pass CartViewModel to CartScreen
