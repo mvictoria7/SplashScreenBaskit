@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
@@ -38,16 +39,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
-import com.example.splashscreenbaskit.Home.SlideImg
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
@@ -114,6 +111,7 @@ fun TB_HomeContent(navController: NavController) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
                 ){
+
                     Column (
                         modifier = Modifier.padding(top = 60.dp, end = 8.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -254,6 +252,12 @@ fun OrderByLocation() {
         Column(
             modifier = Modifier.padding(start = 50.dp, top = 10.dp)
         ) {
+            /*Image(
+                painter = painterResource(id = R.drawable.baskit_green),
+                contentDescription = "baskit green",
+                modifier = Modifier.size(10.dp) .clip(CircleShape)
+            )*/
+
             Text(
                 text = "Jorose Po",
                 fontSize = 16.sp,
