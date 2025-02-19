@@ -1,5 +1,6 @@
 package com.example.splashscreenbaskit.Tagabili
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -257,6 +259,7 @@ fun TB_OrderItems(){
             fontFamily = poppinsFontFamily
         )
     }
+    Spacer(modifier = Modifier.height(40.dp))
 
     Row (
         modifier = Modifier.fillMaxWidth(),
@@ -264,29 +267,31 @@ fun TB_OrderItems(){
     ){
         Button(
             modifier = Modifier
-                .clip(RoundedCornerShape(5.dp))
                 .height(50.dp)
-                .width(148.dp)
-            ,
+                .width(147.dp),
+            shape = RoundedCornerShape(10.dp),
+            border = BorderStroke(2.dp, Color(0xFF1d7151)),
             onClick = {},
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151)),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.White),
             enabled = true
         ) {
-            Text("Decline",
-                color = Color(0xFF83BD70),
+            Text(
+                text = "Decline",
+                color = Color(0xFF1d7151),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
                 fontFamily = poppinsFontFamily
             )
         }
 
+
         Spacer(modifier = Modifier.width(25.dp))
 
         Button(
             modifier = Modifier
-                .clip(RoundedCornerShape(5.dp))
                 .height(50.dp)
-                .width(148.dp),
+                .width(147.dp),
+            shape = RoundedCornerShape(10.dp),
             onClick = {},
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151)),
             enabled = true
