@@ -243,48 +243,49 @@ fun OrderByLocation() {
             .fillMaxWidth()
             .height(60.dp)
             .width(360.dp),
-        //.padding(start = 20.dp, end = 20.dp),
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         //Image(painter = R.drawable.baskit_white)
-        Column(
-            modifier = Modifier.padding(start = 50.dp, top = 10.dp)
-        ) {
-            /*Image(
-                painter = painterResource(id = R.drawable.baskit_green),
-                contentDescription = "baskit green",
-                modifier = Modifier.size(10.dp) .clip(CircleShape)
-            )*/
+        Row {
+            Column(
+                modifier = Modifier.padding(start = 50.dp, top = 10.dp)
+            ) {
+                /*Image(
+                    painter = painterResource(id = R.drawable.baskit_green),
+                    contentDescription = "baskit green",
+                    modifier = Modifier.size(10.dp) .clip(CircleShape)
+                )*/
 
-            Text(
-                text = "Jorose Po",
-                fontSize = 16.sp,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.SemiBold
-            )
+                Text(
+                    text = "Jorose Po",
+                    fontSize = 16.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.SemiBold
+                )
 
-            Text(
-                text = "5 items",
-                fontSize = 10.sp,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Medium
-            )
-        }
+                Text(
+                    text = "5 items",
+                    fontSize = 10.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.Medium
+                )
+            }
 
-        TextButton(
-            //modifier = Modifier.padding(end = 40.dp),
-            onClick = { },
-            enabled = true
-        ) {
-            Text(
-                text = "View order",
-                color = Color.Black,
-                fontFamily = poppinsFontFamily,
-                fontSize = 10.sp,
-                fontWeight = FontWeight.Medium
-            )
+            TextButton(
+                onClick = { },
+                enabled = true
+            ) {
+                Text(
+                    text = "View order",
+                    color = Color.Black,
+                    fontFamily = poppinsFontFamily,
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(start = 130.dp, top = 20.dp)
+                )
+            }
         }
     }
 }
