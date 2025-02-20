@@ -53,6 +53,7 @@ import com.example.splashscreenbaskit.LoginSignup.LoginActivity
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.splashscreenbaskit.Carts.CheckoutScreen
 import com.example.splashscreenbaskit.Products.BananaScreen
 import com.example.splashscreenbaskit.Products.GrapesScreen
 import com.example.splashscreenbaskit.Products.MangoScreen
@@ -273,6 +274,9 @@ fun HomeScreen() {
             }
             composable("CartScreen") {
                 CartScreen(cartViewModel = cartViewModel, navController = navController)
+            }
+            composable("CheckoutScreen") {
+                CheckoutScreen(cartViewModel = cartViewModel, navController = navController)
             }
             composable("NotificationsActivity") {
                 NotificationsActivity(navController)

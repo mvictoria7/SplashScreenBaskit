@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.AccountDetails.AccountActivity
 import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
 import com.example.splashscreenbaskit.Carts.CartScreen
+import com.example.splashscreenbaskit.Carts.CheckoutScreen
 import com.example.splashscreenbaskit.LoginSignup.LoginActivity
 import com.example.splashscreenbaskit.LoginSignup.OnboardingScreen
 import com.example.splashscreenbaskit.LoginSignup.SignUpActivity
@@ -76,8 +77,10 @@ class MainActivity : ComponentActivity() {
                         PineappleScreen(navController = navController, cartViewModel = cartViewModel)
                     }
                     composable("CartScreen") {
-                        // Pass CartViewModel to CartScreen
                         CartScreen(cartViewModel = cartViewModel, navController = navController)
+                    }
+                    composable("CheckoutScreen") {
+                        CheckoutScreen(cartViewModel = cartViewModel, navController = navController)
                     }
                     composable("NotificationsActivity") {
                         NotificationsActivity(navController)
