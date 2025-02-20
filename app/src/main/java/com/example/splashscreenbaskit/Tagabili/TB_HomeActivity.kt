@@ -92,11 +92,10 @@ fun TB_HomeContent(navController: NavController) {
 
             Box(
                 modifier = Modifier
-                    .background(Color(0xFF1d7151))
+                    .background(Color(0xFF1d7151), shape = RoundedCornerShape(20.dp))
                     .height(160.dp)
                     .width(330.dp)
                     .padding(start = 20.dp, end = 20.dp)
-                    .clip(RoundedCornerShape(10.dp))
             ){
                 Text(
                     text = "PENDING ORDERS",
@@ -199,7 +198,7 @@ fun DropdownLocation(){
         onExpandedChange = {expanded = !expanded}
     ) {
         OutlinedTextField(
-            modifier = Modifier.fillMaxWidth() .menuAnchor(),
+            modifier = Modifier.fillMaxWidth() .menuAnchor() .height(46.dp),
             readOnly = true,
             value = selectedOption,
             onValueChange = {},
@@ -244,21 +243,19 @@ fun OrderByLocation() {
             .height(60.dp)
             .width(360.dp),
         shape = RoundedCornerShape(10.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF2F2F2)),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
-        //Image(painter = R.drawable.baskit_white)
         Row {
             Image(
                 painter = painterResource(id = R.drawable.baskit_green),
                 contentDescription = "baskit green",
                 modifier = Modifier
                     .size(60.dp)
-                    .clip(CircleShape)
-                    .padding (start = 10.dp)
+                    .clip(RoundedCornerShape(topStart = 5.dp, topEnd = 20.dp, bottomStart = 5.dp, bottomEnd = 20.dp))
             )
             Column(
-                modifier = Modifier.padding(start = 50.dp, top = 10.dp)
+                modifier = Modifier.padding(start = 20.dp, top = 10.dp)
             ) {
 
                 Text(
@@ -272,7 +269,8 @@ fun OrderByLocation() {
                     text = "5 items",
                     fontSize = 10.sp,
                     fontFamily = poppinsFontFamily,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Medium,
+                    color = Color(0xFF737272)
                 )
             }
 
@@ -286,7 +284,7 @@ fun OrderByLocation() {
                     fontFamily = poppinsFontFamily,
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Medium,
-                    modifier = Modifier.padding(start = 50.dp, top = 20.dp)
+                    modifier = Modifier.padding(start = 110.dp, top = 25.dp)
                 )
             }
         }
