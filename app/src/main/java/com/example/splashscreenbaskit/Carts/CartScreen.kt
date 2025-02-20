@@ -21,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun CartScreen(cartViewModel: CartViewModel, navController: NavController) {
@@ -51,7 +52,13 @@ fun CartScreen(cartViewModel: CartViewModel, navController: NavController) {
             Spacer(modifier = Modifier.height(10.dp))
 
             if (cartItems.isEmpty()) {
-                Text(text = "Your basket is empty.", fontSize = 18.sp)
+//                Text(text = "Your basket is empty.", fontSize = 18.sp)
+                Image(
+                    painter = painterResource(id = R.drawable.noorders_img),
+                    contentDescription = "S",
+                    modifier = Modifier
+                        .size(150.dp)
+                )
             } else {
                 // LazyColumn for scrolling cart items
                 LazyColumn {
@@ -126,6 +133,8 @@ fun CartItemView(item: CartItem, onRemoveItem: () -> Unit, onIncreaseQuantity: (
                     modifier = Modifier.size(50.dp)
                 )
                 Spacer(modifier = Modifier.width(10.dp))
+
+
                 Column(modifier = Modifier.weight(1f)) {
                     Text(text = item.name, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                     Text(text = "${item.quantity}pc", fontSize = 16.sp, fontWeight = FontWeight.Medium)
@@ -145,7 +154,7 @@ fun CartItemView(item: CartItem, onRemoveItem: () -> Unit, onIncreaseQuantity: (
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         IconButton(onClick = onDecreaseQuantity) {
                             Icon(
-                                painter = painterResource(id = R.drawable.minus),
+                                painter = painterResource(id = R.drawable.add),
                                 contentDescription = "Decrease Quantity",
                                 tint = Color.Black,
                                 modifier = Modifier.size(15.dp)
@@ -166,3 +175,9 @@ fun CartItemView(item: CartItem, onRemoveItem: () -> Unit, onIncreaseQuantity: (
         }
     }
 }
+
+//@Preview(showBackground = true)
+//@Composable
+//fun CartScreen (){
+//    CartScreen()
+//}

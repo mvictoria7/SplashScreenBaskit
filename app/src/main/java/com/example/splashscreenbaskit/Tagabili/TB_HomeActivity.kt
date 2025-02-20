@@ -249,14 +249,17 @@ fun OrderByLocation() {
     ) {
         //Image(painter = R.drawable.baskit_white)
         Row {
+            Image(
+                painter = painterResource(id = R.drawable.baskit_green),
+                contentDescription = "baskit green",
+                modifier = Modifier
+                    .size(60.dp)
+                    .clip(CircleShape)
+                    .padding (start = 10.dp)
+            )
             Column(
                 modifier = Modifier.padding(start = 50.dp, top = 10.dp)
             ) {
-                /*Image(
-                    painter = painterResource(id = R.drawable.baskit_green),
-                    contentDescription = "baskit green",
-                    modifier = Modifier.size(10.dp) .clip(CircleShape)
-                )*/
 
                 Text(
                     text = "Jorose Po",
@@ -283,7 +286,7 @@ fun OrderByLocation() {
                     fontFamily = poppinsFontFamily,
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Medium,
-                    modifier = Modifier.padding(start = 130.dp, top = 20.dp)
+                    modifier = Modifier.padding(start = 50.dp, top = 20.dp)
                 )
             }
         }

@@ -69,14 +69,6 @@ data class Fruits(
     val imageRes: Int
 )
 
-//data class Product(
-//    val name: String,
-//    val price: Double,
-//    val description: String,
-//    val imageRes: Int,
-//    val vendorName: String
-//)
-
 val sampleProducts = listOf(
     Vendor("Product 1", R.drawable.food),
     Vendor("Product 2", R.drawable.food),
@@ -611,4 +603,10 @@ sealed class BottomBarScreen(val route: String, val title: String, val icon: Ima
     object Home : BottomBarScreen("home", "Home", Icons.Default.Home)
     object Cart : BottomBarScreen("cart", "Cart", Icons.Default.ShoppingCart)
     object Account : BottomBarScreen("account", "Account", Icons.Default.AccountCircle)
+}
+
+@Preview (showBackground = true)
+@Composable
+fun HomeActivity (){
+    HomeScreen()
 }
