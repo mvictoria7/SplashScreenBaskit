@@ -20,10 +20,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import com.example.splashscreenbaskit.Carts.CartItem
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
+
 
 @Composable
 fun AppleScreen(navController: NavController, cartViewModel: CartViewModel) {

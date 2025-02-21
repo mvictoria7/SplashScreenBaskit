@@ -20,6 +20,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.TabRowDefaults.Divider
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -106,8 +109,8 @@ fun TB_OrdersContent(navController: NavController) {
             //Spacer(modifier = Modifier.height(45.dp))
 
             Box(modifier = Modifier
-                .fillMaxWidth()
-                .height(1000.dp)
+                .fillMaxSize()
+                .height(800.dp)
                 .clip(RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp))
                 .background (Color(0xFFE0F4DE))
             ){
@@ -244,7 +247,6 @@ fun TB_OrderItems(){
                     )
                 }
 
-
                 Row (modifier = Modifier.padding(top = 20.dp)
                 ){
                     Column {
@@ -336,17 +338,26 @@ fun TB_OrderItems(){
             modifier = Modifier
                 .height(50.dp)
                 .width(147.dp),
-            shape = RoundedCornerShape(10.dp),onClick = {},
+            shape = RoundedCornerShape(10.dp),
+            onClick = {},
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE22727)),
             enabled = true
         ) {
-            Text(
-                text = "Decline",
-                color = Color.White,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-                fontFamily = poppinsFontFamily
-            )
+            Row {
+                Icon(
+                    Icons.Default.Close,
+                    contentDescription = "Decline",
+                    tint = Color.White
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "Decline",
+                    color = Color.White,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
+                    fontFamily = poppinsFontFamily
+                )
+            }
         }
 
 
@@ -361,12 +372,21 @@ fun TB_OrderItems(){
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151)),
             enabled = true
         ) {
-            Text("Accept",
-                color = Color.White,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-                fontFamily = poppinsFontFamily
-            )
+            Row {
+                Icon(
+                    Icons.Default.Done,
+                    contentDescription = "Accept",
+                    tint = Color.White
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "Accept",
+                    color = Color.White,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
+                    fontFamily = poppinsFontFamily
+                )
+            }
         }
     }
 }
