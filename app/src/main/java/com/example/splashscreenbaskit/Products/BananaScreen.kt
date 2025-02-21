@@ -198,8 +198,8 @@ fun BananaScreen(navController: NavController, cartViewModel: CartViewModel) {
                                     .border(BorderStroke(1.dp, Color.LightGray))
                                 else Modifier
                             ),
-                        onClick = { selectedWeight = option },
                         shape = RoundedCornerShape(10.dp),
+                        onClick = { selectedWeight = option },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = if (selectedWeight == option) Color(0xFFD9D9D9) else Color.White,
                             contentColor = Color.Black

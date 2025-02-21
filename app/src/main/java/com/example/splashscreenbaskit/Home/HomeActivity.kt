@@ -566,11 +566,12 @@
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(80.dp),
+                .height(70.dp)
+                .clip(RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp)),
             color = Color(0xFF1d7151)
         ) {
             Row(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize() .padding(top = 5.dp),
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -591,7 +592,7 @@
                             Icon(
                                 imageVector = screen.icon,
                                 contentDescription = screen.title,
-                                tint = iconColor,
+                                tint = if (isSelected) Color.White else Color.Gray,
                                 modifier = Modifier.size(iconSize)
                             )
                         },
