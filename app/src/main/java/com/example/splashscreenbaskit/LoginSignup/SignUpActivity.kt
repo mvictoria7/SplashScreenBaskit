@@ -51,6 +51,8 @@ fun SignUpActivity(navController: NavController) {
     var isChecked by remember { mutableStateOf(false) }
     var showTerms by remember { mutableStateOf(false) }
 
+    val scrollState = rememberScrollState()
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.White
@@ -58,7 +60,8 @@ fun SignUpActivity(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 16.dp)
+                .verticalScroll(scrollState),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
