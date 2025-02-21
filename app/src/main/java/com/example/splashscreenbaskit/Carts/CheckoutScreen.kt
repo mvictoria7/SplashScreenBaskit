@@ -83,7 +83,7 @@ fun CheckoutScreen(cartViewModel: CartViewModel, navController: NavController) {
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6CBF5F)),
                 modifier = Modifier.fillMaxWidth(0.9f)
             ) {
-                Text(text = "Confirm Order", color = Color.White, fontSize = 20.sp)
+                Text(text = "Pay-In Store", color = Color.White, fontSize = 20.sp)
             }
         }
     }
