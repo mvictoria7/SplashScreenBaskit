@@ -452,19 +452,39 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                             horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
                             Button(
-                                modifier = Modifier.clip(RoundedCornerShape(10.dp)),
+                                modifier = Modifier
+                                    .height(50.dp)
+                                    .width(147.dp),
+                                shape = RoundedCornerShape(10.dp),
                                 onClick = {
                                     onCheckedChange(false)
                                     showDialog = false
                                 },
-                                colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE22727)),
                                 enabled = hasReachedBottom
                             ) {
-                                Text("Decline")
+                                Row {
+                                    Icon(
+                                        Icons.Default.Close,
+                                        contentDescription = "Decline",
+                                        tint = Color.White
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(
+                                        text = "Decline",
+                                        color = Color.White,
+                                        fontSize = 16.sp,
+                                        fontWeight = FontWeight.Medium,
+                                        fontFamily = poppinsFontFamily
+                                    )
+                                }
                             }
 
                             Button(
-                                modifier = Modifier.clip(RoundedCornerShape(10.dp)),
+                                modifier = Modifier
+                                    .height(50.dp)
+                                    .width(147.dp),
+                                shape = RoundedCornerShape(10.dp),
                                 onClick = {
                                     onCheckedChange(true)
                                     showDialog = false
@@ -472,7 +492,21 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151)),
                                 enabled = hasReachedBottom
                             ) {
-                                Text("Accept")
+                                Row {
+                                    Icon(
+                                        Icons.Default.Done,
+                                        contentDescription = "Accept",
+                                        tint = Color.White
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(
+                                        text = "Decline",
+                                        color = Color.White,
+                                        fontSize = 16.sp,
+                                        fontWeight = FontWeight.Medium,
+                                        fontFamily = poppinsFontFamily
+                                    )
+                                }
                             }
                         }
                     }

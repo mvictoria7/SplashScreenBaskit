@@ -25,9 +25,14 @@ import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import com.example.splashscreenbaskit.Carts.CartItem
+import com.example.splashscreenbaskit.Tagabili.TB_OrdersContent
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
 
-
+/*@Preview (showBackground = true)
+@Composable
+fun AppleActivity (){
+    AppleScreen(navController = rememberNavController())
+}*/
 @Composable
 fun AppleScreen(navController: NavController, cartViewModel: CartViewModel) {
     var quantity by remember { mutableStateOf(1) }

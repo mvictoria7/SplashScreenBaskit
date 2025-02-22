@@ -39,7 +39,7 @@ import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
 @Preview(showBackground = true)
 @Composable
-fun AccountActivity() {
+fun AccountActivityPreview() {
     AccountActivity(navController = rememberNavController())
 }
 

@@ -110,7 +110,6 @@ fun TB_OrdersContent(navController: NavController) {
 
             Box(modifier = Modifier
                 .fillMaxSize()
-                .height(800.dp)
                 .clip(RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp))
                 .background (Color(0xFFE0F4DE))
             ){
@@ -134,6 +133,7 @@ fun TB_OrdersContent(navController: NavController) {
 
 @Composable
 fun TB_CustomerInfo (){
+
     Box(
         modifier = Modifier
             .background(Color.White, shape = RoundedCornerShape(30.dp))
@@ -222,7 +222,7 @@ fun TB_OrderItems(){
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .fillMaxHeight()
                 .padding(top = 8.dp)
                 .background (Color.White, shape = RoundedCornerShape(30.dp))
         ){
@@ -239,7 +239,7 @@ fun TB_OrderItems(){
                     contentAlignment = Alignment.Center
                 ){
                     Text(
-                        text = "Jorose Store",
+                        text = "JOROSE STORE",
                         color = Color.Black,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
@@ -247,51 +247,7 @@ fun TB_OrderItems(){
                     )
                 }
 
-                Row (modifier = Modifier.padding(top = 20.dp)
-                ){
-                    Column {
-                        Text(text = "Product",
-                            color = Color.Black,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                            fontFamily = poppinsFontFamily
-                        )
-
-                        Row {
-                            Text(text = "1 pc",
-                                color = Color.Gray,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Normal,
-                                fontFamily = poppinsFontFamily
-                            )
-
-                            Text(text = "Quantity:",
-                                color = Color.Gray,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Bold,
-                                fontFamily = poppinsFontFamily,
-                                modifier = Modifier.padding(start = 15.dp)
-                            )
-
-                            Text(text = "1",
-                                color = Color.Gray,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Bold,
-                                fontFamily = poppinsFontFamily,
-                                modifier = Modifier.padding(start = 5.dp)
-                            )
-                        }
-                    }
-
-                    Text(
-                        text = "₱ 00.00",
-                        color = Color.DarkGray,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        fontFamily = poppinsFontFamily,
-                        modifier = Modifier.padding(start = 100.dp, top = 10.dp)
-                    )
-                }
+                ProductDetails()
             }
         }
 
@@ -388,6 +344,55 @@ fun TB_OrderItems(){
                 )
             }
         }
+    }
+}
+
+@Composable
+fun ProductDetails(){
+    Row (modifier = Modifier.padding(top = 20.dp)
+    ){
+        Column {
+            Text(text = "Product",
+                color = Color.Black,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = poppinsFontFamily
+            )
+
+            Row {
+                Text(text = "1 pc",
+                    color = Color.Gray,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Normal,
+                    fontFamily = poppinsFontFamily
+                )
+
+                Text(text = "Quantity:",
+                    color = Color.Gray,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = poppinsFontFamily,
+                    modifier = Modifier.padding(start = 15.dp)
+                )
+
+                Text(text = "1",
+                    color = Color.Gray,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = poppinsFontFamily,
+                    modifier = Modifier.padding(start = 5.dp)
+                )
+            }
+        }
+
+        Text(
+            text = "₱ 00.00",
+            color = Color.DarkGray,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.SemiBold,
+            fontFamily = poppinsFontFamily,
+            modifier = Modifier.padding(start = 100.dp, top = 10.dp)
+        )
     }
 }
 
