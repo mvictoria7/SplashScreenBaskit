@@ -361,28 +361,30 @@ fun AccountActivity(navController: NavController) {
     if (showDialog.value) {
         AlertDialog(
             onDismissRequest = { showDialog.value = false },
-            title = { Text("Log Out") },
-            text = { Text("Are you sure you want to log out?") },
+            title = {
+                Text("Log Out?", fontSize = 18.sp, fontFamily = poppinsFontFamily, fontWeight = FontWeight.Bold ) },
+            text = { Text("Are you sure you want to log out?", fontSize = 14.sp, fontFamily = poppinsFontFamily, fontWeight = FontWeight.Normal) },
             confirmButton = {
                 Button(
                     onClick = {
                         navController.navigate(route = "LoginActivity")
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCA0000))
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCB3B3B))
                 ) {
-                    Text("Log out", color = Color.White)
+                    Text("Log out", color = Color.White, fontSize = 15.sp, fontFamily = poppinsFontFamily, fontWeight = FontWeight.SemiBold)
                 }
             },
             dismissButton = {
                 Button(
                     onClick = onCancelLogOut,
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD9D9D9))
                 ) {
-                    Text("Cancel", color = Color.White)
+                    Text("Cancel", color = Color.Black, fontSize = 15.sp, fontFamily = poppinsFontFamily, fontWeight = FontWeight.SemiBold)
                 }
             },
             containerColor = Color.White,
-            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
+            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
+            modifier = Modifier.size(width = 325.dp, height = 220.dp) .clip(RoundedCornerShape(20.dp))
         )
 
     }

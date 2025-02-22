@@ -127,7 +127,7 @@ fun TB_HomeContent(navController: NavController) {
                         ){
 
                             Column (
-                                modifier = Modifier.padding(top = 60.dp, end = 8.dp),
+                                modifier = Modifier.padding(top = 65.dp, end = 8.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center
                             ){
@@ -151,7 +151,7 @@ fun TB_HomeContent(navController: NavController) {
                             Spacer(modifier = Modifier.width(50.dp))
 
                             Column (
-                                modifier = Modifier.padding(top = 60.dp, end = 8.dp),
+                                modifier = Modifier.padding(top = 65.dp, end = 8.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center
                             ) {

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,6 +38,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -277,7 +279,7 @@ fun TB_AccountDetails(navController: NavController) {
                             )
                             Text(text = "0900-000-0000")
 
-                            Spacer(modifier = Modifier.width(100.dp))
+                            Spacer(modifier = Modifier.width(110.dp))
 
                             Icon(
                                 imageVector = Icons.Default.Edit,
@@ -378,28 +380,30 @@ fun TB_AccountDetails(navController: NavController) {
     if (showDialog.value) {
         AlertDialog(
             onDismissRequest = { showDialog.value = false },
-            title = { Text("Log Out") },
-            text = { Text("Are you sure you want to log out?") },
+            title = {
+                Text("Log Out?", fontSize = 18.sp, fontFamily = poppinsFontFamily, fontWeight = FontWeight.Bold ) },
+            text = { Text("Are you sure you want to log out?", fontSize = 14.sp, fontFamily = poppinsFontFamily, fontWeight = FontWeight.Normal) },
             confirmButton = {
                 Button(
                     onClick = {
                         navController.navigate(route = "LoginActivity")
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCA0000))
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCB3B3B))
                 ) {
-                    Text("Log out", color = Color.White)
+                    Text("Log out", color = Color.White, fontSize = 15.sp, fontFamily = poppinsFontFamily, fontWeight = FontWeight.SemiBold)
                 }
             },
             dismissButton = {
                 Button(
                     onClick = onCancelLogOut,
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD9D9D9))
                 ) {
-                    Text("Cancel", color = Color.White)
+                    Text("Cancel", color = Color.Black, fontSize = 15.sp, fontFamily = poppinsFontFamily, fontWeight = FontWeight.SemiBold)
                 }
             },
             containerColor = Color.White,
-            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
+            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
+            modifier = Modifier.size(width = 325.dp, height = 220.dp) .clip(RoundedCornerShape(20.dp))
         )
 
     }
