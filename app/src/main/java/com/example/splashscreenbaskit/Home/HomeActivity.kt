@@ -489,11 +489,18 @@
 
             Spacer(modifier = Modifier.width(10.dp))
 
-            Icon(
-                Icons.Default.Notifications,
-                contentDescription = "Notifications Icon",
+            IconButton(
+                onClick = {},
+                    //navController.navigate("NotificationsActivity") },
+                enabled = true,
                 modifier = Modifier.size(25.dp)
-            )
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Notifications,
+                    contentDescription = "Notifications",
+                    tint = Color.Black
+                )
+            }
         }
     }
 
@@ -529,7 +536,7 @@
             ) {
                 Text(
                     "DAGUPAN",
-                    color = if (selectedLocation.value == "Dagupan") Color.Gray else Color(0xFFBFBFBF),
+                    color = if (selectedLocation.value == "Dagupan") Color.Black else Color(0xFFBFBFBF),
                     fontSize = 15.sp,fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.Bold,
                     style = TextStyle(fontFamily = poppinsFontFamily)
