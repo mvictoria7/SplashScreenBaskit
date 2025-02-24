@@ -68,6 +68,10 @@
     import androidx.compose.ui.draw.alpha
     import androidx.compose.ui.draw.clip
     import androidx.compose.ui.draw.clipToBounds
+    import com.example.splashscreenbaskit.LoginSignup.ChangePasswordScreen
+    import com.example.splashscreenbaskit.LoginSignup.EnterOTPScreen
+    import com.example.splashscreenbaskit.LoginSignup.ForgotPasswordScreen
+    import com.example.splashscreenbaskit.LoginSignup.ResetPasswordScreen
 
     // Data classes
     data class Vendor(
@@ -292,6 +296,24 @@
                     }
                     composable("LoginActivity") {
                         LoginActivity(navController)
+                    }
+                    composable("NotificationsActivity") {
+                        NotificationsActivity(navController)
+                    }
+                    composable("SettingsActivity") {
+                        SettingsActivity(navController)
+                    }
+                    composable("ForgotPasswordScreen") {
+                        ForgotPasswordScreen(navController)
+                    }
+                    composable("EnterOTPScreen") {
+                        EnterOTPScreen(navController)
+                    }
+                    composable("ChangePasswordScreen") {
+                        ChangePasswordScreen(navController)
+                    }
+                    composable("ResetPasswordScreen") {
+                        ResetPasswordScreen(navController)
                     }
                 }
             }

@@ -108,8 +108,7 @@ fun LoginActivity(navController: NavController) {
                 fontSize = 12.sp,
                 color = Color(0xFF4557FF),
                 modifier = Modifier.clickable {
-                    Log.d("ForgotPassword", "Clicked!")
-                    showDialog = true
+                    navController.navigate("ForgotPasswordScreen")
                 }
             )
         }
@@ -189,37 +188,6 @@ fun LoginActivity(navController: NavController) {
             }
         }
 
-        if (showDialog) {
-            AlertDialog(
-                onDismissRequest = { showDialog = false },
-                title = { Text(text = "Reset Password") },
-                text = {
-                    Column {
-                        Text("Enter a new password")
-                        OutlinedTextField(
-                            value = newPassword,
-                            onValueChange = { newPassword = it },
-                            label = { Text("New Password") },
-                            visualTransformation = PasswordVisualTransformation(),
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                    }
-                },
-                confirmButton = {
-                    TextButton(onClick = {
-                        showDialog = false
-                        showNewPasswordField = true
-                        Log.d("ForgotPassword", "Password reset confirmed")
-                    }) {
-                        Text("Reset")
-                    }
-                },
-                dismissButton = {
-                    TextButton(onClick = { showDialog = false }) {
-                        Text("Cancel")
-                    }
-                }
-            )
-        }
+
     }
 }

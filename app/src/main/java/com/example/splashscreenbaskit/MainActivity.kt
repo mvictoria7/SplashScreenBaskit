@@ -13,10 +13,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.AccountDetails.AccountActivity
 import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
+import com.example.splashscreenbaskit.AccountDetails.SettingsActivity
 import com.example.splashscreenbaskit.Carts.CartScreen
 import com.example.splashscreenbaskit.Carts.CheckoutScreen
+import com.example.splashscreenbaskit.LoginSignup.ChangePasswordScreen
+import com.example.splashscreenbaskit.LoginSignup.EnterOTPScreen
+import com.example.splashscreenbaskit.LoginSignup.ForgotPasswordScreen
 import com.example.splashscreenbaskit.LoginSignup.LoginActivity
 import com.example.splashscreenbaskit.LoginSignup.OnboardingScreen
+import com.example.splashscreenbaskit.LoginSignup.ResetPasswordScreen
 import com.example.splashscreenbaskit.LoginSignup.SignUpActivity
 import com.example.splashscreenbaskit.Products.AppleScreen
 import com.example.splashscreenbaskit.Products.BananaScreen
@@ -84,6 +89,21 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("NotificationsActivity") {
                         NotificationsActivity(navController)
+                    }
+                    composable("SettingsActivity") {
+                        SettingsActivity(navController)
+                    }
+                    composable("ForgotPasswordScreen") {
+                        ForgotPasswordScreen(navController)
+                    }
+                    composable("EnterOTPScreen") {
+                        EnterOTPScreen(navController)
+                    }
+                    composable("ChangePasswordScreen") {
+                        ChangePasswordScreen(navController)
+                    }
+                    composable("ResetPasswordScreen") {
+                        ResetPasswordScreen(navController)
                     }
                 }
             }

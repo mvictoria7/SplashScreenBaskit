@@ -330,7 +330,10 @@ fun AccountActivity(navController: NavController) {
                         fontSize = 12.sp,
                         color = Color(0xFF4557FF),
                         fontFamily = poppinsFontFamily,
-                        style = TextStyle(textDecoration = TextDecoration.Underline)
+                        style = TextStyle(textDecoration = TextDecoration.Underline),
+                        modifier = Modifier.clickable {
+                            navController.navigate("ResetPasswordScreen")
+                        }
                     )
                 }
             }
