@@ -50,11 +50,11 @@ class MainActivity : ComponentActivity() {
                     composable("OnBoardingScreen") {
                         OnboardingScreen(navController)
                     }
-                    composable("LoginActivity") {
-                        LoginActivity(navController)
-                    }
                     composable("SignUpActivity") {
                         SignUpActivity(navController)
+                    }
+                    composable("LoginActivity") {
+                        LoginActivity(navController)
                     }
                     composable("AccountActivity") {
                         AccountActivity(navController)

@@ -50,7 +50,7 @@ fun ResetPasswordScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(40.dp))
 
-        // Forgot Password Illustration
+
         Image(
             painter = painterResource(id = R.drawable.notif_img), // Replace with actual drawable
             contentDescription = "Reset Password",
