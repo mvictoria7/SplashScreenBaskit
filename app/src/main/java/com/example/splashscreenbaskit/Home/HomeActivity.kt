@@ -84,17 +84,31 @@
         val imageRes: Int
     )
 
-    val sampleProducts = listOf(
-        Vendor("Product 1", R.drawable.food),
-        Vendor("Product 2", R.drawable.food),
-        Vendor("Product 3", R.drawable.food),
-        Vendor("Product 4", R.drawable.food),
-        Vendor("Product 5", R.drawable.food),
-        Vendor("Product 6", R.drawable.food),
-        Vendor("Product 7", R.drawable.food),
-        Vendor("Product 8", R.drawable.food)
+    val dagupanVendors = listOf(
+        Vendor("Fresh Mart Dagupan", R.drawable.food),
+        Vendor("Green Store", R.drawable.food),
+        Vendor("Dagupan Market", R.drawable.food),
+        Vendor("Prime Goods", R.drawable.food)
+    )
 
-        )
+    val calasiaoVendors = listOf(
+        Vendor("Calasiao Fresh", R.drawable.food),
+        Vendor("Golden Harvest", R.drawable.food),
+        Vendor("Market Plus", R.drawable.food),
+        Vendor("Sunny Farms", R.drawable.food)
+    )
+
+//    val sampleProducts = listOf(
+//        Vendor("Product 1", R.drawable.food),
+//        Vendor("Product 2", R.drawable.food),
+//        Vendor("Product 3", R.drawable.food),
+//        Vendor("Product 4", R.drawable.food),
+//        Vendor("Product 5", R.drawable.food),
+//        Vendor("Product 6", R.drawable.food),
+//        Vendor("Product 7", R.drawable.food),
+//        Vendor("Product 8", R.drawable.food)
+//
+//        )
 
     @Composable
     fun PageIndicator(currentPage: Int, totalScreens: Int) {
@@ -254,12 +268,12 @@
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues) // This prevents overlap with BottomBar
+                    .padding(paddingValues)
             ) {
                 NavHost(
                     navController = navController,
                     startDestination = BottomBarScreen.Home.route,
-                    modifier = Modifier.weight(1f) // Ensures NavHost fills remaining space
+                    modifier = Modifier.weight(1f)
                 ) {
                     composable(BottomBarScreen.Home.route) {
                         HomeContent(navController)
@@ -332,7 +346,6 @@
         ) {
             Column(
                 modifier = Modifier
-                    //.padding(horizontal = 30.dp)
                     .fillMaxWidth()
                     .verticalScroll(scrollState),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -344,7 +357,7 @@
                     contentDescription = "Logo",
                     modifier = Modifier
                         .size(70.dp)
-                        .padding(bottom = 16.dp)
+                        .padding(16.dp)
                 )
 
                 Text(
@@ -356,8 +369,6 @@
                     modifier = Modifier.offset(y = (-20).dp)
                 )
 
-                //Spacer(modifier = Modifier.height(10.dp))
-
                 SearchBar()
 
                 Spacer(modifier = Modifier.height(30.dp))
@@ -368,13 +379,29 @@
 
                 LocationSelector(selectedLocation)
 
-                HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp, horizontal = 10.dp), thickness = 2.dp)
+                HorizontalDivider(
+                    modifier = Modifier.padding(vertical = 4.dp, horizontal = 10.dp),
+                    thickness = 2.dp
+                )
 
                 CategoryRow(selectedCategory, navController)
 
                 Spacer(modifier = Modifier.height(5.dp))
 
+
                 when (selectedCategory.value) {
+                    null, "SHOP" -> {
+                        when (selectedLocation.value) {
+                            "Dagupan" -> VendorGrid(
+                                products = dagupanVendors,
+                                navController = navController
+                            )
+                            "Calasiao" -> VendorGrid(
+                                products = calasiaoVendors,
+                                navController = navController
+                            )
+                        }
+                    }
                     "Fruits" -> FruitGrid(
                         listOf(
                             Fruits("Apple", R.drawable.apple),
@@ -386,30 +413,8 @@
                         ),
                         navController
                     )
-                    else -> VendorGrid(sampleProducts, navController)
                 }
             }
-        }
-    }
-
-    @Composable
-    fun VendorDetailScreen(vendorName: String) {
-        val products = listOf(
-            Fruits("Apple", R.drawable.apple),
-            Fruits("Orange", R.drawable.orange),
-            Fruits("Banana", R.drawable.banana),
-            Fruits("Mango", R.drawable.mango),
-            Fruits("Grapes", R.drawable.grapes),
-            Fruits("Pineapple", R.drawable.pineapple)
-        )
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-        ) {
-            Text(text = "$vendorName's Products", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 
@@ -493,8 +498,8 @@
                 singleLine = true,
                 decorationBox = { innerTextField ->
                     Box(
-                        contentAlignment = Alignment.CenterStart, // Center horizontally
-                        modifier = Modifier.fillMaxWidth() // Make the Box fill the available width
+                        contentAlignment = Alignment.CenterStart,
+                        modifier = Modifier.fillMaxWidth()
                     ) {
                         if (searchText.text.isEmpty()) {
                             Text(
@@ -504,7 +509,7 @@
                                 fontFamily = poppinsFontFamily
                             )
                         }
-                        innerTextField() // This ensures the inner text field is still drawn
+                        innerTextField()
                     }
                 }
             )
