@@ -68,7 +68,7 @@
     import androidx.compose.ui.draw.alpha
     import androidx.compose.ui.draw.clip
     import androidx.compose.ui.draw.clipToBounds
-    import com.example.splashscreenbaskit.AccountDetails.BusinessInformationScreen
+    import com.example.splashscreenbaskit.AccountDetails.BusinessInformationActivity
     import com.example.splashscreenbaskit.AccountDetails.RequestSentScreen
     import com.example.splashscreenbaskit.AccountDetails.ShopInformationScreen
     import com.example.splashscreenbaskit.LoginSignup.ChangePasswordScreen
@@ -335,8 +335,8 @@
                     composable("ShopInformationScreen") {
                         ShopInformationScreen(navController)
                     }
-                    composable("BusinessInformationScreen") {
-                        BusinessInformationScreen(navController)
+                    composable("BusinessInformationActivity") {
+                        BusinessInformationActivity(navController)
                     }
                     composable("RequestSentScreen") {
                         RequestSentScreen(navController)

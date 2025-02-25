@@ -45,6 +45,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -75,7 +76,7 @@ fun TB_HomeContent(navController: NavController) {
             Box(modifier = Modifier
                 .height(363.dp)
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(bottomStart = 30.dp, bottomEnd = 30.dp))
+                .clip(RoundedCornerShape(bottomStart = 50.dp, bottomEnd = 50.dp))
                 .background (Color(0xFF1d7151))
             ){
                 Column(
@@ -222,7 +223,6 @@ fun DropdownLocation(){
             readOnly = true,
             value = selectedOption,
             onValueChange = {},
-            //label = { Text(text = "Select location") },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)},
             colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(
                 focusedBorderColor = Color.Black,
@@ -238,7 +238,7 @@ fun DropdownLocation(){
         ) {
             options.forEach{
                 DropdownMenuItem(
-                    text = {Text(it)},
+                    text = {Text(text = it,style = TextStyle(fontFamily = poppinsFontFamily))},
                     onClick = {
                         selectedOption = it
                         expanded = false

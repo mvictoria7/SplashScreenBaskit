@@ -14,6 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,6 +38,10 @@ fun ShopInformationScreen(navController: NavController) {
     var shopAddress by remember { mutableStateOf("") }
     var ownerName by remember { mutableStateOf("") }
     var ownerNumber by remember { mutableStateOf("") }
+
+    val options = listOf("Select location --", "Dagupan", "Calasiao")
+    var expanded by remember { mutableStateOf(false) }
+    var selectedOption by remember { mutableStateOf(options[0]) }
 
     val isButtonEnabled = shopName.isNotBlank() && shopAddress.isNotBlank() && ownerName.isNotBlank() && ownerNumber.isNotBlank()
 
@@ -116,7 +122,7 @@ fun ShopInformationScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(20.dp))
 
                 Text(
-                    text = "Shop Name",
+                    text = "Store Name",
                     fontSize = 14.sp,
                     fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.Normal,
@@ -124,9 +130,10 @@ fun ShopInformationScreen(navController: NavController) {
                 OutlinedTextField(
                     value = shopName,
                     onValueChange = { shopName = it },
-                    label = {
-                        Text("Enter your shop name",
+                    placeholder = {
+                        Text("Enter your store name",
                             fontSize = 14.sp,
+                            fontWeight = FontWeight.Normal,
                             fontFamily = poppinsFontFamily,
                             color = Color(0xFF8C8C8C)
                         )
@@ -142,7 +149,7 @@ fun ShopInformationScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
-                    text = "Shop Address",
+                    text = "Store Address",
                     fontSize = 14.sp,
                     fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.Normal,
@@ -150,16 +157,64 @@ fun ShopInformationScreen(navController: NavController) {
                 OutlinedTextField(
                     value = shopAddress,
                     onValueChange = { shopAddress = it },
-                    label = {
-                        Text("Enter your shop address",
+                    placeholder = {
+                        Text("Enter your store address",
                             fontSize = 14.sp,
+                            fontWeight = FontWeight.Normal,
                             fontFamily = poppinsFontFamily,
                             color = Color(0xFF8C8C8C)
                         )
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(10.dp)
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = Color.Black,
+                        unfocusedBorderColor = Color.Gray
+                    )
                 )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Text(
+                    text = "Store Location",
+                    fontSize = 14.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.Black
+                )
+                ExposedDropdownMenuBox(
+                    expanded = expanded,
+                    onExpandedChange = {expanded = !expanded}
+                ) {
+                    OutlinedTextField(
+                        modifier = Modifier.fillMaxWidth() .menuAnchor(),
+                        readOnly = true,
+                        value = selectedOption,
+                        onValueChange = {},
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)},
+                        colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(
+                            focusedBorderColor = Color.Black,
+                            unfocusedBorderColor = Color.Gray
+                        ),
+                        shape = RoundedCornerShape(10.dp)
+                    )
+
+                    ExposedDropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = {expanded = false}
+                    ) {
+                        options.forEach{
+                            DropdownMenuItem(
+                                text = {Text(text = it,style = TextStyle(fontFamily = poppinsFontFamily))},
+                                onClick = {
+                                    selectedOption = it
+                                    expanded = false
+                                },
+                                contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                            )
+                        }
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(10.dp))
 
@@ -168,19 +223,25 @@ fun ShopInformationScreen(navController: NavController) {
                     fontSize = 14.sp,
                     fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.Normal,
-                    color = Color.Black)
+                    color = Color.Black
+                )
                 OutlinedTextField(
                     value = ownerName,
                     onValueChange = { ownerName = it },
-                    label = {
+                    placeholder = {
                         Text("Enter your name",
                             fontSize = 14.sp,
+                            fontWeight = FontWeight.Normal,
                             fontFamily = poppinsFontFamily,
                             color = Color(0xFF8C8C8C)
                         )
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(10.dp)
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = Color.Black,
+                        unfocusedBorderColor = Color.Gray
+                    )
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -194,22 +255,27 @@ fun ShopInformationScreen(navController: NavController) {
                 OutlinedTextField(
                     value = ownerNumber,
                     onValueChange = { ownerNumber = it },
-                    label = {
+                    placeholder = {
                         Text("Enter your number",
                             fontSize = 14.sp,
+                            fontWeight = FontWeight.Normal,
                             fontFamily = poppinsFontFamily,
                             color = Color(0xFF8C8C8C)
                         )
                     },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
+                    colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = Color.Black,
+                        unfocusedBorderColor = Color.Gray
+                    ),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
 
                 Spacer(modifier = Modifier.height(50.dp))
 
                 Button(
-                    onClick = {navController.navigate("BusinessInformationScreen")},
+                    onClick = {navController.navigate("BusinessInformationActivity")},
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E7D32)),
                     modifier = Modifier.fillMaxWidth().height(50.dp),
                     enabled = isButtonEnabled

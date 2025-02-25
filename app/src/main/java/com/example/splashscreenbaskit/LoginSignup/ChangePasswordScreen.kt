@@ -16,104 +16,135 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
+@Preview(showBackground = true)
+@Composable
+fun ChangePreview() {
+   ChangePasswordScreen(navController = rememberNavController())
+}
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChangePasswordScreen(navController: NavController) {
-    var password by remember { mutableStateOf("") }
-    var confirmPassword by remember { mutableStateOf("") }
+    var newPass by remember { mutableStateOf("") }
+    var confirmPass by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
-            .background(Color.White),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(Color.White)
     ) {
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(50.dp))
 
-        // Back Button
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "< Back",
-                fontSize = 20.sp,
-                color = Color.Black,
-                fontWeight = FontWeight.Bold,
-                fontFamily = poppinsFontFamily,
-                modifier = Modifier.clickable { navController.popBackStack() }
-            )
-        }
-
-        Spacer(modifier = Modifier.height(40.dp))
-
-        // Forgot Password Illustration
-        Image(
-            painter = painterResource(id = R.drawable.notif_img), // Replace with actual drawable
-            contentDescription = "Change Password",
-            modifier = Modifier.size(250.dp),
+        Text(
+            text = "< Back",
+            fontSize = 14.sp,
+            color = Color.Black,
+            fontWeight = FontWeight.SemiBold,
+            fontFamily = poppinsFontFamily,
+            modifier = Modifier
+                .padding(start = 20.dp)
+                .clickable { navController.popBackStack() }
         )
 
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(60.dp))
+
+
+        Column (
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.changepassword_img),
+                contentDescription = "Reset Password",
+                modifier = Modifier.height(199.dp),
+            )
+        }
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp), // Adds padding from both sides
-            horizontalAlignment = Alignment.Start // Aligns all content to the left
+                .padding(horizontal = 40.dp),
+            horizontalAlignment = Alignment.Start
         ) {
             Spacer(modifier = Modifier.height(40.dp))
 
             Text(
                 text = "Change password",
-                fontSize = 27.sp,
-                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.ExtraBold,
+                fontFamily = poppinsFontFamily,
                 color = Color.Black
-            )
-
-            Spacer(modifier = Modifier.height(10.dp)) // Spacing
-
-            Text(
-                text = "Change Password",
-                fontSize = 14.sp,
-                color = Color.Gray
-            )
-
-            OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
-                label = { Text("New Password") },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(10.dp)
-            )
-            OutlinedTextField(
-                value = confirmPassword,
-                onValueChange = { confirmPassword = it },
-                label = { Text("Confirm Password") },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(10.dp)
             )
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Send OTP Button
+            Text(
+                text = "Password must contain at least 8 characters, one special character, and one number.",
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium,
+                fontFamily = poppinsFontFamily,
+                color = Color(0xFF8C8C8C)
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            OutlinedTextField(
+                value = newPass,
+                onValueChange = { newPass = it },
+                label = { Text("New Password",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal,
+                    fontFamily = poppinsFontFamily,
+                    color = Color(0xFF8C8C8C)) },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(10.dp),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.Gray
+                )
+            )
+            OutlinedTextField(
+                value = confirmPass,
+                onValueChange = { confirmPass = it },
+                label = { Text("Confirm Password",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal,
+                    fontFamily = poppinsFontFamily,
+                    color = Color(0xFF8C8C8C)) },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(10.dp),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.Gray
+                )
+            )
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center // Centers the button horizontally
+                horizontalArrangement = Arrangement.Center
             ) {
                 Button(
-                    onClick = { navController.navigate("Reset") }, // Navigates to OTP Screen
+                    onClick = { navController.navigate("Reset") },
+                    enabled = newPass.isNotBlank() && confirmPass.isNotBlank(),
                     modifier = Modifier.fillMaxWidth().height(50.dp),
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFB7DAFF), // Light Blue color
+                        containerColor = Color(0xFFBDE0FE),
                         contentColor = Color.Black
                     )
                 ) {
-                    Text(text = "Reset", fontWeight = FontWeight.Bold)
+                    Text(
+                        text = "Reset",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        fontFamily = poppinsFontFamily
+                    )
                 }
             }
         }

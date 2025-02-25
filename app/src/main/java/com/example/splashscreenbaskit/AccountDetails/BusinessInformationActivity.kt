@@ -8,15 +8,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,11 +26,11 @@ import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 @Preview
 @Composable
 fun BusinessInfoPreview (){
-   BusinessInformationScreen(navController = rememberNavController())
+   BusinessInformationActivity(navController = rememberNavController())
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BusinessInformationScreen(navController: NavController) {
+fun BusinessInformationActivity(navController: NavController) {
     var shopName by remember { mutableStateOf("") }
     var shopAddress by remember { mutableStateOf("") }
     var selectedStoreType by remember { mutableStateOf("Standard") }
@@ -123,7 +120,7 @@ fun BusinessInformationScreen(navController: NavController) {
                 OutlinedTextField(
                     value = shopName,
                     onValueChange = { shopName = it },
-                    label = {
+                    placeholder = {
                         Text("Enter your shop name",
                             fontSize = 14.sp,
                             fontFamily = poppinsFontFamily,
@@ -149,9 +146,10 @@ fun BusinessInformationScreen(navController: NavController) {
                 OutlinedTextField(
                     value = shopAddress,
                     onValueChange = { shopAddress = it },
-                    label = {
+                    placeholder = {
                         Text("Enter your shop address",
                             fontSize = 14.sp,
+                            fontWeight = FontWeight.Normal,
                             fontFamily = poppinsFontFamily,
                             color = Color(0xFF8C8C8C)
                         )
@@ -215,11 +213,12 @@ fun BusinessInformationScreen(navController: NavController) {
                         fontWeight = FontWeight.Normal,
                         color = Color.Black
                     )
+                    Spacer(modifier = Modifier.width(5.dp))
                     Icon(
                         imageVector = Icons.Default.Info,
-                        contentDescription = "Done",
+                        contentDescription = "Info",
                         tint = Color(0xFF4557FF),
-                        modifier = Modifier.size(14.dp)
+                        modifier = Modifier.size(18.dp)
                     )
                 }
                 Box(

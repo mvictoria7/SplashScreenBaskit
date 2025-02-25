@@ -169,15 +169,13 @@ fun AccountActivity(navController: NavController) {
             Column {
 
                 Text(
-                    text = "Username",
+                    text = "Name",
                     fontSize = 14.sp,
                     color = Color.Gray,
                     fontWeight = FontWeight.Normal,
                     fontFamily = poppinsFontFamily
                 )
-
                 Spacer(modifier = Modifier.height(4.dp))
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -188,6 +186,44 @@ fun AccountActivity(navController: NavController) {
                     Box(modifier = Modifier
                         .fillMaxWidth()
                         .background(Color(0xFFE0F4DE), RoundedCornerShape(10.dp))
+                    ) {
+                        Row (
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            modifier = Modifier.padding(15.dp)
+                        ){
+                            Icon(
+                                imageVector = Icons.Default.Person,
+                                contentDescription = null,
+                                tint = Color.DarkGray
+                            )
+                            Text(text = "Maria Victoria Catabay",
+                                fontFamily = poppinsFontFamily)
+                        }
+                    }
+
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Text(
+                    text = "Username",
+                    fontSize = 14.sp,
+                    color = Color.Gray,
+                    fontWeight = FontWeight.Normal,
+                    fontFamily = poppinsFontFamily
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(text = "")
+
+                    Box(modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color(0xFFF0F6CE), RoundedCornerShape(10.dp))
                     ) {
                         Row (
                             verticalAlignment = Alignment.CenterVertically,
@@ -220,9 +256,7 @@ fun AccountActivity(navController: NavController) {
                     fontFamily = poppinsFontFamily
 
                 )
-
                 Spacer(modifier = Modifier.height(4.dp))
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -232,7 +266,7 @@ fun AccountActivity(navController: NavController) {
 
                     Box(modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color(0xFFF0F6CE), RoundedCornerShape(10.dp))
+                        .background(Color(0xBBC2E1ED), RoundedCornerShape(10.dp))
 
                     ) {
                         Row (verticalAlignment = Alignment.CenterVertically,
@@ -264,9 +298,7 @@ fun AccountActivity(navController: NavController) {
                     fontWeight = FontWeight.Normal,
                     fontFamily = poppinsFontFamily
                 )
-
                 Spacer(modifier = Modifier.height(4.dp))
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -276,7 +308,7 @@ fun AccountActivity(navController: NavController) {
 
                     Box(modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color(0xBBC2E1ED), RoundedCornerShape(10.dp))
+                        .background(Color(0xFFE0F4DE), RoundedCornerShape(10.dp))
                     ) {
                         Row (verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -287,7 +319,7 @@ fun AccountActivity(navController: NavController) {
                                 contentDescription = null,
                                 tint = Color.DarkGray
                             )
-                            Text(text = "0900-000-0000")
+                            Text(text = "0900-000-0000", fontFamily = poppinsFontFamily)
 
                             Spacer(modifier = Modifier.width(100.dp))
 
@@ -325,7 +357,7 @@ fun AccountActivity(navController: NavController) {
 
                     Box(modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color(0xFFE0F4DE), RoundedCornerShape(10.dp))
+                        .background(Color(0xFFF0F6CE), RoundedCornerShape(10.dp))
                     ) {
                         Row (verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(10.dp),

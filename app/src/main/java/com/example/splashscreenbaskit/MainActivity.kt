@@ -12,7 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.AccountDetails.AccountActivity
-import com.example.splashscreenbaskit.AccountDetails.BusinessInformationScreen
+import com.example.splashscreenbaskit.AccountDetails.BusinessInformationActivity
 import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
 import com.example.splashscreenbaskit.AccountDetails.RequestSentScreen
 import com.example.splashscreenbaskit.AccountDetails.SettingsActivity
@@ -111,8 +111,8 @@ class MainActivity : ComponentActivity() {
                     composable("ShopInformationScreen") {
                         ShopInformationScreen(navController)
                     }
-                    composable("BusinessInformationScreen") {
-                        BusinessInformationScreen(navController)
+                    composable("BusinessInformationActivity") {
+                        BusinessInformationActivity(navController)
                     }
                     composable("RequestSentScreen") {
                         RequestSentScreen(navController)

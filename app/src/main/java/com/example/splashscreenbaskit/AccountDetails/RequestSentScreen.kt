@@ -74,7 +74,7 @@ fun RequestSentScreen(navController: NavController) {
                 }
             }
 
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(70.dp))
 
 
             Image(
