@@ -74,6 +74,7 @@ fun AccountActivity(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
+            //.fillMaxWidth()
             .background(Color.White)
             .verticalScroll(scrollState)
     ) {
@@ -85,40 +86,35 @@ fun AccountActivity(navController: NavController) {
         ) {
             Button(
                 onClick = {navController.navigate("ShopInformationScreen")},
-                shape = RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp), // Rounded only on the right
-                colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black),
-                elevation = ButtonDefaults.buttonElevation(20.dp), // Adds shadow only on the right, top, and bottom
+                shape = RoundedCornerShape(topEnd = 20.dp, bottomEnd = 20.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF5F5F5), contentColor = Color.Black),
+                //elevation = ButtonDefaults.buttonElevation(20.dp),
                 modifier = Modifier
-                    .fillMaxWidth(0.38f) // Adjust width (tweak if needed)
-                     // Align to the left
-                    .offset(x = (-8).dp) // Moves left slightly to hide shadow on left edge
+                    .fillMaxWidth(0.38f)
+                    .offset(x = (-10).dp)
+                    .width(110.dp)
+                    .height(35.dp)
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.shop),
                     contentDescription = "Shop Icon",
-                    modifier = Modifier.size(40.dp)
+                    modifier = Modifier.size(20.dp)
                 )
-                Spacer(modifier = Modifier.width(3.dp))
+
+                Spacer(modifier = Modifier.width(12.dp))
+
                 Text(
-                    text = "Start Selling!",
+                    text = "Start Selling >",
                     fontFamily = poppinsFontFamily,
-                    fontSize = 15.sp
+                    fontSize = 10.sp
                 )
             }
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 50.dp, end = 10.dp),
-            horizontalArrangement = Arrangement.End
-        ) {
 
             IconButton(
                 onClick = {
                     navController.navigate("NotificationsActivity") },
                 enabled = true,
-                modifier = Modifier.padding(top = 5.dp)
+                modifier = Modifier.padding(start = 120.dp)
             ) {
                 Icon(
                     imageVector = Icons.Filled.Notifications,
@@ -129,8 +125,7 @@ fun AccountActivity(navController: NavController) {
 
             IconButton(
                 onClick = { navController.navigate("SettingsActivity") },
-                enabled = true,
-                modifier = Modifier.padding(top = 5.dp)
+                enabled = true
             ) {
                 Icon(
                     imageVector = Icons.Filled.Settings,

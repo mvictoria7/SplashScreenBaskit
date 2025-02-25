@@ -1,5 +1,7 @@
 package com.example.splashscreenbaskit.AccountDetails
 
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -18,6 +20,11 @@ import androidx.navigation.NavController
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
+@Preview
+@Composable
+fun RequestPreview (){
+    RequestSentScreen(navController = rememberNavController())
+}
 @Composable
 fun RequestSentScreen(navController: NavController) {
     Column(
