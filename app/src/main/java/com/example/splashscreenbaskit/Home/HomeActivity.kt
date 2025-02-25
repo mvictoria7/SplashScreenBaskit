@@ -68,6 +68,9 @@
     import androidx.compose.ui.draw.alpha
     import androidx.compose.ui.draw.clip
     import androidx.compose.ui.draw.clipToBounds
+    import com.example.splashscreenbaskit.AccountDetails.BusinessInformationScreen
+    import com.example.splashscreenbaskit.AccountDetails.RequestSentScreen
+    import com.example.splashscreenbaskit.AccountDetails.ShopInformationScreen
     import com.example.splashscreenbaskit.LoginSignup.ChangePasswordScreen
     import com.example.splashscreenbaskit.LoginSignup.EnterOTPScreen
     import com.example.splashscreenbaskit.LoginSignup.ForgotPasswordScreen
@@ -328,6 +331,15 @@
                     }
                     composable("ResetPasswordScreen") {
                         ResetPasswordScreen(navController)
+                    }
+                    composable("ShopInformationScreen") {
+                        ShopInformationScreen(navController)
+                    }
+                    composable("BusinessInformationScreen") {
+                        BusinessInformationScreen(navController)
+                    }
+                    composable("RequestSentScreen") {
+                        RequestSentScreen(navController)
                     }
                 }
             }

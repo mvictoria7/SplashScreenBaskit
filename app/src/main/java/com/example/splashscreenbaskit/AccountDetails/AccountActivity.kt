@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -30,12 +31,15 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.window.DialogProperties
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
+import kotlin.io.path.Path
 
 @Preview(showBackground = true)
 @Composable
@@ -67,13 +71,41 @@ fun AccountActivity(navController: NavController) {
 
     val scrollState = rememberScrollState()
 
-
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
             .verticalScroll(scrollState)
     ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 50.dp),
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Button(
+                onClick = {navController.navigate("ShopInformationScreen")},
+                shape = RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp), // Rounded only on the right
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black),
+                elevation = ButtonDefaults.buttonElevation(20.dp), // Adds shadow only on the right, top, and bottom
+                modifier = Modifier
+                    .fillMaxWidth(0.38f) // Adjust width (tweak if needed)
+                     // Align to the left
+                    .offset(x = (-8).dp) // Moves left slightly to hide shadow on left edge
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.shop),
+                    contentDescription = "Shop Icon",
+                    modifier = Modifier.size(40.dp)
+                )
+                Spacer(modifier = Modifier.width(3.dp))
+                Text(
+                    text = "Start Selling!",
+                    fontFamily = poppinsFontFamily,
+                    fontSize = 15.sp
+                )
+            }
+        }
 
         Row(
             modifier = Modifier
@@ -108,6 +140,8 @@ fun AccountActivity(navController: NavController) {
 
             }
         }
+
+        Spacer(modifier = Modifier.height(50.dp))
 
         Image(
             painter = painterResource(id = R.drawable.account_img),

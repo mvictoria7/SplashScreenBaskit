@@ -12,8 +12,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.AccountDetails.AccountActivity
+import com.example.splashscreenbaskit.AccountDetails.BusinessInformationScreen
 import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
+import com.example.splashscreenbaskit.AccountDetails.RequestSentScreen
 import com.example.splashscreenbaskit.AccountDetails.SettingsActivity
+import com.example.splashscreenbaskit.AccountDetails.ShopInformationScreen
 import com.example.splashscreenbaskit.Carts.CartScreen
 import com.example.splashscreenbaskit.Carts.CheckoutScreen
 import com.example.splashscreenbaskit.LoginSignup.ChangePasswordScreen
@@ -104,6 +107,15 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("ResetPasswordScreen") {
                         ResetPasswordScreen(navController)
+                    }
+                    composable("ShopInformationScreen") {
+                        ShopInformationScreen(navController)
+                    }
+                    composable("BusinessInformationScreen") {
+                        BusinessInformationScreen(navController)
+                    }
+                    composable("RequestSentScreen") {
+                        RequestSentScreen(navController)
                     }
                 }
             }

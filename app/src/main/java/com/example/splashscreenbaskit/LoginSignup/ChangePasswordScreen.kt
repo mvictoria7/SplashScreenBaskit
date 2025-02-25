@@ -21,7 +21,8 @@ import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
 @Composable
 fun ChangePasswordScreen(navController: NavController) {
-    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -82,15 +83,15 @@ fun ChangePasswordScreen(navController: NavController) {
             )
 
             OutlinedTextField(
-                value = email,
-                onValueChange = { email = it },
+                value = password,
+                onValueChange = { password = it },
                 label = { Text("New Password") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(10.dp)
             )
             OutlinedTextField(
-                value = email,
-                onValueChange = { email = it },
+                value = confirmPassword,
+                onValueChange = { confirmPassword = it },
                 label = { Text("Confirm Password") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(10.dp)
