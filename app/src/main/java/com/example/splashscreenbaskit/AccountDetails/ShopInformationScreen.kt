@@ -116,7 +116,6 @@ fun ShopInformationScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(20.dp))
 
                 Text(
-                    modifier = Modifier.padding(bottom = 5.dp),
                     text = "Shop Name",
                     fontSize = 14.sp,
                     fontFamily = poppinsFontFamily,
@@ -132,7 +131,7 @@ fun ShopInformationScreen(navController: NavController) {
                             color = Color(0xFF8C8C8C)
                         )
                     },
-                    modifier = Modifier.fillMaxWidth() .height(45.dp),
+                    modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = Color.Black,
@@ -140,9 +139,9 @@ fun ShopInformationScreen(navController: NavController) {
                     )
                 )
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
-                Text(modifier = Modifier.padding(bottom = 5.dp),
+                Text(
                     text = "Shop Address",
                     fontSize = 14.sp,
                     fontFamily = poppinsFontFamily,
@@ -157,13 +156,14 @@ fun ShopInformationScreen(navController: NavController) {
                             fontFamily = poppinsFontFamily,
                             color = Color(0xFF8C8C8C)
                         )
-                    },                    modifier = Modifier.fillMaxWidth() .height(45.dp),
+                    },
+                    modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp)
                 )
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
-                Text(modifier = Modifier.padding(bottom = 5.dp),
+                Text(
                     text = "Owner Name",
                     fontSize = 14.sp,
                     fontFamily = poppinsFontFamily,
@@ -178,13 +178,14 @@ fun ShopInformationScreen(navController: NavController) {
                             fontFamily = poppinsFontFamily,
                             color = Color(0xFF8C8C8C)
                         )
-                    },                    modifier = Modifier.fillMaxWidth().height(45.dp),
+                    },
+                    modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp)
                 )
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
-                Text(modifier = Modifier.padding(bottom = 5.dp),
+                Text(
                     text = "Owner Number",
                     fontSize = 14.sp,
                     fontFamily = poppinsFontFamily,
@@ -199,7 +200,8 @@ fun ShopInformationScreen(navController: NavController) {
                             fontFamily = poppinsFontFamily,
                             color = Color(0xFF8C8C8C)
                         )
-                    },                    modifier = Modifier.fillMaxWidth() .height(45.dp),
+                    },
+                    modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
@@ -210,8 +212,7 @@ fun ShopInformationScreen(navController: NavController) {
                     onClick = {navController.navigate("BusinessInformationScreen")},
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E7D32)),
                     modifier = Modifier.fillMaxWidth().height(50.dp),
-                    enabled = isButtonEnabled,
-                    shape = RoundedCornerShape(10.dp),
+                    enabled = isButtonEnabled
                 ) {
                     Text("Next", color = Color.White)
                 }

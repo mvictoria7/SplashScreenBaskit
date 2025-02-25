@@ -31,12 +31,15 @@ import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 fun BusinessInfoPreview (){
    BusinessInformationScreen(navController = rememberNavController())
 }
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BusinessInformationScreen(navController: NavController) {
     var shopName by remember { mutableStateOf("") }
     var shopAddress by remember { mutableStateOf("") }
     var selectedStoreType by remember { mutableStateOf("Standard") }
     val context = LocalContext.current
+
+    val isButtonEnabled = shopName.isNotBlank() && shopAddress.isNotBlank()
 
     Column(
         modifier = Modifier
@@ -112,9 +115,7 @@ fun BusinessInformationScreen(navController: NavController) {
             ) {
                 Spacer(modifier = Modifier.height(20.dp))
 
-                Text(
-                    modifier = Modifier.padding(bottom = 5.dp),
-                    text = "Registered shop name",
+                Text(text = "Registered shop name",
                     fontSize = 14.sp,
                     fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.Normal,
@@ -129,14 +130,17 @@ fun BusinessInformationScreen(navController: NavController) {
                             color = Color(0xFF8C8C8C)
                         )
                     },
-                    modifier = Modifier.fillMaxWidth().height(45.dp),
-                    shape = RoundedCornerShape(10.dp)
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(10.dp),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = Color.Black,
+                        unfocusedBorderColor = Color.Gray
+                    )
                 )
 
-                Spacer(modifier = Modifier.height(15.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
-                    modifier = Modifier.padding(bottom = 5.dp),
                     text = "Registered shop address",
                     fontSize = 14.sp,
                     fontFamily = poppinsFontFamily,
@@ -152,8 +156,12 @@ fun BusinessInformationScreen(navController: NavController) {
                             color = Color(0xFF8C8C8C)
                         )
                     },
-                    modifier = Modifier.fillMaxWidth() .height(45.dp),
-                    shape = RoundedCornerShape(10.dp)
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(10.dp),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = Color.Black,
+                        unfocusedBorderColor = Color.Gray
+                    )
                 )
 
                 Spacer(modifier = Modifier.height(15.dp))
@@ -304,8 +312,7 @@ fun BusinessInformationScreen(navController: NavController) {
                         onClick = {navController.navigate("RequestSentScreen")},
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1D7151)),
                         modifier = Modifier.fillMaxWidth().height(50.dp),
-                        enabled = true,
-                        shape = RoundedCornerShape(10.dp),
+                        enabled = isButtonEnabled
                     ) {
                         Text(
                             text = "Send request",
@@ -317,8 +324,6 @@ fun BusinessInformationScreen(navController: NavController) {
                     }
                 }
             }
-
-
         }
     }
 }
