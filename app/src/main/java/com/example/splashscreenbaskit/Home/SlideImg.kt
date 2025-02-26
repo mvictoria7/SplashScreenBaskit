@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.splashscreenbaskit.R
@@ -21,18 +22,19 @@ fun SlideImg(modifier: Modifier = Modifier) {
         HorizontalPager(
             count = 3,
             state = pagerState,
-            modifier = Modifier.fillMaxSize() // Adjust to match parent size
+            modifier = Modifier.fillMaxSize() // Ensures full container width & height
         ) { page ->
             Image(
                 painter = painterResource(
                     id = when (page) {
-                        0 -> R.drawable.baskit_logo
-                        1 -> R.drawable.testimg
-                        else -> R.drawable.baskitlogo_white
+                        0 -> R.drawable.slider1
+                        1 -> R.drawable.slider2
+                        else -> R.drawable.slider3
                     }
                 ),
-                contentDescription = "Logo $page",
-                modifier = Modifier.fillMaxSize()
+                contentDescription = "Slider Image $page",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop // Makes the image cover the entire container
             )
         }
 
@@ -40,5 +42,5 @@ fun SlideImg(modifier: Modifier = Modifier) {
             pagerState = pagerState,
             modifier = Modifier.padding(top = 8.dp)
         )
-       }
+    }
 }

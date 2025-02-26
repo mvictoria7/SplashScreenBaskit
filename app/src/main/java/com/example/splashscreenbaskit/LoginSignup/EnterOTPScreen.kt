@@ -149,7 +149,7 @@ fun EnterOTPScreen(navController: NavController) {
             ) {
                 Button(
                     onClick = { navController.navigate("ChangePasswordScreen") },
-                    enabled = email.isNotBlank(),
+                    enabled = isOtpComplete,
                     modifier = Modifier.fillMaxWidth().height(50.dp),
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(

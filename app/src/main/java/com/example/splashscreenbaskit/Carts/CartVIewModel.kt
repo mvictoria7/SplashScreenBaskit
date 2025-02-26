@@ -12,9 +12,8 @@ class CartViewModel : ViewModel() {
         val existingItem = _cartItems.find { it.name == item.name && it.weight == item.weight }
         if (existingItem != null) {
             existingItem.quantity += item.quantity
-            existingItem.price += item.price * item.quantity
         } else {
-            _cartItems.add(item)
+            _cartItems.add(item.copy(price = item.price)) // Keep the fixed price
         }
     }
 

@@ -166,8 +166,18 @@ fun CartItemView(item: CartItem, onRemoveItem: () -> Unit, onIncreaseQuantity: (
 
                 Column(modifier = Modifier.weight(1f)) {
                     Text(text = item.name, fontSize = 18.sp, fontWeight = FontWeight.Bold)
-                    Text(text = "${item.quantity}pcs", fontSize = 16.sp, fontWeight = FontWeight.Medium)
-                    Text(text = "₱${"%.2f".format(item.price)}", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color(0xFF6CBF5F))
+                    Text(
+                        text = "${item.weight}",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.Gray
+                    )
+                    Text(
+                        text = "₱${"%.2f".format(item.price)}",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF6CBF5F)
+                    )
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     IconButton(

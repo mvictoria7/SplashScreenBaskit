@@ -12,22 +12,34 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import com.example.splashscreenbaskit.Carts.CartItem
+import com.example.splashscreenbaskit.Tagabili.TB_OrdersContent
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
 
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PineappleScreenPreview() {
+    val navController = rememberNavController()
+    val cartViewModel = CartViewModel() // Create a mock ViewModel instance
+    PineappleScreen(navController = navController, cartViewModel = cartViewModel)
+}
 
 @Composable
 fun PineappleScreen(navController: NavController, cartViewModel: CartViewModel) {
-    var quantity by remember { mutableStateOf(1) }
+    var quantity by remember { mutableStateOf(0) }
     var selectedWeight by remember { mutableStateOf("1 pc") }
     val basePrice = 32.25
     val priceIncrease = 30.0
@@ -45,64 +57,82 @@ fun PineappleScreen(navController: NavController, cartViewModel: CartViewModel) 
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .padding(16.dp)
     ) {
-        // Image section
+        // Image Section
+        // Image Section (Rectangle)
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp)
+                .height(250.dp)
+                .background(Color.White),
+            contentAlignment = Alignment.TopCenter
         ) {
             Image(
                 painter = painterResource(id = R.drawable.pineapple),
                 contentDescription = "Pineapple",
                 modifier = Modifier
-                    .height(330.dp)
-                    .width(400.dp),
+                    .fillMaxWidth()
+                    .height(250.dp)
+                    .clip(RoundedCornerShape(10.dp)),
                 contentScale = ContentScale.Crop
             )
+
             IconButton(
                 onClick = { navController.popBackStack() },
                 modifier = Modifier
-                    .padding(top = 45.dp, start = 25.dp)
+                    .padding(16.dp)
                     .align(Alignment.TopStart)
-                    .size(35.dp)
-                    .background(Color.White, shape = RoundedCornerShape(50))
+                    .size(40.dp)
+                    .background(Color.White, shape = CircleShape)
             ) {
                 Icon(
-                    modifier = Modifier.size(20.dp),
                     painter = painterResource(id = R.drawable.back),
                     contentDescription = "Back",
-                    tint = Color.Black
+                    tint = Color.Black,
+                    modifier = Modifier.size(24.dp)
                 )
             }
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
+        // Product Details
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 20.dp, start = 25.dp, end = 25.dp)
+                .weight(0.35f)
+                .padding(horizontal = 16.dp)
         ) {
             Text(
                 text = "Pineapple",
-                fontSize = 32.sp,
+                fontSize = 36.sp,
                 fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.Bold
             )
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(vertical = 4.dp)
-            ) {
-                Spacer(modifier = Modifier.padding(start = 225.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "₱ ${"%.2f".format(priceForWeight)}",
+                    fontSize = 28.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Gray
+                )
+
+                // Quantity Buttons
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(onClick = { if (quantity > 1) quantity-- },
+                    IconButton(
+                        onClick = { if (quantity > 1) quantity-- },
                         modifier = Modifier
                             .background(color = Color(0xFFD9D9D9), shape = CircleShape)
-                            .size(35.dp)) {
+                            .size(35.dp)
+                    ) {
                         Icon(
                             painter = painterResource(id = R.drawable.minus),
                             contentDescription = "Minus",
@@ -111,16 +141,16 @@ fun PineappleScreen(navController: NavController, cartViewModel: CartViewModel) 
                         )
                     }
 
-                    Spacer(modifier = Modifier.width(10.dp))
+                    Spacer(modifier = Modifier.width(12.dp))
 
                     Text(
                         text = "$quantity",
                         fontSize = 20.sp,
                         fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.Bold
                     )
 
-                    Spacer(modifier = Modifier.width(10.dp))
+                    Spacer(modifier = Modifier.width(12.dp))
 
                     IconButton(
                         onClick = { quantity++ },
@@ -136,38 +166,22 @@ fun PineappleScreen(navController: NavController, cartViewModel: CartViewModel) 
                         )
                     }
                 }
-            }
 
-            Text(
-                text = "₱ ${"%.2f".format(priceForWeight)}",
-                fontSize = 24.sp,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Bold,
-                color = Color.Gray
-            )
+            }
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            // Quantity selection
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = "Seller Description",
-                    fontSize = 24.sp,
-                    fontFamily = poppinsFontFamily,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(vertical = 8.dp)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(5.dp))
-
+            Text(
+                text = "Seller Description",
+                fontSize = 20.sp,
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(vertical = 8.dp),
+                color = Color.Gray
+            )
             Text(
                 text = "Martha Rosario (Aling Martha’s)",
-                fontSize = 16.sp,
+                fontSize = 20.sp,
                 fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.Black
@@ -175,14 +189,23 @@ fun PineappleScreen(navController: NavController, cartViewModel: CartViewModel) 
 
             Text(
                 text = "0900-000-0000",
-                fontSize = 16.sp,
+                fontSize = 18.sp,
                 fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.Light,
                 color = Color.Black
             )
 
-            Spacer(modifier = Modifier.height(50.dp))
+            Text(
+                text = "123 Street, Dagupan City",
+                fontSize = 18.sp,
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.Light,
+                color = Color.Black
+            )
 
+            Spacer(modifier = Modifier.height(143.dp))
+
+            // Weight Selection
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -190,14 +213,10 @@ fun PineappleScreen(navController: NavController, cartViewModel: CartViewModel) 
                 listOf("1 pc", "1/4 kg", "1/2 kg", "1 kg").forEach { option ->
                     Button(
                         modifier = Modifier
-                            .height(48.dp)
-                            .width(75.dp)
-                            .then(
-                                if (selectedWeight != option) Modifier
-                                    .clip(RoundedCornerShape(10.dp))
-                                    .border(BorderStroke(1.dp, Color.LightGray))
-                                else Modifier
-                            ),
+                            .height(55.dp)
+                            .width(85.dp)
+                            .shadow(8.dp, shape = RoundedCornerShape(15.dp)) // Add shadow effect
+                            .clip(RoundedCornerShape(20.dp)),
                         onClick = { selectedWeight = option },
                         shape = RoundedCornerShape(10.dp),
                         colors = ButtonDefaults.buttonColors(
@@ -205,24 +224,28 @@ fun PineappleScreen(navController: NavController, cartViewModel: CartViewModel) 
                             contentColor = Color.Black
                         ),
                     ) {
-                        Text(text = option, fontSize = 12.sp, fontFamily = poppinsFontFamily, fontWeight = FontWeight.SemiBold)
+                        Text(
+                            text = option,
+                            fontSize = 12.sp,
+                            fontFamily = poppinsFontFamily,
+                            fontWeight = FontWeight.SemiBold
+                        )
                     }
                 }
             }
         }
 
-        Spacer(modifier = Modifier.weight(1f))
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .weight(0.1f)
                 .background(Color(0xFF1D7151))
-                .height(110.dp)
-                .padding(25.dp),
+                .padding(20.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Column(horizontalAlignment = Alignment.Start) {
+            Column {
                 Text(
                     text = "Total Price",
                     fontSize = 16.sp,
@@ -230,7 +253,7 @@ fun PineappleScreen(navController: NavController, cartViewModel: CartViewModel) 
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold
                 )
-                Spacer(modifier = Modifier.height(2.dp))
+
                 Text(
                     text = "₱ ${"%.2f".format(totalPrice)}",
                     fontSize = 24.sp,
@@ -242,16 +265,14 @@ fun PineappleScreen(navController: NavController, cartViewModel: CartViewModel) 
 
             Button(
                 onClick = {
-                    val itemId = System.currentTimeMillis().toInt() // Use a unique id generation method
-
-                    // Add the item to the cart
+                    val itemId = System.currentTimeMillis().toInt()
                     cartViewModel.addToCart(
                         CartItem(
-                            id = itemId, // Assign a unique ID to the item
+                            id = itemId,
                             name = "Pineapple",
                             weight = selectedWeight,
                             quantity = quantity,
-                            price = priceForWeight * quantity,
+                            price = totalPrice,
                             imageResId = R.drawable.pineapple
                         )
                     )
@@ -259,10 +280,18 @@ fun PineappleScreen(navController: NavController, cartViewModel: CartViewModel) 
                 },
                 shape = RoundedCornerShape(30.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White),
-                modifier = Modifier.height(70.dp).width(180.dp)
+                modifier = Modifier
+                    .height(60.dp)
+                    .width(180.dp)
             ) {
-                Text(text = "Add to Basket", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Text(
+                    text = "Add to Basket",
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
             }
         }
     }
 }
+

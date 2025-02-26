@@ -68,6 +68,7 @@
     import androidx.compose.ui.draw.alpha
     import androidx.compose.ui.draw.clip
     import androidx.compose.ui.draw.clipToBounds
+    import androidx.compose.ui.layout.ContentScale
     import com.example.splashscreenbaskit.AccountDetails.BusinessInformationActivity
     import com.example.splashscreenbaskit.AccountDetails.RequestSentScreen
     import com.example.splashscreenbaskit.AccountDetails.ShopInformationScreen
@@ -88,8 +89,8 @@
     )
 
     val dagupanVendors = listOf(
-        Vendor("Fresh Mart Dagupan", R.drawable.food),
-        Vendor("Green Store", R.drawable.food),
+        Vendor("Aling Kristine's Shop", R.drawable.vendor1),
+        Vendor("Green Store", R.drawable.vendors3),
         Vendor("Dagupan Market", R.drawable.food),
         Vendor("Prime Goods", R.drawable.food)
     )
@@ -433,58 +434,98 @@
     @Composable
     fun VendorGrid(products: List<Vendor>, navController: NavController) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            products.chunked(2).forEach { rowVendor ->
-                Row(
+            products.forEach { vendor ->
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF9F9F9)),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 30.dp, end = 30.dp, bottom = 10.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .height(200.dp), // Increased size for a bigger container
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                 ) {
-                    rowVendor.forEach { vendor ->
-                        Card(
-                            colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F0F0)),
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(170.dp)
-                                .width(154.dp)
-                                .padding(4.dp),
-                            shape = RoundedCornerShape(10.dp),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-
-                        ) {
-                            Column(
+                    Column {
+                        // Image with overlay
+                        Box(modifier = Modifier.fillMaxWidth()) {
+                            Image(
+                                painter = painterResource(id = vendor.imageRes),
+                                contentDescription = vendor.name,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(top = 5.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center
-                            ) {
-                                Image(
-                                    painter = painterResource(id = vendor.imageRes),
-                                    contentDescription = "Product Image",
-                                    modifier = Modifier
-                                        .height(100.dp)
-                                        .width(135.dp)
-                                        .padding(top = 8.dp)
-                                        .clip(RoundedCornerShape(10.dp))
-                                )
-                                Spacer(modifier = Modifier.height(8.dp))
+                                    .height(150.dp) // Adjusted for a bigger image
+                                    .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)),
+                                contentScale = ContentScale.Crop
+                            )
 
-                                Text(vendor.name,
-                                    fontWeight = FontWeight.SemiBold,
-                                    fontSize = 16.sp,
-                                    fontFamily = poppinsFontFamily,
-                                    modifier = Modifier.padding(8.dp))
+                            // "Top Store" Label
+                            Box(
+                                modifier = Modifier
+                                    .padding(12.dp)
+                                    .background(Color(0xFFFFA726), shape = RoundedCornerShape(20.dp))
+                                    .padding(horizontal = 12.dp, vertical = 4.dp)
+                            ) {
+                                Text(
+                                    text = "Top Store",
+                                    fontSize = 12.sp,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold
+                                )
                             }
                         }
-                    }
-                    if (rowVendor.size == 1) {
-                        Spacer(modifier = Modifier.weight(1f))
+
+                        // Vendor Name & "Recommended" Badge in Row
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 8.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = vendor.name,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 19.sp,
+                                fontFamily = poppinsFontFamily,
+                                modifier = Modifier.padding(end = 8.dp) // Spacing before badge
+                            )
+
+                            Box(
+                                modifier = Modifier
+                                    .background(Color(0xFFFFA726), shape = RoundedCornerShape(20.dp))
+                                    .padding(horizontal = 12.dp, vertical = 4.dp)
+                            ) {
+                                Text(
+                                    text = "Recommended",
+                                    fontSize = 12.sp,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
                     }
                 }
             }
         }
     }
+
+
+    @Composable
+    fun LabelChip(text: String) {
+        Box(
+            modifier = Modifier
+                .background(Color(0xFFFFA726), shape = RoundedCornerShape(20.dp))
+                .padding(horizontal = 12.dp, vertical = 4.dp)
+        ) {
+            Text(
+                text = text,
+                fontSize = 12.sp,
+                color = Color.White,
+                fontWeight = FontWeight.Bold
+            )
+        }
+    }
+
+
     @Composable
     fun SearchBar() {
         var searchText by remember { mutableStateOf(TextFieldValue("")) }
@@ -548,8 +589,8 @@
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(155.dp)
-                .padding(start = 30.dp, end = 30.dp),
+                .height(149.dp)
+                .padding(start = 31.dp, end = 30.dp),
             shape = RoundedCornerShape(10.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
