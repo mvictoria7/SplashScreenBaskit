@@ -1,5 +1,6 @@
 package com.example.splashscreenbaskit.Products
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,6 +30,7 @@ import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import com.example.splashscreenbaskit.Carts.CartItem
 import com.example.splashscreenbaskit.Tagabili.TB_OrdersContent
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
+import androidx.compose.ui.platform.LocalContext
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
@@ -39,7 +42,8 @@ fun BananaScreenPreview() {
 
 @Composable
 fun BananaScreen(navController: NavController, cartViewModel: CartViewModel) {
-    var quantity by remember { mutableStateOf(0) }
+    val context = LocalContext.current
+    var quantity by remember { mutableStateOf(1) }
     var selectedWeight by remember { mutableStateOf("1 pc") }
     val basePrice = 32.25
     val priceIncrease = 30.0
@@ -276,7 +280,7 @@ fun BananaScreen(navController: NavController, cartViewModel: CartViewModel) {
                             imageResId = R.drawable.banana
                         )
                     )
-                    navController.navigate("CartScreen")
+                    Toast.makeText(context, "Added to Basket!", Toast.LENGTH_SHORT).show()
                 },
                 shape = RoundedCornerShape(30.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White),
