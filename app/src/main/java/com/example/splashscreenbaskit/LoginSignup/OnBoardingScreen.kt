@@ -17,18 +17,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import com.google.accompanist.pager.*
+import kotlinx.coroutines.launch
 
 @Composable
 fun OnboardingScreen(navController: NavController) {
     val pagerState = rememberPagerState()
+    val coroutineScope = rememberCoroutineScope()
 
     Box(
-        modifier = Modifier.fillMaxSize().background(Color.White)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
     ) {
 
         // Background Image
@@ -38,12 +43,41 @@ fun OnboardingScreen(navController: NavController) {
             modifier = Modifier.fillMaxSize()
         )
 
-        HorizontalPager(count = 3, state = pagerState) { page ->
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            contentAlignment = Alignment.TopEnd
+        ) {
+            TextButton(
+                onClick = {
+                    coroutineScope.launch { pagerState.animateScrollToPage(2) }
+                },
+                modifier = Modifier
+                    .zIndex(1f)
+            ) {
+                Text(
+                    text = "Skip",
+                    fontFamily = poppinsFontFamily,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp
+                )
+            }
+        }
+
+        HorizontalPager(
+            count = 3,
+            state = pagerState,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 50.dp)
+        ) { page ->
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 Spacer(modifier = Modifier.height(150.dp))
 
                 OnboardingImage(page)
@@ -68,31 +102,36 @@ fun OnboardingScreen(navController: NavController) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.End
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Page Indicator
             PageIndicator(currentPage = pagerState.currentPage, totalScreens = 3)
+        }
 
             Spacer(modifier = Modifier.height(16.dp))
 
             if (pagerState.currentPage == 2) {
-                TextButton(
-                    onClick = { navController.navigate("SignUpActivity") },
-                    modifier = Modifier.padding(bottom = 30.dp, end = 20.dp)
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(end = 20.dp, bottom = 30.dp),
+                    contentAlignment = Alignment.BottomEnd
                 ) {
-                    Text(
-                        text = "Get Started",
-                        fontFamily = poppinsFontFamily,
-                        color = Color.Black,
-                        //fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp
+                    TextButton(
+                        onClick = { navController.navigate("LoginActivity") }
+                    ) {
+                        Text(
+                            text = "Get Started",
+                            fontFamily = poppinsFontFamily,
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp
                     )
                 }
             }
         }
     }
 }
+
 
 @Composable
 fun OnboardingImage(page: Int) {
@@ -129,7 +168,7 @@ fun OnboardingContent(title: String, description: String) {
             color = Color.Black,
             textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(21.dp))
 
         Text(
             text = description,
