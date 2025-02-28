@@ -2,32 +2,37 @@ package com.example.splashscreenbaskit.Products
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.TextButton
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,39 +45,43 @@ import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun StoreScreenPreview(){
+fun StoreScreenPreview() {
     StoreScreen(navController = rememberNavController())
 }
+
 @Composable
 fun StoreScreen(navController: NavController) {
+    var storeName by remember { mutableStateOf("") }
+    var categoryInput by remember { mutableStateOf("") }
+    val categories = remember { mutableStateOf(mutableListOf<String>()) }
+    var selectedCategory by remember { mutableStateOf<String?>(null) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
+        // Header with Store Image and Back Button
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(315.dp)
-                .background(Color.White),
-            contentAlignment = Alignment.TopCenter
+                .height(250.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.seller_img),
-                contentDescription = "Apple",
+                painter = painterResource(id = R.drawable.testimg),
+                contentDescription = "Store Image",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(320.dp),
+                    .height(250.dp),
                 contentScale = ContentScale.Crop
             )
-
             IconButton(
-                onClick = { },
+                onClick = { navController.popBackStack() },
                 modifier = Modifier
-                    .padding(top = 50.dp, start = 16.dp)
-                    .align(Alignment.TopStart)
+                    .padding(top = 16.dp, start = 16.dp)
                     .size(40.dp)
-                    .background(Color.White, shape = CircleShape)
+                    .clip(CircleShape)
+                    .background(Color.White)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.back),
@@ -83,45 +92,199 @@ fun StoreScreen(navController: NavController) {
             }
         }
 
-        Box(
+        // Content Area
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(68.dp)
-                .background(Color(0xFFFFA52F)),
-            contentAlignment = Alignment.TopCenter
+                .fillMaxSize()
+                .padding(16.dp)
         ) {
-            //CategoryRow(selectedCategory, navController)
-        }
-    }
-}
-
-@Composable
-fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavController) {
-    val categories = listOf("SHOP", "Vegetables", "Fruits", "Meats", "Fish", "Spices", "Frozen Foods")
-
-    LazyRow(
-        modifier = Modifier.fillMaxWidth().padding(top = 5.dp, start = 8.dp, end = 10.dp)
-    ) {
-        items(categories) { category ->
-            TextButton(
-                modifier = Modifier
-                    .background(
-                        color = if (selectedCategory.value == category) Color(0xAAFFFFFF) else Color.Transparent,
-                        shape = RoundedCornerShape(20.dp)
-                    )
-                    .wrapContentHeight()
-                    .heightIn(min = 20.dp),
-                onClick = { selectedCategory.value = category }
-            ) {
+            // Display Store Name
+            if (storeName.isNotEmpty()) {
                 Text(
-                    text = category,
-                    color = if (selectedCategory.value == category) Color(0xFFFFFFFF) else Color(0xFFFFFFFF),
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold,
+                    text = "$storeName's Store",
+                    color = Color.Black,
+                    fontSize = 24.sp,
                     fontFamily = poppinsFontFamily,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(bottom = 16.dp)
                 )
+            }
+
+            // Set Store Name Input (only shown if empty)
+            if (storeName.isEmpty()) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    BasicTextField(
+                        value = storeName,
+                        onValueChange = { storeName = it },
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 8.dp),
+                        textStyle = TextStyle(
+                            fontSize = 18.sp,
+                            fontFamily = poppinsFontFamily,
+                            fontWeight = FontWeight.Bold
+                        ),
+                        decorationBox = { innerTextField ->
+                            Box {
+                                if (storeName.isEmpty()) {
+                                    Text(
+                                        text = "Set store name",
+                                        color = Color.Gray,
+                                        fontSize = 18.sp,
+                                        fontFamily = poppinsFontFamily,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                                innerTextField()
+                            }
+                        }
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.pencil),
+                        contentDescription = "Edit",
+                        tint = Color.Black,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Add Category Input and Button
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                BasicTextField(
+                    value = categoryInput,
+                    onValueChange = { categoryInput = it },
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp),
+                    textStyle = TextStyle(
+                        fontSize = 18.sp,
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.Bold
+                    ),
+                    decorationBox = { innerTextField ->
+                        Box {
+                            if (categoryInput.isEmpty()) {
+                                Text(
+                                    text = "Add a category",
+                                    color = Color.Gray,
+                                    fontSize = 18.sp,
+                                    fontFamily = poppinsFontFamily,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                            innerTextField()
+                        }
+                    }
+                )
+                IconButton(
+                    onClick = {
+                        if (categoryInput.isNotEmpty()) {
+                            categories.value = categories.value.toMutableList().apply {
+                                add(categoryInput)
+                            }
+                            categoryInput = "" // Clear input after adding
+                            selectedCategory = categoryInput // Set the first category as selected
+                        }
+                    }
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.list),
+                        contentDescription = "Add Category",
+                        tint = Color.Black,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Display Selected Category and Products
+            selectedCategory?.let { category ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color(0xFFFFA52F), RoundedCornerShape(8.dp))
+                        .padding(8.dp)
+                ) {
+                    Text(
+                        text = category,
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Product Row (Example with one product and Add button)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    // Product Card
+                    Card(
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(120.dp),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.carrot),
+                                contentDescription = "Product Image",
+                                modifier = Modifier.size(60.dp)
+                            )
+                            Text(
+                                text = "Carrot",
+                                color = Color.Black,
+                                fontSize = 16.sp,
+                                fontFamily = poppinsFontFamily,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+
+                    // Add Product Card
+                    Card(
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(120.dp),
+                        shape = RoundedCornerShape(8.dp),
+                        onClick = { /* Handle add product action */ }
+                    ) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = "Add Product",
+                                modifier = Modifier.size(40.dp),
+                                tint = Color.Black
+                            )
+                            Text(
+                                text = "Add a product",
+                                color = Color.Black,
+                                fontSize = 16.sp,
+                                fontFamily = poppinsFontFamily,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.padding(top = 48.dp)
+                            )
+                        }
+                    }
+                }
             }
         }
     }
