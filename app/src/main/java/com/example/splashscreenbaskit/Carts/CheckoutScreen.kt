@@ -351,13 +351,11 @@ fun YourCodeDialog(onDismiss: () -> Unit, onSaveImage: () -> Unit) {
     }
 }
 
-// 📌 Function to generate random code
 fun generateRandomCode(): String {
     val chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     return (1..8).map { chars.random() }.joinToString("")
 }
 
-// 📌 Checkout Item View
 @Composable
 fun CheckoutItemView(item: CartItem) {
     Card(
@@ -375,7 +373,7 @@ fun CheckoutItemView(item: CartItem) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                painter = painterResource(id = item.imageResId ?: R.drawable.noorders_img), // Fallback
+                painter = painterResource(id = item.imageResId ?: R.drawable.noorders_img),
                 contentDescription = "Product Image",
                 modifier = Modifier
                     .size(80.dp)

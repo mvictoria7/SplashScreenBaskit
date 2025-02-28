@@ -257,7 +257,7 @@
 //                    fontWeight = FontWeight.SemiBold
 //                )
 //
-//                Text(
+//    5            Text(
 //                    text = "₱ ${"%.2f".format(totalPrice)}",
 //                    fontSize = 24.sp,
 //                    fontFamily = poppinsFontFamily,

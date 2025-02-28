@@ -18,6 +18,8 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -48,14 +50,8 @@ import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
 import com.example.splashscreenbaskit.AccountDetails.SettingsActivity
 import com.example.splashscreenbaskit.Carts.CartScreen
 import com.example.splashscreenbaskit.Carts.CheckoutScreen
-import com.example.splashscreenbaskit.Home.SlideImg
 import com.example.splashscreenbaskit.LoginSignup.LoginActivity
-//import com.example.splashscreenbaskit.Products.AppleScreen
-//import com.example.splashscreenbaskit.Products.BananaScreen
-//import com.example.splashscreenbaskit.Products.GrapesScreen
-//import com.example.splashscreenbaskit.Products.MangoScreen
-//import com.example.splashscreenbaskit.Products.OrangeScreen
-//import com.example.splashscreenbaskit.Products.PineappleScreen
+import com.example.splashscreenbaskit.Products.ProductScreen
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
@@ -63,10 +59,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import com.example.splashscreenbaskit.AccountDetails.BusinessInformationActivity
 import com.example.splashscreenbaskit.AccountDetails.RequestSentScreen
@@ -75,7 +69,6 @@ import com.example.splashscreenbaskit.LoginSignup.ChangePasswordScreen
 import com.example.splashscreenbaskit.LoginSignup.EnterOTPScreen
 import com.example.splashscreenbaskit.LoginSignup.ForgotPasswordScreen
 import com.example.splashscreenbaskit.LoginSignup.ResetPasswordScreen
-import com.example.splashscreenbaskit.Products.ProductScreen
 
 data class Vendor(val name: String, val imageRes: Int)
 data class Product(val name: String, val imageRes: Int, val category: String, val price: Double = 0.0)
@@ -159,7 +152,7 @@ fun PageIndicator(currentPage: Int, totalScreens: Int) {
 
 @Composable
 fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavController) {
-    val categories = listOf("STORE", "Vegetables", "Fruits", "Meats", "Fish", "Spices", "Frozen Foods")
+    val categories = listOf("Vegetables", "Fruits", "Meats", "Fish", "Spices", "Frozen Foods")
 
     LazyRow(
         modifier = Modifier.fillMaxWidth().padding(top = 5.dp, start = 8.dp, end = 10.dp)
@@ -168,7 +161,7 @@ fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavContr
             TextButton(
                 modifier = Modifier
                     .background(
-                        color = if (selectedCategory.value == category) Color(0xBB5CC163) else Color.Transparent,
+                        color = if (selectedCategory.value == category) Color(0xFFFFA726) else Color.Transparent,
                         shape = RoundedCornerShape(20.dp)
                     )
                     .wrapContentHeight()
@@ -250,169 +243,6 @@ fun ProductGrid(products: List<Product>, navController: NavController) {
 }
 
 @Composable
-fun HomeScreen() {
-    val navController = rememberNavController()
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
-    val cartViewModel: CartViewModel = viewModel()
-
-    Log.d("HomeScreen", "Current Route: $currentRoute")
-
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        bottomBar = {
-            if (currentRoute !in listOf("ProductScreen/{productName}", "CartScreen", "CheckoutScreen")) {
-                BottomBar(navController = navController)
-            }
-        }
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            NavHost(
-                navController = navController,
-                startDestination = BottomBarScreen.Home.route,
-                modifier = Modifier.weight(1f)
-            ) {
-                composable(BottomBarScreen.Home.route) {
-                    HomeContent(navController)
-                }
-                composable(BottomBarScreen.Cart.route) {
-                    CartScreen(cartViewModel = cartViewModel, navController = navController)
-                }
-                composable(BottomBarScreen.Account.route) {
-                    AccountActivity(navController)
-                }
-                composable(
-                    "ProductScreen/{productName}",
-                    arguments = listOf(navArgument("productName") { type = NavType.StringType })
-                ) { backStackEntry ->
-                    ProductScreen(
-                        navController = navController,
-                        cartViewModel = cartViewModel,
-                        productName = backStackEntry.arguments?.getString("productName")
-                    )
-                }
-                composable("CartScreen") {
-                    CartScreen(cartViewModel = cartViewModel, navController = navController)
-                }
-                composable("CheckoutScreen") {
-                    CheckoutScreen(cartViewModel = cartViewModel, navController = navController)
-                }
-                composable("LoginActivity") {
-                    LoginActivity(navController)
-                }
-                composable("NotificationsActivity") {
-                    NotificationsActivity(navController)
-                }
-                composable("SettingsActivity") {
-                    SettingsActivity(navController)
-                }
-                composable("ForgotPasswordScreen") {
-                    ForgotPasswordScreen(navController)
-                }
-                composable("EnterOTPScreen") {
-                    EnterOTPScreen(navController)
-                }
-                composable("ChangePasswordScreen") {
-                    ChangePasswordScreen(navController)
-                }
-                composable("ResetPasswordScreen") {
-                    ResetPasswordScreen(navController)
-                }
-                composable("ShopInformationScreen") {
-                    ShopInformationScreen(navController)
-                }
-                composable("BusinessInformationActivity") {
-                    BusinessInformationActivity(navController)
-                }
-                composable("RequestSentScreen") {
-                    RequestSentScreen(navController)
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun HomeContent(navController: NavController) {
-    val selectedCategory = remember { mutableStateOf<String?>(null) }
-    val selectedLocation = remember { mutableStateOf<String?>("Dagupan") }
-    val scrollState = rememberScrollState()
-
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color.White
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(scrollState),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.height(45.dp))
-            Image(
-                painter = painterResource(id = R.drawable.baskit_logo),
-                contentDescription = "Logo",
-                modifier = Modifier
-                    .size(70.dp)
-                    .padding(16.dp)
-            )
-            Text(
-                text = "Shop Smarter, Not Harder",
-                fontFamily = poppinsFontFamily,
-                fontSize = 12.sp,
-                color = Color.Black,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.offset(y = (-20).dp)
-            )
-            SearchBar()
-            Spacer(modifier = Modifier.height(30.dp))
-            SliderCard()
-            Spacer(modifier = Modifier.height(15.dp))
-            LocationSelector(selectedLocation)
-//            HorizontalDivider(
-//                modifier = Modifier.padding(vertical = 4.dp, horizontal = 10.dp),
-//                thickness = 2.dp
-//            )
-            Box(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(10.dp)
-                        .background(
-                            brush = Brush.verticalGradient(
-                                colors = listOf(Color.Gray.copy(alpha = 0.5f), Color.Transparent)
-                            )
-                        )
-                )
-            }
-            CategoryRow(selectedCategory, navController)
-            Spacer(modifier = Modifier.height(5.dp))
-
-            when (selectedCategory.value) {
-                null, "SHOP" -> {
-                    when (selectedLocation.value) {
-                        "Dagupan" -> VendorGrid(products = dagupanVendors, navController = navController)
-                        "Calasiao" -> VendorGrid(products = calasiaoVendors, navController = navController)
-                    }
-                }
-                "Vegetables" -> ProductGrid(products = vegetableList, navController = navController)
-                "Fruits" -> ProductGrid(products = fruitList, navController = navController)
-                "Meats" -> ProductGrid(products = meatList, navController = navController)
-                "Fish" -> ProductGrid(products = fishList, navController = navController)
-                "Spices" -> ProductGrid(products = spiceList, navController = navController)
-                "Frozen Foods" -> ProductGrid(products = frozenFoodList, navController = navController)
-            }
-        }
-    }
-}
-
-@Composable
 fun VendorGrid(products: List<Vendor>, navController: NavController) {
     Column(modifier = Modifier.fillMaxWidth()) {
         products.forEach { vendor ->
@@ -421,7 +251,10 @@ fun VendorGrid(products: List<Vendor>, navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp)
-                    .height(200.dp),
+                    .height(200.dp)
+                    .clickable {
+                        navController.navigate("ShopScreen/${vendor.name}/${vendor.imageRes}")
+                    },
                 shape = RoundedCornerShape(16.dp),
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
             ) {
@@ -661,6 +494,254 @@ sealed class BottomBarScreen(val route: String, val title: String, val icon: Ima
     object Home : BottomBarScreen("home", "Home", Icons.Default.Home)
     object Cart : BottomBarScreen("cart", "Cart", Icons.Default.ShoppingCart)
     object Account : BottomBarScreen("account", "Account", Icons.Default.AccountCircle)
+}
+
+@Composable
+fun ShopScreen(navController: NavController, vendorName: String, imageRes: Int) {
+    // State for selected category
+    val selectedCategory = remember { mutableStateOf<String?>("Vegetables") } // Default to "Vegetables"
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+    ) {
+        // Header with Store Image and Back Button
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(250.dp)
+        ) {
+            Image(
+                painter = painterResource(id = imageRes),
+                contentDescription = vendorName,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(250.dp),
+                contentScale = ContentScale.Crop
+            )
+            IconButton(
+                onClick = { navController.popBackStack() },
+                modifier = Modifier
+                    .padding(top = 16.dp, start = 16.dp)
+                    .size(40.dp)
+                    .clip(CircleShape)
+                    .background(Color.White)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back",
+                    tint = Color.Black,
+                    modifier = Modifier.size(15.dp)
+                )
+            }
+        }
+
+        // Content Area
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            // Display Store Name
+            Text(
+                text = "$vendorName's Store",
+                color = Color.Black,
+                fontSize = 24.sp,
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+
+            // Category Row
+            CategoryRow(
+                selectedCategory = selectedCategory,
+                navController = navController
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Display Products Based on Selected Category
+            when (selectedCategory.value) {
+                "Vegetables" -> ProductGrid(products = vegetableList, navController = navController)
+                "Fruits" -> ProductGrid(products = fruitList, navController = navController)
+                "Meats" -> ProductGrid(products = meatList, navController = navController)
+                "Fish" -> ProductGrid(products = fishList, navController = navController)
+                "Spices" -> ProductGrid(products = spiceList, navController = navController)
+                "Frozen Foods" -> ProductGrid(products = frozenFoodList, navController = navController)
+                else -> {
+                    Text(
+                        text = "Select a category to view products",
+                        color = Color.Gray,
+                        fontSize = 16.sp,
+                        fontFamily = poppinsFontFamily,
+                        modifier = Modifier.padding(top = 16.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+@Composable
+fun HomeScreen() {
+    val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+    val cartViewModel: CartViewModel = viewModel()
+
+    Log.d("HomeScreen", "Current Route: $currentRoute")
+
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = {
+            if (currentRoute !in listOf("ProductScreen/{productName}", "CartScreen", "CheckoutScreen", "ShopScreen/{vendorName}/{imageRes}")) {
+                BottomBar(navController = navController)
+            }
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            NavHost(
+                navController = navController,
+                startDestination = BottomBarScreen.Home.route,
+                modifier = Modifier.weight(1f)
+            ) {
+                composable(BottomBarScreen.Home.route) {
+                    HomeContent(navController)
+                }
+                composable(BottomBarScreen.Cart.route) {
+                    CartScreen(cartViewModel = cartViewModel, navController = navController)
+                }
+                composable(BottomBarScreen.Account.route) {
+                    AccountActivity(navController)
+                }
+                composable(
+                    "ProductScreen/{productName}",
+                    arguments = listOf(navArgument("productName") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    ProductScreen(
+                        navController = navController,
+                        cartViewModel = cartViewModel,
+                        productName = backStackEntry.arguments?.getString("productName")
+                    )
+                }
+                composable("CartScreen") {
+                    CartScreen(cartViewModel = cartViewModel, navController = navController)
+                }
+                composable("CheckoutScreen") {
+                    CheckoutScreen(cartViewModel = cartViewModel, navController = navController)
+                }
+                composable("LoginActivity") {
+                    LoginActivity(navController)
+                }
+                composable("NotificationsActivity") {
+                    NotificationsActivity(navController)
+                }
+                composable("SettingsActivity") {
+                    SettingsActivity(navController)
+                }
+                composable("ForgotPasswordScreen") {
+                    ForgotPasswordScreen(navController)
+                }
+                composable("EnterOTPScreen") {
+                    EnterOTPScreen(navController)
+                }
+                composable("ChangePasswordScreen") {
+                    ChangePasswordScreen(navController)
+                }
+                composable("ResetPasswordScreen") {
+                    ResetPasswordScreen(navController)
+                }
+                composable("ShopInformationScreen") {
+                    ShopInformationScreen(navController)
+                }
+                composable("BusinessInformationActivity") {
+                    BusinessInformationActivity(navController)
+                }
+                composable("RequestSentScreen") {
+                    RequestSentScreen(navController)
+                }
+                composable(
+                    "ShopScreen/{vendorName}/{imageRes}",
+                    arguments = listOf(
+                        navArgument("vendorName") { type = NavType.StringType },
+                        navArgument("imageRes") { type = NavType.IntType }
+                    )
+                ) { backStackEntry ->
+                    ShopScreen(
+                        navController = navController,
+                        vendorName = backStackEntry.arguments?.getString("vendorName") ?: "",
+                        imageRes = backStackEntry.arguments?.getInt("imageRes") ?: 0
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun HomeContent(navController: NavController) {
+    val selectedCategory = remember { mutableStateOf<String?>(null) }
+    val selectedLocation = remember { mutableStateOf<String?>("Dagupan") }
+    val scrollState = rememberScrollState()
+
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = Color.White
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(scrollState),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.height(45.dp))
+            Image(
+                painter = painterResource(id = R.drawable.baskit_logo),
+                contentDescription = "Logo",
+                modifier = Modifier
+                    .size(70.dp)
+                    .padding(16.dp)
+            )
+            Text(
+                text = "Shop Smarter, Not Harder",
+                fontFamily = poppinsFontFamily,
+                fontSize = 12.sp,
+                color = Color.Black,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.offset(y = (-20).dp)
+            )
+            SearchBar()
+            Spacer(modifier = Modifier.height(30.dp))
+            SliderCard()
+            Spacer(modifier = Modifier.height(15.dp))
+            LocationSelector(selectedLocation)
+            HorizontalDivider(
+                modifier = Modifier.padding(vertical = 4.dp, horizontal = 10.dp),
+                thickness = 2.dp
+            )
+            CategoryRow(selectedCategory, navController)
+            Spacer(modifier = Modifier.height(5.dp))
+
+            when (selectedCategory.value) {
+                null, "STORE" -> {
+                    when (selectedLocation.value) {
+                        "Dagupan" -> VendorGrid(products = dagupanVendors, navController = navController)
+                        "Calasiao" -> VendorGrid(products = calasiaoVendors, navController = navController)
+                    }
+                }
+                "Vegetables" -> ProductGrid(products = vegetableList, navController = navController)
+                "Fruits" -> ProductGrid(products = fruitList, navController = navController)
+                "Meats" -> ProductGrid(products = meatList, navController = navController)
+                "Fish" -> ProductGrid(products = fishList, navController = navController)
+                "Spices" -> ProductGrid(products = spiceList, navController = navController)
+                "Frozen Foods" -> ProductGrid(products = frozenFoodList, navController = navController)
+            }
+        }
+    }
 }
 
 @Preview(showBackground = true)
