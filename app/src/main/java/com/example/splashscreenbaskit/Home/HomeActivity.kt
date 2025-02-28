@@ -61,6 +61,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import com.example.splashscreenbaskit.AccountDetails.BusinessInformationActivity
 import com.example.splashscreenbaskit.AccountDetails.RequestSentScreen
@@ -698,7 +699,7 @@ fun HomeContent(navController: NavController) {
                 .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(45.dp))
+            Spacer(modifier = Modifier.height(40.dp))
             Image(
                 painter = painterResource(id = R.drawable.baskit_logo),
                 contentDescription = "Logo",
@@ -719,10 +720,24 @@ fun HomeContent(navController: NavController) {
             SliderCard()
             Spacer(modifier = Modifier.height(15.dp))
             LocationSelector(selectedLocation)
-            HorizontalDivider(
-                modifier = Modifier.padding(vertical = 4.dp, horizontal = 10.dp),
-                thickness = 2.dp
+            Box(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(10.dp)
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(Color.Gray.copy(alpha = 0.5f), Color.Transparent)
+                        )
+                    )
             )
+        }
+//            HorizontalDivider(
+//                modifier = Modifier.padding(vertical = 4.dp, horizontal = 10.dp),
+//                thickness = 2.dp
+//            )
             CategoryRow(selectedCategory, navController)
             Spacer(modifier = Modifier.height(5.dp))
 
