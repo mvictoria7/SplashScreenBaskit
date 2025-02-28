@@ -270,7 +270,7 @@ fun CheckoutItemView(item: CartItem) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                painter = painterResource(id = item.imageResId),
+                painter = painterResource(id = item.imageResId ?: R.drawable.noorders_img), // Fallback
                 contentDescription = "Product Image",
                 modifier = Modifier
                     .size(80.dp)

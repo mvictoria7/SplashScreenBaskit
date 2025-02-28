@@ -1,7 +1,7 @@
 package com.example.splashscreenbaskit.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.mutableStateListOf
+import androidx.lifecycle.ViewModel
 import com.example.splashscreenbaskit.Carts.CartItem
 
 class CartViewModel : ViewModel() {
@@ -9,16 +9,18 @@ class CartViewModel : ViewModel() {
     val cartItems: List<CartItem> get() = _cartItems
 
     fun addToCart(item: CartItem) {
-        val existingItem = _cartItems.find { it.name == item.name && it.weight == item.weight }
-        if (existingItem != null) {
-            existingItem.quantity += item.quantity
+        if (item.quantity <= 0) return
+        val existingItemIndex = _cartItems.indexOfFirst { it.name == item.name && it.weight == item.weight }
+        if (existingItemIndex != -1) {
+            val existingItem = _cartItems[existingItemIndex]
+            _cartItems[existingItemIndex] = existingItem.copy(quantity = existingItem.quantity + item.quantity)
         } else {
-            _cartItems.add(item.copy(price = item.price)) // Keep the fixed price
+            _cartItems.add(item.copy())
         }
     }
 
     fun removeFromCart(item: CartItem) {
-        _cartItems.remove(item)
+        _cartItems.removeAll { it.id == item.id }
     }
 
     fun increaseQuantity(item: CartItem) {
@@ -34,4 +36,11 @@ class CartViewModel : ViewModel() {
             _cartItems[index] = item.copy(quantity = item.quantity - 1)
         }
     }
+
+    fun clearCart() {
+        _cartItems.clear()
+    }
+
+    val totalPrice: Double
+        get() = _cartItems.sumOf { it.price * it.quantity }
 }

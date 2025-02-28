@@ -22,7 +22,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun CartScreen(cartViewModel: CartViewModel, navController: NavController) {
@@ -138,10 +137,13 @@ fun CartScreen(cartViewModel: CartViewModel, navController: NavController) {
     }
 }
 
-
-
 @Composable
-fun CartItemView(item: CartItem, onRemoveItem: () -> Unit, onIncreaseQuantity: () -> Unit, onDecreaseQuantity: () -> Unit) {
+fun CartItemView(
+    item: CartItem,
+    onRemoveItem: () -> Unit,
+    onIncreaseQuantity: () -> Unit,
+    onDecreaseQuantity: () -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -157,17 +159,16 @@ fun CartItemView(item: CartItem, onRemoveItem: () -> Unit, onIncreaseQuantity: (
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Image(
-                    painter = painterResource(id = item.imageResId),
+                    painter = painterResource(id = item.imageResId ?: R.drawable.noorders_img),
                     contentDescription = "Product Image",
                     modifier = Modifier.size(80.dp)
                 )
                 Spacer(modifier = Modifier.width(10.dp))
 
-
                 Column(modifier = Modifier.weight(1f)) {
                     Text(text = item.name, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                     Text(
-                        text = "${item.weight}",
+                        text = "${item.weight ?: "N/A"}",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color.Gray
@@ -214,9 +215,3 @@ fun CartItemView(item: CartItem, onRemoveItem: () -> Unit, onIncreaseQuantity: (
         }
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun CartScreen (){
-//    CartScreen()
-//}

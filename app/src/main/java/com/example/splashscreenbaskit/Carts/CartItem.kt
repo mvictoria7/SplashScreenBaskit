@@ -1,10 +1,18 @@
 package com.example.splashscreenbaskit.Carts
 
+
 data class CartItem(
-    val id: Int,            // Unique ID for each item
+    val id: String,
     val name: String,
-    val weight: String,
-    var price: Double,
-    var quantity: Int,      // Quantity is mutable to update it later
-    val imageResId: Int, // Resource ID for the image
+    val price: Double,
+    val quantity: Int,
+    val weight: String? = null,
+    val imageResId: Int? = null
+)
+
+data class Product(
+    val name: String,
+    val imageRes: Int,
+    val category: String,
+    val price: Double
 )
