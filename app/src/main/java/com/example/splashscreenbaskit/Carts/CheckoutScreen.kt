@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,31 +21,50 @@ import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
-
+@Preview(showBackground = true)
+@Composable
+fun CheckoutScreenPreview(){
+    val cartViewModel = CartViewModel()
+    val navController = rememberNavController()
+    CheckoutScreen(cartViewModel, navController)
+}
 
 @Composable
 fun CheckoutScreen(cartViewModel: CartViewModel, navController: NavController) {
     val cartItems by remember { mutableStateOf(cartViewModel.cartItems) }
     var showCodeDialog by remember { mutableStateOf(false) } // State for Dialog
 
+    val scrollState = rememberScrollState()
+
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize() .verticalScroll(scrollState)
     ) {
         // Toolbar
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(top = 70.dp, start = 40.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { navController.popBackStack() }) {
-                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
+            IconButton(
+                onClick = { navController.popBackStack() },
+                modifier = Modifier.size(20.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.back),
+                    contentDescription = "Back",
+                    tint = Color.Black,
+                    modifier = Modifier.size(20.dp)
+                )
             }
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.width(80.dp))
             Text(
                 text = "Checkout",
                 fontSize = 24.sp,
@@ -52,7 +72,6 @@ fun CheckoutScreen(cartViewModel: CartViewModel, navController: NavController) {
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
-            Spacer(modifier = Modifier.weight(1f))
         }
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -60,9 +79,9 @@ fun CheckoutScreen(cartViewModel: CartViewModel, navController: NavController) {
         // Products List with Padding
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp) // Products stay padded
-                .weight(1f) // Allows scrolling
+                .fillMaxSize()
+                .padding(horizontal = 30.dp)
+                .weight(1f)
         ) {
             LazyColumn {
                 items(cartItems) { item ->
@@ -71,84 +90,170 @@ fun CheckoutScreen(cartViewModel: CartViewModel, navController: NavController) {
             }
         }
 
-        // FULL-WIDTH SHADOW (End to End)
-        Box(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(12.dp)
-                    .background(
-                        brush = Brush.verticalGradient(
-                            colors = listOf(Color.Gray.copy(alpha = 0.5f), Color.Transparent)
-                        )
-                    )
-            )
-        }
+//        // FULL-WIDTH SHADOW (End to End)
+//        Box(
+//            modifier = Modifier.fillMaxWidth()
+//        ) {
+//            Box(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(12.dp)
+//                    .background(
+//                        brush = Brush.verticalGradient(
+//                            colors = listOf(Color.Gray.copy(alpha = 0.5f), Color.Transparent)
+//                        )
+//                    )
+//            )
+//        }
 
         // Tagabili Column (Still inside padding)
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 16.dp),
+                .padding(horizontal = 30.dp, vertical = 30.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
         // Bottom Summary & Payment Section
         val totalPrice = cartItems.sumOf { it.price * it.quantity }
 
 
-            Text(
-                text = "Tagabili: Juan Sebastian",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
+            Divider(
+                thickness = 0.5.dp,
+                color = Color.Black
             )
             Text(
-                text = "0900-000-0000",
+                text = "Waiting for Tagabili...",
                 fontSize = 16.sp,
-                color = Color.Gray
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = poppinsFontFamily,
+                modifier = Modifier.padding(top = 25.dp, bottom = 8.dp)
             )
+//            Text(
+//                text = "Tagabili: Juan Sebastian",
+//                fontSize = 16.sp,
+//                fontWeight = FontWeight.SemiBold,
+//                fontFamily = poppinsFontFamily,
+//                modifier = Modifier.padding(top = 25.dp, bottom = 8.dp)
+//            )
+//            Text(
+//                text = "0900-000-0000",
+//                fontSize = 16.sp,
+//                fontFamily = poppinsFontFamily,
+//                fontWeight = FontWeight.SemiBold,
+//                color = Color.Black
+//            )
 
-            Spacer(modifier = Modifier.height(10.dp))
-            Divider()
+            Spacer(modifier = Modifier.height(30.dp))
 
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(text = "Subtotal: ₱${"%.2f".format(totalPrice)}", fontSize = 16.sp, color = Color.Gray)
-            Text(text = "Tagabili Fee: ₱0.00", fontSize = 16.sp, color = Color.Gray)
+            Box(
+                modifier = Modifier
+                    .width(263.dp)
+                    .height(60.dp)
+                    .background(Color(0xFFEEEDED), shape = RoundedCornerShape(10.dp)),
+                contentAlignment = Alignment.Center
+            ){
+                Text(
+                    text = "GCash and Cash are accepted",
+                    fontSize = 14.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color(0xFF5F5D5D)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(40.dp))
+
+            Row (
+                modifier = Modifier.fillMaxWidth() .padding(horizontal = 10.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+                Text(
+                    text = "Subtotal:",
+                    fontSize = 16.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Gray
+                )
+                Text(
+                    text = "₱${"%.2f".format(totalPrice)}",
+                    fontSize = 16.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Gray
+                )
+            }
+
+            Spacer(modifier = Modifier.height(15.dp))
+
+            Row (
+                modifier = Modifier.fillMaxWidth() .padding(horizontal = 10.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+                Text(
+                    text = "Tagabili Fee:",
+                    fontSize = 16.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Gray
+                )
+                Text(
+                    text = "₱0.00",
+                    fontSize = 16.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Gray
+                )
+            }
+
             Spacer(modifier = Modifier.height(4.dp))
 
-            Divider()
-
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "Total: ₱${"%.2f".format(totalPrice)}",
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF6CBF5F)
+            Divider(
+                modifier = Modifier.padding(top = 15.dp, bottom = 8.dp),
+                thickness = 0.5.dp,
+                color = Color.Black
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(7.dp))
+
+            Row (
+                modifier = Modifier.fillMaxWidth() .padding(horizontal = 10.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+                Text(
+                    text = "Total:",
+                    fontSize = 24.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = Color(0xFF83BD70)
+                )
+                Text(
+                    text = "₱${"%.2f".format(totalPrice)}",
+                    fontSize = 24.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = Color(0xFF83BD70)
+                )
+            }
+            Spacer(modifier = Modifier.height(40.dp))
             Button(
                 onClick = {showCodeDialog = true },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151)),
-                modifier = Modifier.fillMaxWidth()
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF83BD70)),
+                modifier = Modifier.width(205.dp) .height(58.dp)
             ) {
-                Text(text = "YOUR CODE", color = Color.White, fontSize = 20.sp)
+                Text(text = "PAY IN STORE", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = poppinsFontFamily)
 
             }
         }
     }
 
-    // Show Dialog when button is clicked
     if (showCodeDialog) {
         YourCodeDialog(
             onDismiss = { showCodeDialog = false },
-            onSaveImage = { /* Implement save as image function here */ }
+            onSaveImage = {  }
         )
     }
 }
 
-// 📌 Styled Dialog Box Component (Matches Image Design)
 @Composable
 fun YourCodeDialog(onDismiss: () -> Unit, onSaveImage: () -> Unit) {
     val randomCode by remember { mutableStateOf(generateRandomCode()) }
@@ -156,7 +261,7 @@ fun YourCodeDialog(onDismiss: () -> Unit, onSaveImage: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.5f)), // Dim background
+            .background(Color.Black.copy(alpha = 0.5f)),
         contentAlignment = Alignment.Center
     ) {
         Card(
@@ -165,7 +270,7 @@ fun YourCodeDialog(onDismiss: () -> Unit, onSaveImage: () -> Unit) {
                 .fillMaxWidth(0.85f)
                 .wrapContentHeight(),
             colors = CardDefaults.cardColors(containerColor = Color.White),
-            elevation = CardDefaults.cardElevation(8.dp) // Shadow effect
+            elevation = CardDefaults.cardElevation(8.dp)
         ) {
             Column(
                 modifier = Modifier.padding(20.dp),

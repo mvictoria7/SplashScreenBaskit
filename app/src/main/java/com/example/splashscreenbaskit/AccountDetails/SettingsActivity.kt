@@ -140,8 +140,8 @@ fun SettingsActivity(navController: NavHostController) {
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        modifier = Modifier.padding(15.dp)
+                        horizontalArrangement = Arrangement.spacedBy(15.dp),
+                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 15.dp)
                     ) {
                         Text(
                             text = "Receive push notifications",

@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -22,23 +23,43 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun CartScreenPreview() {
+    val navController = rememberNavController()
+    val cartViewModel = CartViewModel()
+    CartScreen(cartViewModel = cartViewModel, navController)
+}
 @Composable
 fun CartScreen(cartViewModel: CartViewModel, navController: NavController) {
     val cartItems by remember { mutableStateOf(cartViewModel.cartItems) }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize()
+    ) {
         // Title Bar
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(top = 60.dp, start = 30.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { navController.popBackStack() }) {
-                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
+            IconButton(
+                onClick = { navController.popBackStack() },
+                modifier = Modifier
+                    //.padding(top = 60.dp, start = 30.dp)
+                    .size(20.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.back),
+                    contentDescription = "Back",
+                    tint = Color.Black,
+                    modifier = Modifier.size(20.dp)
+                )
             }
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.width(90.dp))
             Text(
                 text = "My Basket",
                 fontSize = 24.sp,
@@ -46,7 +67,6 @@ fun CartScreen(cartViewModel: CartViewModel, navController: NavController) {
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
-            Spacer(modifier = Modifier.weight(1f))
         }
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -67,14 +87,15 @@ fun CartScreen(cartViewModel: CartViewModel, navController: NavController) {
                     Image(
                         painter = painterResource(id = R.drawable.noorders_img),
                         contentDescription = "No Orders",
-                        modifier = Modifier.size(250.dp)
+                        modifier = Modifier.size(220.dp)
                     )
                     Spacer(modifier = Modifier.height(20.dp))
                     Text(
                         text = "Your basket is empty!",
-                        fontSize = 18.sp,
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.Medium,
-                        color = Color.Gray
+                        color = Color.Gray,
+                        fontFamily = poppinsFontFamily
                     )
                 }
             } else {
