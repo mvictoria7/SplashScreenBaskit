@@ -19,11 +19,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.splashscreenbaskit.Carts.CartItem
 import com.example.splashscreenbaskit.Carts.Product
+import com.example.splashscreenbaskit.Home.HomeScreen
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
@@ -70,6 +72,8 @@ val frozenFoodList = listOf(
     Product("Chicken Nuggets", R.drawable.nuggets, "Frozen Foods", 4.50)
 )
 
+
+
 @Composable
 fun ProductScreen(
     navController: NavController,
@@ -83,8 +87,8 @@ fun ProductScreen(
     val context = LocalContext.current
     var quantity by remember { mutableStateOf(1) }
     var selectedWeight by remember { mutableStateOf("1 pc") }
-    val basePrice = product.price // Use product's base price
-    val priceIncrease = 30.0 // Same increment as AppleScreen; adjust per product if needed
+    val basePrice = product.price
+    val priceIncrease = 30.0
 
     // Calculate price based on selected weight
     val priceForWeight = when (selectedWeight) {

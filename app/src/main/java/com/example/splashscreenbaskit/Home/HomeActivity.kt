@@ -158,7 +158,7 @@ fun PageIndicator(currentPage: Int, totalScreens: Int) {
 
 @Composable
 fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavController) {
-    val categories = listOf("SHOP", "Vegetables", "Fruits", "Meats", "Fish", "Spices", "Frozen Foods")
+    val categories = listOf("STORE", "Vegetables", "Fruits", "Meats", "Fish", "Spices", "Frozen Foods")
 
     LazyRow(
         modifier = Modifier.fillMaxWidth().padding(top = 5.dp, start = 8.dp, end = 10.dp)
@@ -431,7 +431,8 @@ fun VendorGrid(products: List<Vendor>, navController: NavController) {
                                 text = "Top Store",
                                 fontSize = 12.sp,
                                 color = Color.White,
-                                fontWeight = FontWeight.Bold
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = poppinsFontFamily
                             )
                         }
                     }
@@ -445,20 +446,21 @@ fun VendorGrid(products: List<Vendor>, navController: NavController) {
                         Text(
                             text = vendor.name,
                             fontWeight = FontWeight.Bold,
-                            fontSize = 19.sp,
+                            fontSize = 16.sp,
                             fontFamily = poppinsFontFamily,
-                            modifier = Modifier.padding(end = 8.dp)
+                            modifier = Modifier.padding(top = 5.dp, end = 8.dp)
                         )
                         Box(
                             modifier = Modifier
                                 .background(Color(0xFFFFA726), shape = RoundedCornerShape(20.dp))
-                                .padding(horizontal = 12.dp, vertical = 4.dp)
+                                .padding(horizontal = 12.dp, vertical = 5.dp)
                         ) {
                             Text(
                                 text = "Recommended",
                                 fontSize = 12.sp,
                                 color = Color.White,
-                                fontWeight = FontWeight.Bold
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = poppinsFontFamily
                             )
                         }
                     }
@@ -573,7 +575,7 @@ fun LocationSelector(selectedLocation: MutableState<String?>) {
         TextButton(onClick = { selectedLocation.value = "Calasiao" }) {
             Text(
                 "CALASIAO",
-                color = if (selectedLocation.value == "Calasiao") Color.Gray else Color(0xFFBFBFBF),
+                color = if (selectedLocation.value == "Calasiao") Color.Black else Color(0xFFBFBFBF),
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold,
                 style = TextStyle(fontFamily = poppinsFontFamily)

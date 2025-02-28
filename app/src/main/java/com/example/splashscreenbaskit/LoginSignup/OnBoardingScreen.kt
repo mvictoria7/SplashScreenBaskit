@@ -48,14 +48,13 @@ fun OnboardingScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(25.dp),
-            contentAlignment = Alignment.TopEnd
+            contentAlignment = Alignment.BottomEnd
         ) {
             TextButton(
                 onClick = {
                     coroutineScope.launch { pagerState.animateScrollToPage(2) }
                 },
-                modifier = Modifier
-                    .zIndex(1f)
+                modifier = Modifier.zIndex(1f)
             ) {
                 Text(
                     text = "Skip",
@@ -125,9 +124,9 @@ fun OnboardingScreen(navController: NavController) {
                             color = Color.Black,
                             fontWeight = FontWeight.Bold,
                             fontSize = 14.sp
-                    )
+                        )
+                    }
                 }
-            }
         }
     }
 }

@@ -114,7 +114,7 @@ fun AccountActivity(navController: NavController) {
                 onClick = {
                     navController.navigate("NotificationsActivity") },
                 enabled = true,
-                modifier = Modifier.padding(start = 120.dp)
+                modifier = Modifier.padding(start = 130.dp)
             ) {
                 Icon(
                     imageVector = Icons.Filled.Notifications,
@@ -155,7 +155,7 @@ fun AccountActivity(navController: NavController) {
         ) {
 
             Text(
-                text = "Account\ndetails",
+                text = "Account Details",
                 style = MaterialTheme.typography.headlineMedium,
                 color = Color.Black,
                 fontWeight = FontWeight.ExtraBold,
