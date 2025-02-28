@@ -212,37 +212,45 @@ fun ProductScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            Text(
-                text = "Seller Description",
-                fontSize = 20.sp,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(vertical = 8.dp),
-                color = Color.Gray
-            )
-            Text(
-                text = "Martha Rosario (Aling Martha’s)",
-                fontSize = 20.sp,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.SemiBold,
-                color = Color.Black
-            )
-            Text(
-                text = "0900-000-0000",
-                fontSize = 18.sp,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Light,
-                color = Color.Black
-            )
-            Text(
-                text = "123 Street, Dagupan City",
-                fontSize = 18.sp,
-                fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Light,
-                color = Color.Black
-            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color(0xFFEEEDED), shape = RoundedCornerShape(10.dp))
+                    .padding(18.dp)
+            ) {
+                Column {
+                    Text(
+                        text = "Seller Description",
+                        fontSize = 22.sp,
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Gray
+                    )
+                    Text(
+                        text = "Martha Rosario (Aling Martha’s)",
+                        fontSize = 22.sp,
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black
+                    )
+                    Text(
+                        text = "0900-000-0000",
+                        fontSize = 20.sp,
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.Light,
+                        color = Color.Black
+                    )
+                    Text(
+                        text = "123 Street, Dagupan City",
+                        fontSize = 20.sp,
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.Light,
+                        color = Color.Black
+                    )
+                }
+            }
 
-            Spacer(modifier = Modifier.height(143.dp))
+            Spacer(modifier = Modifier.height(115.dp))
 
             // Weight Selection
             Row(
@@ -280,14 +288,14 @@ fun ProductScreen(
                 .fillMaxWidth()
                 .weight(0.1f)
                 .background(Color(0xFF1D7151))
-                .padding(20.dp),
+                .padding(18.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column {
                 Text(
                     text = "Total Price",
-                    fontSize = 16.sp,
+                    fontSize = 18.sp,
                     fontFamily = poppinsFontFamily,
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold
