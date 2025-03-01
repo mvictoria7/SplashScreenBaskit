@@ -149,7 +149,7 @@ fun ProductScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(45.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
         // Product Details
         Column(

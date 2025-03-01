@@ -1,6 +1,9 @@
 package com.example.splashscreenbaskit.AccountDetails
 
+import android.os.Bundle
 import android.widget.Space
+import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,6 +29,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
@@ -35,6 +39,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.window.DialogProperties
 import com.example.splashscreenbaskit.R
@@ -70,6 +75,7 @@ fun AccountActivity(navController: NavController) {
     }
 
     val scrollState = rememberScrollState()
+    var showPopup by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -85,7 +91,7 @@ fun AccountActivity(navController: NavController) {
             horizontalArrangement = Arrangement.Start
         ) {
             Button(
-                onClick = {navController.navigate("ShopInformationScreen")},
+                onClick = {showPopup = true},
                 shape = RoundedCornerShape(topEnd = 20.dp, bottomEnd = 20.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF5F5F5), contentColor = Color.Black),
                 //elevation = ButtonDefaults.buttonElevation(20.dp),
@@ -95,6 +101,16 @@ fun AccountActivity(navController: NavController) {
                     .width(110.dp)
                     .height(35.dp)
             ) {
+                if (showPopup) {
+                    StartSellingPopup(
+                        onCancel = { showPopup = false },
+                        onProceed = {
+                            showPopup = true
+                            navController.navigate("ShopInformationScreen")
+                        }
+                    )
+                }
+
                 Image(
                     painter = painterResource(id = R.drawable.shop),
                     contentDescription = "Shop Icon",
@@ -104,9 +120,15 @@ fun AccountActivity(navController: NavController) {
                 Spacer(modifier = Modifier.width(12.dp))
 
                 Text(
-                    text = "Start Selling >",
+                    text = "Start Selling",
                     fontFamily = poppinsFontFamily,
                     fontSize = 10.sp
+                )
+
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowRight,
+                    contentDescription = "Notifications",
+                    tint = Color.Black
                 )
             }
 
@@ -453,3 +475,69 @@ fun AccountActivity(navController: NavController) {
 
     }
 }
+
+@Composable
+fun StartSellingPopup(onCancel: () -> Unit, onProceed: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = {  },
+        title = {
+            Text(
+                text = "Start Selling?",
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+                fontFamily = poppinsFontFamily,
+                color = Color.Black
+            )
+        },
+        text = {
+            Text(
+                "Create your own store and post your products now!",
+                fontWeight = FontWeight.Normal,
+                fontSize = 14.sp,
+                fontFamily = poppinsFontFamily,
+                color = Color.Black
+            )
+        },
+        confirmButton = {
+            Button(
+                modifier = Modifier
+                    .height(38.dp)
+                    .width(104.dp)
+                    .background(Color(0xFF1D7151)), shape = RoundedCornerShape(10.dp),
+                onClick = onProceed
+            ) {
+                Text("Proceed",
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 15.sp,
+                    fontFamily = poppinsFontFamily,
+                    color = Color.White
+                )
+            }
+        },
+        dismissButton = {
+            Button(modifier = Modifier
+                .height(38.dp)
+                .width(104.dp)
+                .background(Color(0xFFD9D9D9)), shape = RoundedCornerShape(10.dp),
+                onClick = onCancel
+            ) {
+                Text("Cancel",
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 15.sp,
+                    fontFamily = poppinsFontFamily,
+                    color = Color.Black
+                )
+            }
+        }
+    )
+}
+
+class AccountActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            AccountActivity()
+        }
+    }
+}
+

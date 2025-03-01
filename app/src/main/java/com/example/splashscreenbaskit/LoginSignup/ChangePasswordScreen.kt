@@ -81,16 +81,6 @@ fun ChangePasswordScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(
-                text = "Password must contain at least 8 characters, one special character, and one number.",
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Medium,
-                fontFamily = poppinsFontFamily,
-                color = Color(0xFF8C8C8C)
-            )
-
-            Spacer(modifier = Modifier.height(20.dp))
-
             OutlinedTextField(
                 value = newPass,
                 onValueChange = { newPass = it },
@@ -120,6 +110,16 @@ fun ChangePasswordScreen(navController: NavController) {
                     focusedBorderColor = Color.Black,
                     unfocusedBorderColor = Color.Gray
                 )
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(
+                text = "Password must contain at least 8 characters, one special character, and one number.",
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium,
+                fontFamily = poppinsFontFamily,
+                color = Color(0xFF8C8C8C)
             )
 
             Spacer(modifier = Modifier.height(30.dp))

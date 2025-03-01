@@ -276,7 +276,7 @@ fun ShopInformationScreen(navController: NavController) {
 
                 Button(
                     onClick = {navController.navigate("BusinessInformationActivity")},
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E7D32)),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1D7151)),
                     modifier = Modifier.fillMaxWidth().height(50.dp),
                     enabled = isButtonEnabled
                 ) {

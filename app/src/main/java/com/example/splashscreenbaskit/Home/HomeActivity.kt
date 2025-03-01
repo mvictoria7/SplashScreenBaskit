@@ -153,7 +153,7 @@ fun PageIndicator(currentPage: Int, totalScreens: Int) {
 
 @Composable
 fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavController) {
-    val categories = listOf("Vegetables", "Fruits", "Meats", "Fish", "Spices", "Frozen Foods")
+    val categories = listOf("STORE", "Vegetables", "Fruits", "Meats", "Fish", "Spices", "Frozen Foods")
 
     LazyRow(
         modifier = Modifier.fillMaxWidth().padding(top = 5.dp, start = 8.dp, end = 10.dp)
@@ -336,7 +336,7 @@ fun LabelChip(text: String) {
 }
 
 @Composable
-fun SearchBar() {
+fun SearchBar(navController: NavController) {
     var searchText by remember { mutableStateOf(TextFieldValue("")) }
 
     Row(
@@ -369,18 +369,18 @@ fun SearchBar() {
                 }
             }
         )
-//        Spacer(modifier = Modifier.width(10.dp))
-//        IconButton(
-//            onClick = {},
-//            enabled = true,
-//            modifier = Modifier.size(25.dp)
-//        ) {
-//            Icon(
-//                imageVector = Icons.Filled.Notifications,
-//                contentDescription = "Notifications",
-//                tint = Color.Black
-//            )
-//        }
+        Spacer(modifier = Modifier.width(10.dp))
+        IconButton(
+            onClick = {navController.navigate("NotificationsActivity")},
+            enabled = true,
+            modifier = Modifier.size(25.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Notifications,
+                contentDescription = "Notifications",
+                tint = Color.Black
+            )
+        }
     }
 }
 
@@ -390,7 +390,7 @@ fun SliderCard() {
         modifier = Modifier
             .fillMaxWidth()
             .height(149.dp)
-            .padding(start = 31.dp, end = 30.dp),
+            .padding(start = 30.dp, end = 30.dp),
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
@@ -444,7 +444,7 @@ fun BottomBar(navController: NavController) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(70.dp),
+            .height(80.dp),
             //.clip(RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp)),
         color = Color(0xFF1d7151)
     ) {
@@ -455,7 +455,7 @@ fun BottomBar(navController: NavController) {
         ) {
             screens.forEachIndexed { index, screen ->
                 val isSelected = currentDestination?.route == screen.route
-                val iconSize by animateDpAsState(targetValue = if (isSelected) 32.dp else 24.dp, label = "Icon Size Animation")
+                val iconSize by animateDpAsState(targetValue = if (isSelected) 34.dp else 26.dp, label = "Icon Size Animation")
                 val iconColor by animateColorAsState(targetValue = if (isSelected) Color.White else Color.Gray, label = "Icon Color Animation")
 
                 BottomNavigationItem(
@@ -703,10 +703,9 @@ fun HomeContent(navController: NavController) {
             Image(
                 painter = painterResource(id = R.drawable.baskit_logo),
                 contentDescription = "Logo",
-                modifier = Modifier
-                    .size(70.dp)
-                    .padding(16.dp)
+                modifier = Modifier.size(50.dp)
             )
+            Spacer(modifier = Modifier.height(20.dp))
             Text(
                 text = "Shop Smarter, Not Harder",
                 fontFamily = poppinsFontFamily,
@@ -715,7 +714,8 @@ fun HomeContent(navController: NavController) {
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.offset(y = (-20).dp)
             )
-            SearchBar()
+            Spacer(modifier = Modifier.height(15.dp))
+            SearchBar(navController)
             Spacer(modifier = Modifier.height(30.dp))
             SliderCard()
             Spacer(modifier = Modifier.height(15.dp))
@@ -726,7 +726,7 @@ fun HomeContent(navController: NavController) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(10.dp)
+                    .height(6.dp)
                     .background(
                         brush = Brush.verticalGradient(
                             colors = listOf(Color.Gray.copy(alpha = 0.5f), Color.Transparent)

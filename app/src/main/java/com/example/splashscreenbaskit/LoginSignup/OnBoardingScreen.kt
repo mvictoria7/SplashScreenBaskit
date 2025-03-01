@@ -48,7 +48,7 @@ fun OnboardingScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(25.dp),
-            contentAlignment = Alignment.TopEnd
+            contentAlignment = Alignment.BottomStart
         ) {
             TextButton(
                 onClick = {

@@ -76,7 +76,7 @@ fun BusinessInformationActivity(navController: NavController) {
                     )
                 }
                 Divider(
-                    color = Color(0xFFD9D9D9),
+                    color = Color(0xFF1D7151),
                     modifier = Modifier
                         .width(60.dp)
                         .height(2.dp)
