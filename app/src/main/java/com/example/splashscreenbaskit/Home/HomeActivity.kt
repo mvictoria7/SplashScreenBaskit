@@ -369,18 +369,18 @@ fun SearchBar() {
                 }
             }
         )
-        Spacer(modifier = Modifier.width(10.dp))
-        IconButton(
-            onClick = {},
-            enabled = true,
-            modifier = Modifier.size(25.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Notifications,
-                contentDescription = "Notifications",
-                tint = Color.Black
-            )
-        }
+//        Spacer(modifier = Modifier.width(10.dp))
+//        IconButton(
+//            onClick = {},
+//            enabled = true,
+//            modifier = Modifier.size(25.dp)
+//        ) {
+//            Icon(
+//                imageVector = Icons.Filled.Notifications,
+//                contentDescription = "Notifications",
+//                tint = Color.Black
+//            )
+//        }
     }
 }
 
@@ -444,8 +444,8 @@ fun BottomBar(navController: NavController) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(70.dp)
-            .clip(RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp)),
+            .height(70.dp),
+            //.clip(RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp)),
         color = Color(0xFF1d7151)
     ) {
         Row(
