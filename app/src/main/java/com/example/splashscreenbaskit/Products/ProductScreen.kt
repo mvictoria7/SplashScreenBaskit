@@ -19,9 +19,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.Carts.CartItem
 import com.example.splashscreenbaskit.Carts.Product
 import com.example.splashscreenbaskit.R
@@ -69,7 +71,19 @@ val frozenFoodList = listOf(
     Product("Frozen Peas", R.drawable.frozen_peas, "Frozen Foods", 2.00),
     Product("Chicken Nuggets", R.drawable.nuggets, "Frozen Foods", 4.50)
 )
+@Preview(showBackground = true)
+@Composable
+fun ProductScreenPreview() {
+    val navController = rememberNavController()
+    val cartViewModel = CartViewModel()
+    val productName = "Apple"
 
+    ProductScreen(
+        navController = navController,
+        cartViewModel = cartViewModel,
+        productName = productName
+    )
+}
 @Composable
 fun ProductScreen(
     navController: NavController,
@@ -105,7 +119,7 @@ fun ProductScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp)
+                .height(320.dp)
                 .background(Color.White),
             contentAlignment = Alignment.TopCenter
         ) {
@@ -114,45 +128,44 @@ fun ProductScreen(
                 contentDescription = product.name,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(250.dp)
-                    .clip(RoundedCornerShape(10.dp)),
+                    .height(320.dp),
                 contentScale = ContentScale.Crop
             )
 
             IconButton(
                 onClick = { navController.popBackStack() },
                 modifier = Modifier
-                    .padding(16.dp)
+                    .padding(top = 70.dp, start = 40.dp)
                     .align(Alignment.TopStart)
-                    .size(40.dp)
+                    .size(20.dp)
                     .background(Color.White, shape = CircleShape)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.back),
                     contentDescription = "Back",
                     tint = Color.Black,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(20.dp)
                 )
             }
         }
 
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(45.dp))
 
         // Product Details
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(0.35f)
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 20.dp)
         ) {
             Text(
                 text = product.name,
-                fontSize = 36.sp,
+                fontSize = 32.sp,
                 fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.Bold
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -161,7 +174,7 @@ fun ProductScreen(
             ) {
                 Text(
                     text = "₱ ${"%.2f".format(priceForWeight)}",
-                    fontSize = 28.sp,
+                    fontSize = 24.sp,
                     fontFamily = poppinsFontFamily,
                     fontWeight = FontWeight.Bold,
                     color = Color.Gray
@@ -183,7 +196,7 @@ fun ProductScreen(
                         )
                     }
 
-                    Spacer(modifier = Modifier.width(12.dp))
+                    Spacer(modifier = Modifier.width(25.dp))
 
                     Text(
                         text = "$quantity",
@@ -192,7 +205,7 @@ fun ProductScreen(
                         fontWeight = FontWeight.Bold
                     )
 
-                    Spacer(modifier = Modifier.width(12.dp))
+                    Spacer(modifier = Modifier.width(25.dp))
 
                     IconButton(
                         onClick = { quantity++ },
@@ -221,36 +234,37 @@ fun ProductScreen(
                 Column {
                     Text(
                         text = "Seller Description",
-                        fontSize = 22.sp,
+                        fontSize = 20.sp,
                         fontFamily = poppinsFontFamily,
                         fontWeight = FontWeight.Bold,
-                        color = Color.Gray
+                        color = Color.Black
                     )
+                    Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text = "Martha Rosario (Aling Martha’s)",
-                        fontSize = 22.sp,
+                        fontSize = 14.sp,
                         fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.SemiBold,
+                        fontWeight = FontWeight.Normal,
                         color = Color.Black
                     )
                     Text(
                         text = "0900-000-0000",
-                        fontSize = 20.sp,
+                        fontSize = 14.sp,
                         fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.Light,
+                        fontWeight = FontWeight.Normal,
                         color = Color.Black
                     )
                     Text(
                         text = "123 Street, Dagupan City",
-                        fontSize = 20.sp,
+                        fontSize = 14.sp,
                         fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.Light,
+                        fontWeight = FontWeight.Normal,
                         color = Color.Black
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(115.dp))
+            Spacer(modifier = Modifier.height(35.dp))
 
             // Weight Selection
             Row(
@@ -262,8 +276,7 @@ fun ProductScreen(
                         modifier = Modifier
                             .height(55.dp)
                             .width(85.dp)
-                            .shadow(8.dp, shape = RoundedCornerShape(15.dp))
-                            .clip(RoundedCornerShape(20.dp)),
+                            .shadow(4.dp, shape = RoundedCornerShape(10.dp)),
                         onClick = { selectedWeight = option },
                         shape = RoundedCornerShape(10.dp),
                         colors = ButtonDefaults.buttonColors(
@@ -275,7 +288,7 @@ fun ProductScreen(
                             text = option,
                             fontSize = 12.sp,
                             fontFamily = poppinsFontFamily,
-                            fontWeight = FontWeight.SemiBold
+                            fontWeight = FontWeight.Bold
                         )
                     }
                 }
@@ -288,21 +301,21 @@ fun ProductScreen(
                 .fillMaxWidth()
                 .weight(0.1f)
                 .background(Color(0xFF1D7151))
-                .padding(18.dp),
+                .padding(20.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column {
                 Text(
                     text = "Total Price",
-                    fontSize = 18.sp,
+                    fontSize = 16.sp,
                     fontFamily = poppinsFontFamily,
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
                     text = "₱ ${"%.2f".format(totalPrice)}",
-                    fontSize = 24.sp,
+                    fontSize = 22.sp,
                     fontFamily = poppinsFontFamily,
                     color = Color.White,
                     fontWeight = FontWeight.Bold
@@ -325,14 +338,15 @@ fun ProductScreen(
                 shape = RoundedCornerShape(30.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White),
                 modifier = Modifier
-                    .height(60.dp)
-                    .width(180.dp)
+                    .height(58.dp)
+                    .width(205.dp)
             ) {
                 Text(
                     text = "Add to Basket",
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
+                    fontSize = 20.sp,
+                    fontFamily = poppinsFontFamily
                 )
             }
         }

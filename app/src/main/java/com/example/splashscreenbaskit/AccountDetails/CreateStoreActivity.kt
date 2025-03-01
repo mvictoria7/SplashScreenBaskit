@@ -22,8 +22,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -38,6 +41,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -98,18 +102,18 @@ fun CreateStore(navController: NavController) {
             }
 
             IconButton(
-                onClick = { },
+                onClick = { navController.popBackStack() },
                 modifier = Modifier
-                    .padding(top = 50.dp, start = 16.dp)
+                    .padding(top = 60.dp, start = 40.dp)
                     .align(Alignment.TopStart)
-                    .size(40.dp)
-                    .background(Color.White, shape = CircleShape)
+                    .size(20.dp)
+                    .background(Color(0xAAFFFFFF), shape = CircleShape)
             ) {
                 Icon(
-                    painter = painterResource(id = com.example.splashscreenbaskit.R.drawable.seller_img),
+                    painter = painterResource(id = com.example.splashscreenbaskit.R.drawable.back),
                     contentDescription = "Back",
                     tint = Color.Black,
-                    modifier = Modifier.size(15.dp)
+                    modifier = Modifier.size(20.dp)
                 )
             }
 
@@ -138,36 +142,39 @@ fun CreateStore(navController: NavController) {
 
         }
 
-        Box(
+        Card(
+            colors = CardDefaults.cardColors(containerColor = Color.White),
             modifier = Modifier
-                .fillMaxWidth()
                 .height(56.dp)
-                .background(Color.White)
-                .shadow(elevation = 2.dp)
-                .clickable {  },
-            contentAlignment = Alignment.CenterStart
+                .fillMaxWidth()
+                .clickable {
+                    // navController.navigate("ProductScreen/${product.name}")
+                },
+            shape = RectangleShape,
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
-            Row (
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(start = 20.dp)
-            ){
-                Text(
-                    text = "Add a category",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    fontFamily = poppinsFontFamily
-                )
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth() .padding(start = 20.dp, end = 20.dp)
+                ) {
+                    Text(
+                        text = "Add a category",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        fontFamily = poppinsFontFamily,
+                        color = Color.White
+                    )
 
-                Spacer(modifier = Modifier.width(10.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
 
-                Icon(
-                    imageVector = Icons.Default.AddCircle,
-                    contentDescription = "Back",
-                    tint = Color.Black,
-                    modifier = Modifier.size(20.dp)
-                )
+                    painterResource(id = com.example.splashscreenbaskit.R.drawable.add_category)
+                }
             }
-
         }
 
         Spacer(modifier = Modifier.height(100.dp))

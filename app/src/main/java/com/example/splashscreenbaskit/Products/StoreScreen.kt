@@ -2,6 +2,7 @@ package com.example.splashscreenbaskit.Products
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -61,25 +62,24 @@ fun StoreScreen(navController: NavController) {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        // Header with Store Image and Back Button
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp)
+                .height(320.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.testimg),
+                painter = painterResource(id = R.drawable.seller_img),
                 contentDescription = "Store Image",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(250.dp),
+                    .height(320.dp),
                 contentScale = ContentScale.Crop
             )
             IconButton(
                 onClick = { navController.popBackStack() },
                 modifier = Modifier
-                    .padding(top = 16.dp, start = 16.dp)
-                    .size(40.dp)
+                    .padding(top = 70.dp, start = 40.dp)
+                    .size(20.dp)
                     .clip(CircleShape)
                     .background(Color.White)
             ) {
@@ -87,41 +87,92 @@ fun StoreScreen(navController: NavController) {
                     painter = painterResource(id = R.drawable.back),
                     contentDescription = "Back",
                     tint = Color.Black,
-                    modifier = Modifier.size(15.dp)
+                    modifier = Modifier.size(20.dp)
                 )
             }
         }
 
-        // Content Area
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
+            modifier = Modifier.fillMaxSize()
         ) {
             // Display Store Name
-            if (storeName.isNotEmpty()) {
-                Text(
-                    text = "$storeName's Store",
-                    color = Color.Black,
-                    fontSize = 24.sp,
-                    fontFamily = poppinsFontFamily,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(65.dp)
+                    .background(Color.White)
+                    .padding(horizontal = 20.dp),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                if (storeName.isNotEmpty()) {
+                    Text(
+                        text = "$storeName's Store",
+                        color = Color.Black,
+                        fontSize = 24.sp,
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+                // Set Store Name Input (only shown if empty)
+                if (storeName.isEmpty()) {
+                    Row(
+                        //modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        BasicTextField(
+                            value = storeName,
+                            onValueChange = { storeName = it },
+                            modifier = Modifier.padding(end = 10.dp),
+                            textStyle = TextStyle(
+                                fontSize = 18.sp,
+                                fontFamily = poppinsFontFamily,
+                                fontWeight = FontWeight.Bold
+                            ),
+                            decorationBox = { innerTextField ->
+                                Box {
+                                    if (storeName.isEmpty()) {
+                                        Text(
+                                            text = "Set store name",
+                                            color = Color.Black,
+                                            fontSize = 18.sp,
+                                            fontFamily = poppinsFontFamily,
+                                            fontWeight = FontWeight.SemiBold
+                                        )
+                                    }
+                                    innerTextField()
+                                }
+                            }
+                        )
+                        Icon(
+                            painter = painterResource(id = R.drawable.pencil),
+                            contentDescription = "Edit",
+                            tint = Color.Black,
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
+                }
+
             }
 
-            // Set Store Name Input (only shown if empty)
-            if (storeName.isEmpty()) {
+            // Add Category Input and Button
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .background(Color(0xFFFFA52F))
+                    .clickable { },
+                contentAlignment = Alignment.CenterStart
+            ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(start = 20.dp)
                 ) {
                     BasicTextField(
-                        value = storeName,
-                        onValueChange = { storeName = it },
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(end = 8.dp),
+                        value = categoryInput,
+                        onValueChange = { categoryInput = it },
+                        modifier = Modifier.padding(end = 5.dp),
                         textStyle = TextStyle(
                             fontSize = 18.sp,
                             fontFamily = poppinsFontFamily,
@@ -129,82 +180,40 @@ fun StoreScreen(navController: NavController) {
                         ),
                         decorationBox = { innerTextField ->
                             Box {
-                                if (storeName.isEmpty()) {
+                                if (categoryInput.isEmpty()) {
                                     Text(
-                                        text = "Set store name",
-                                        color = Color.Gray,
-                                        fontSize = 18.sp,
+                                        text = "Add a category",
+                                        color = Color.White,
+                                        fontSize = 16.sp,
                                         fontFamily = poppinsFontFamily,
-                                        fontWeight = FontWeight.Bold
+                                        fontWeight = FontWeight.ExtraBold
                                     )
                                 }
                                 innerTextField()
                             }
                         }
                     )
-                    Icon(
-                        painter = painterResource(id = R.drawable.pencil),
-                        contentDescription = "Edit",
-                        tint = Color.Black,
-                        modifier = Modifier.size(24.dp)
-                    )
+                    IconButton(
+                        onClick = {
+                            if (categoryInput.isNotEmpty()) {
+                                categories.value = categories.value.toMutableList().apply {
+                                    add(categoryInput)
+                                }
+                                categoryInput = "" // Clear input after adding
+                                selectedCategory =
+                                    categoryInput // Set the first category as selected
+                            }
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.list),
+                            contentDescription = "Add Category",
+                            tint = Color.White,
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
                 }
             }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Add Category Input and Button
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                BasicTextField(
-                    value = categoryInput,
-                    onValueChange = { categoryInput = it },
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 8.dp),
-                    textStyle = TextStyle(
-                        fontSize = 18.sp,
-                        fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.Bold
-                    ),
-                    decorationBox = { innerTextField ->
-                        Box {
-                            if (categoryInput.isEmpty()) {
-                                Text(
-                                    text = "Add a category",
-                                    color = Color.Gray,
-                                    fontSize = 18.sp,
-                                    fontFamily = poppinsFontFamily,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            }
-                            innerTextField()
-                        }
-                    }
-                )
-                IconButton(
-                    onClick = {
-                        if (categoryInput.isNotEmpty()) {
-                            categories.value = categories.value.toMutableList().apply {
-                                add(categoryInput)
-                            }
-                            categoryInput = "" // Clear input after adding
-                            selectedCategory = categoryInput // Set the first category as selected
-                        }
-                    }
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.list),
-                        contentDescription = "Add Category",
-                        tint = Color.Black,
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
 
             // Display Selected Category and Products
             selectedCategory?.let { category ->
