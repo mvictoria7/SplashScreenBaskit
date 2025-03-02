@@ -87,7 +87,6 @@ fun ResetPasswordScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // New Password Field
             OutlinedTextField(
                 value = newPass,
                 onValueChange = { newPass = it },
@@ -97,6 +96,7 @@ fun ResetPasswordScreen(navController: NavController) {
                     fontFamily = poppinsFontFamily,
                     color = Color(0xFF8C8C8C)) },
                 modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
                 shape = RoundedCornerShape(10.dp),
                 visualTransformation = if (newPassVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
@@ -127,6 +127,7 @@ fun ResetPasswordScreen(navController: NavController) {
                     fontFamily = poppinsFontFamily,
                     color = Color(0xFF8C8C8C)) },
                 modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
                 shape = RoundedCornerShape(10.dp),
                 visualTransformation = if (confirmPassVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {

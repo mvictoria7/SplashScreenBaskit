@@ -80,6 +80,7 @@ fun LoginActivity(navController: NavController) {
             leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = null) },
             label = { Text(text = "Username or Email", fontFamily = poppinsFontFamily) },
             modifier = Modifier.fillMaxWidth(0.8f),
+            singleLine = true,
             shape = RoundedCornerShape(10.dp)
         )
 
@@ -92,6 +93,7 @@ fun LoginActivity(navController: NavController) {
             label = { Text(text = "Password", fontFamily = poppinsFontFamily) },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(0.8f),
+            singleLine = true,
             shape = RoundedCornerShape(10.dp)
         )
 

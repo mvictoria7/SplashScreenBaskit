@@ -128,6 +128,7 @@ fun BusinessInformationActivity(navController: NavController) {
                         )
                     },
                     modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
                     shape = RoundedCornerShape(10.dp),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = Color.Black,
@@ -155,6 +156,7 @@ fun BusinessInformationActivity(navController: NavController) {
                         )
                     },
                     modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
                     shape = RoundedCornerShape(10.dp),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = Color.Black,

@@ -110,11 +110,12 @@ fun NotificationsActivity(navController: NavHostController) {
                 Spacer(modifier = Modifier.height(40.dp))
 
                 Text(
-                        text = "You have no notifications.",
-                        fontSize = 14.sp,
-                        color = Color.White,
-                        fontWeight = FontWeight.SemiBold,
-                        fontFamily = poppinsFontFamily
+                    text = "You have no notifications.",
+                    fontSize = 14.sp,
+                    color = Color.White,
+                    fontWeight = FontWeight.SemiBold,
+                    fontFamily = poppinsFontFamily,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
             }
         }

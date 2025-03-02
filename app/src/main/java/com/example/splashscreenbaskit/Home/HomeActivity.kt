@@ -722,18 +722,18 @@ fun HomeContent(navController: NavController) {
             LocationSelector(selectedLocation)
             Box(
             modifier = Modifier.fillMaxWidth()
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(6.dp)
-                    .background(
-                        brush = Brush.verticalGradient(
-                            colors = listOf(Color.Gray.copy(alpha = 0.5f), Color.Transparent)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(6.dp)
+                        .background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(Color.Gray.copy(alpha = 0.5f), Color.Transparent)
+                            )
                         )
-                    )
-            )
-        }
+                )
+            }
 //            HorizontalDivider(
 //                modifier = Modifier.padding(vertical = 4.dp, horizontal = 10.dp),
 //                thickness = 2.dp

@@ -101,6 +101,7 @@ fun SignUpActivity(navController: NavController) {
                     },
                     label = { Text(text = "First Name", fontFamily = poppinsFontFamily)},
                     modifier = Modifier.weight(1f),
+                    singleLine = true,
                     shape = RoundedCornerShape(10.dp)
                     )
 
@@ -113,6 +114,7 @@ fun SignUpActivity(navController: NavController) {
                     },
                     label = { Text(text = "Last Name", fontFamily = poppinsFontFamily) },
                     modifier = Modifier.weight(1f),
+                    singleLine = true,
                     shape = RoundedCornerShape(10.dp)
                 )
             }
@@ -143,6 +145,7 @@ fun SignUpActivity(navController: NavController) {
                     )
                 },
                 modifier = Modifier.fillMaxWidth(0.8f),
+                singleLine = true,
                 shape = RoundedCornerShape(10.dp)
             )
 
@@ -157,6 +160,7 @@ fun SignUpActivity(navController: NavController) {
                     Icon(imageVector = Icons.Default.Person, contentDescription = "Person Icon")
                 },
                 modifier = Modifier.fillMaxWidth(0.8f) ,
+                singleLine = true,
                 shape = RoundedCornerShape(10.dp)
             )
 
@@ -171,6 +175,7 @@ fun SignUpActivity(navController: NavController) {
                     Icon(imageVector = Icons.Default.Phone, contentDescription = "Phone Icon")
                 },
                 modifier = Modifier.fillMaxWidth(0.8f),
+                singleLine = true,
                 shape = RoundedCornerShape(10.dp)
             )
 
@@ -190,6 +195,7 @@ fun SignUpActivity(navController: NavController) {
                     Icon(imageVector = Icons.Default.Email, contentDescription = "Email Icon")
                 },
                 modifier = Modifier.fillMaxWidth(0.8f),
+                singleLine = true,
                 shape = RoundedCornerShape(10.dp)
             )
 
@@ -205,6 +211,7 @@ fun SignUpActivity(navController: NavController) {
                 },
                 modifier = Modifier.fillMaxWidth(0.8f),
                 shape = RoundedCornerShape(10.dp),
+                singleLine = true,
                 visualTransformation = PasswordVisualTransformation()
             )
 
@@ -222,6 +229,7 @@ fun SignUpActivity(navController: NavController) {
                     )
                 },
                 modifier = Modifier.fillMaxWidth(0.8f),
+                singleLine = true,
                 shape = RoundedCornerShape(10.dp) ,
                 visualTransformation = PasswordVisualTransformation()
             )
@@ -446,7 +454,6 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
 
                         Spacer(modifier = Modifier.height(20.dp))
 
-                        // Buttons are ALWAYS visible but DISABLED until scrolled to the end
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceEvenly
@@ -460,7 +467,7 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                                     onCheckedChange(false)
                                     showDialog = false
                                 },
-                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE22727)),
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCB3B3B)),
                                 enabled = hasReachedBottom
                             ) {
                                 Row {
@@ -500,7 +507,7 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                                     )
                                     Spacer(modifier = Modifier.width(8.dp))
                                     Text(
-                                        text = "Decline",
+                                        text = "Accept",
                                         color = Color.White,
                                         fontSize = 16.sp,
                                         fontWeight = FontWeight.Medium,

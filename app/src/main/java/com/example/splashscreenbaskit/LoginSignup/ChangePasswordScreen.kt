@@ -94,6 +94,7 @@ fun ChangePasswordScreen(navController: NavController) {
                     fontFamily = poppinsFontFamily,
                     color = Color(0xFF8C8C8C)) },
                 modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
                 shape = RoundedCornerShape(10.dp),
                 visualTransformation = if (newPassVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
@@ -121,6 +122,7 @@ fun ChangePasswordScreen(navController: NavController) {
                     fontFamily = poppinsFontFamily,
                     color = Color(0xFF8C8C8C)) },
                 modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
                 shape = RoundedCornerShape(10.dp),
                 visualTransformation = if (confirmPassVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {

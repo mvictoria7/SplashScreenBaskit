@@ -54,23 +54,19 @@ fun AccountActivityPreview() {
 
 @Composable
 fun AccountActivity(navController: NavController) {
-    // State to control dialog visibility
+
     val showDialog = remember { mutableStateOf(false) }
 
-    // Show dialog when the user clicks "Log Out"
     val onLogOutClick = {
         showDialog.value = true
     }
 
-    // Handle "Yes" and "No" actions from the dialog
     val onConfirmLogOut = {
-        // Navigate to the login screen
         navController.navigate("LoginActivity")
         showDialog.value = false
     }
 
     val onCancelLogOut = {
-        // Just close the dialog without logging out
         showDialog.value = false
     }
 
@@ -80,7 +76,6 @@ fun AccountActivity(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            //.fillMaxWidth()
             .background(Color.White)
             .verticalScroll(scrollState)
     ) {
@@ -427,7 +422,6 @@ fun AccountActivity(navController: NavController) {
             ){
                 Spacer(modifier = Modifier.height(30.dp))
 
-                // Log Out button
                 Button(
                     onClick = onLogOutClick,
                     modifier = Modifier.fillMaxWidth() .height(47.dp),
@@ -443,7 +437,6 @@ fun AccountActivity(navController: NavController) {
         }
     }
 
-    // Confirmation Dialog
     if (showDialog.value) {
         AlertDialog(
             onDismissRequest = { showDialog.value = false },
@@ -495,7 +488,7 @@ fun StartSellingPopup(onCancel: () -> Unit, onProceed: () -> Unit) {
         onDismissRequest = {  },
         title = {
             Text(
-                text = "Start Selling?",
+                text = "Start Selling!",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
                 fontFamily = poppinsFontFamily,

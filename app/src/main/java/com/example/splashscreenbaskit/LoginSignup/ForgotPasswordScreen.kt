@@ -99,6 +99,7 @@ fun ForgotPasswordScreen(navController: NavController) {
                     fontFamily = poppinsFontFamily,
                     color = Color(0xFF8C8C8C)) },
                 modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Color.Black,

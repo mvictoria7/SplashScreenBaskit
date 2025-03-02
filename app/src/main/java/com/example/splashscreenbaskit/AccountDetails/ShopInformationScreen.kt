@@ -39,7 +39,7 @@ fun ShopInformationScreen(navController: NavController) {
     var ownerName by remember { mutableStateOf("") }
     var ownerNumber by remember { mutableStateOf("") }
 
-    val options = listOf("Select location --", "Dagupan", "Calasiao")
+    val options = listOf("Dagupan", "Calasiao")
     var expanded by remember { mutableStateOf(false) }
     var selectedOption by remember { mutableStateOf(options[0]) }
 
@@ -139,6 +139,7 @@ fun ShopInformationScreen(navController: NavController) {
                         )
                     },
                     modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
                     shape = RoundedCornerShape(10.dp),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = Color.Black,

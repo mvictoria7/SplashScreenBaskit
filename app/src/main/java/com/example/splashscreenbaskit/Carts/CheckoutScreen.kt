@@ -76,7 +76,6 @@ fun CheckoutScreen(cartViewModel: CartViewModel, navController: NavController) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        // Products List with Padding
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -106,14 +105,13 @@ fun CheckoutScreen(cartViewModel: CartViewModel, navController: NavController) {
 //            )
 //        }
 
-        // Tagabili Column (Still inside padding)
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 30.dp, vertical = 30.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-        // Bottom Summary & Payment Section
+
         val totalPrice = cartItems.sumOf { it.price * it.quantity }
 
 
@@ -305,7 +303,6 @@ fun YourCodeDialog(onDismiss: () -> Unit, onSaveImage: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Code with Green Background
                 Box(
                     modifier = Modifier
                         .background(color = Color(0xFF1d7151), shape = RoundedCornerShape(8.dp))
@@ -321,7 +318,6 @@ fun YourCodeDialog(onDismiss: () -> Unit, onSaveImage: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Order Processing Text
                 Text(
                     text = "Order processing...",
                     fontSize = 18.sp,
@@ -331,9 +327,8 @@ fun YourCodeDialog(onDismiss: () -> Unit, onSaveImage: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                // Save as Image Button
                 Button(
-                    onClick = { /* Handle image saving */ },
+                    onClick = {  },
                     colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray)
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -377,18 +372,25 @@ fun CheckoutItemView(item: CartItem) {
                 contentDescription = "Product Image",
                 modifier = Modifier
                     .size(80.dp)
-                    .clip(RoundedCornerShape(12.dp))
+                    .clip(RoundedCornerShape(20.dp))
             )
             Spacer(modifier = Modifier.width(10.dp))
             Column(modifier = Modifier.weight(1f)) {
-                Text(text = item.name, fontSize = 18.sp, fontWeight = FontWeight.Bold)
-                Text(text = "${item.quantity}pcs", fontSize = 16.sp, fontWeight = FontWeight.Medium)
+                Text(text = item.name,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = poppinsFontFamily)
+                Text(text = "${item.quantity}pcs",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
+                    fontFamily = poppinsFontFamily)
             }
             Text(
                 text = "₱${"%.2f".format(item.price * item.quantity)}",
                 fontSize = 26.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF6CBF5F),
+                fontFamily = poppinsFontFamily,
+                color = Color(0xFF83BD70),
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
         }

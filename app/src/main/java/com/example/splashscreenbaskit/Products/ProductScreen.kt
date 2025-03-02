@@ -132,6 +132,7 @@ fun ProductScreen(
                 contentScale = ContentScale.Crop
             )
 
+
             IconButton(
                 onClick = { navController.popBackStack() },
                 modifier = Modifier
@@ -288,7 +289,7 @@ fun ProductScreen(
                             text = option,
                             fontSize = 12.sp,
                             fontFamily = poppinsFontFamily,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.SemiBold
                         )
                     }
                 }
