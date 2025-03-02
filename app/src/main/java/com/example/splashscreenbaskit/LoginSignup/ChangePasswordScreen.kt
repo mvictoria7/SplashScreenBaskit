@@ -19,6 +19,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 
 @Preview(showBackground = true)
 @Composable
@@ -30,6 +32,8 @@ fun ChangePreview() {
 fun ChangePasswordScreen(navController: NavController) {
     var newPass by remember { mutableStateOf("") }
     var confirmPass by remember { mutableStateOf("") }
+    var newPassVisible by remember { mutableStateOf(false) }
+    var confirmPassVisible by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -84,18 +88,30 @@ fun ChangePasswordScreen(navController: NavController) {
             OutlinedTextField(
                 value = newPass,
                 onValueChange = { newPass = it },
-                label = { Text("New Password",
+                label = { Text("N Password",
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
                     fontFamily = poppinsFontFamily,
                     color = Color(0xFF8C8C8C)) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(10.dp),
+                visualTransformation = if (newPassVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                trailingIcon = {
+                    IconButton(onClick = { newPassVisible = !newPassVisible }) {
+                        Image(
+                            painter = painterResource(
+                                id = if (newPassVisible) R.drawable.open else R.drawable.close
+                            ),
+                            contentDescription = "Toggle password visibility"
+                        )
+                    }
+                },
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Color.Black,
                     unfocusedBorderColor = Color.Gray
                 )
             )
+
             OutlinedTextField(
                 value = confirmPass,
                 onValueChange = { confirmPass = it },
@@ -106,11 +122,23 @@ fun ChangePasswordScreen(navController: NavController) {
                     color = Color(0xFF8C8C8C)) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(10.dp),
+                visualTransformation = if (confirmPassVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                trailingIcon = {
+                    IconButton(onClick = { confirmPassVisible = !confirmPassVisible }) {
+                        Image(
+                            painter = painterResource(
+                                id = if (confirmPassVisible) R.drawable.open else R.drawable.close
+                            ),
+                            contentDescription = "Toggle password visibility"
+                        )
+                    }
+                },
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Color.Black,
                     unfocusedBorderColor = Color.Gray
                 )
             )
+
 
             Spacer(modifier = Modifier.height(10.dp))
 

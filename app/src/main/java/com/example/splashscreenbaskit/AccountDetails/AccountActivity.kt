@@ -448,8 +448,17 @@ fun AccountActivity(navController: NavController) {
         AlertDialog(
             onDismissRequest = { showDialog.value = false },
             title = {
-                Text("Log Out?", fontSize = 18.sp, fontFamily = poppinsFontFamily, fontWeight = FontWeight.Bold ) },
-            text = { Text("Are you sure you want to log out?", fontSize = 14.sp, fontFamily = poppinsFontFamily, fontWeight = FontWeight.Normal) },
+                Text("Log Out?",
+                    fontSize = 18.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.Bold ) },
+
+            text = { Text("Are you sure you want to log out?",
+                fontSize = 14.sp,
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.Normal) },
+
+
             confirmButton = {
                 Button(
                     onClick = {
@@ -457,7 +466,11 @@ fun AccountActivity(navController: NavController) {
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCB3B3B))
                 ) {
-                    Text("Log out", color = Color.White, fontSize = 15.sp, fontFamily = poppinsFontFamily, fontWeight = FontWeight.SemiBold)
+                    Text("Log out",
+                        color = Color.White,
+                        fontSize = 15.sp,
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.SemiBold)
                 }
             },
             dismissButton = {
@@ -470,7 +483,7 @@ fun AccountActivity(navController: NavController) {
             },
             containerColor = Color.White,
             properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
-            modifier = Modifier.size(width = 325.dp, height = 220.dp) .clip(RoundedCornerShape(20.dp))
+            modifier = Modifier.size(width = 325.dp, height = 185.dp) .clip(RoundedCornerShape(20.dp))
         )
 
     }
@@ -502,13 +515,17 @@ fun StartSellingPopup(onCancel: () -> Unit, onProceed: () -> Unit) {
             Button(
                 modifier = Modifier
                     .height(38.dp)
-                    .width(104.dp)
-                    .background(Color(0xFF1D7151)), shape = RoundedCornerShape(10.dp),
+                    .width(104.dp),
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF1D7151),
+                    contentColor = Color.White
+                ),
                 onClick = onProceed
             ) {
                 Text("Proceed",
                     fontWeight = FontWeight.SemiBold,
-                    fontSize = 15.sp,
+                    fontSize = 14.sp,
                     fontFamily = poppinsFontFamily,
                     color = Color.White
                 )
@@ -517,8 +534,12 @@ fun StartSellingPopup(onCancel: () -> Unit, onProceed: () -> Unit) {
         dismissButton = {
             Button(modifier = Modifier
                 .height(38.dp)
-                .width(104.dp)
-                .background(Color(0xFFD9D9D9)), shape = RoundedCornerShape(10.dp),
+                .width(104.dp),
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFD9D9D9),
+                    contentColor = Color.White
+                ),
                 onClick = onCancel
             ) {
                 Text("Cancel",
@@ -528,7 +549,10 @@ fun StartSellingPopup(onCancel: () -> Unit, onProceed: () -> Unit) {
                     color = Color.Black
                 )
             }
-        }
+        },
+        containerColor = Color.White,
+        properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
+        modifier = Modifier.size(width = 325.dp, height = 190.dp) .clip(RoundedCornerShape(20.dp))
     )
 }
 

@@ -20,6 +20,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.AccountDetails.AccountActivity
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
+import androidx.compose.material.icons.Icons
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 
 @Preview(showBackground = true)
 @Composable
@@ -32,6 +35,8 @@ fun ResetPreview() {
 fun ResetPasswordScreen(navController: NavController) {
     var newPass by remember { mutableStateOf("") }
     var confirmPass by remember { mutableStateOf("") }
+    var newPassVisible by remember { mutableStateOf(false) }
+    var confirmPassVisible by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -53,8 +58,7 @@ fun ResetPasswordScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(70.dp))
 
-
-        Column (
+        Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -83,6 +87,7 @@ fun ResetPasswordScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
+            // New Password Field
             OutlinedTextField(
                 value = newPass,
                 onValueChange = { newPass = it },
@@ -93,11 +98,26 @@ fun ResetPasswordScreen(navController: NavController) {
                     color = Color(0xFF8C8C8C)) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(10.dp),
+                visualTransformation = if (newPassVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                trailingIcon = {
+                    IconButton(onClick = { newPassVisible = !newPassVisible }) {
+                        Image(
+                            painter = painterResource(
+                                id = if (newPassVisible) R.drawable.open else R.drawable.close
+                            ),
+                            contentDescription = "Toggle password visibility"
+                        )
+                    }
+                },
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Color.Black,
                     unfocusedBorderColor = Color.Gray
                 )
             )
+
+
+            Spacer(modifier = Modifier.height(10.dp))
+
             OutlinedTextField(
                 value = confirmPass,
                 onValueChange = { confirmPass = it },
@@ -108,6 +128,17 @@ fun ResetPasswordScreen(navController: NavController) {
                     color = Color(0xFF8C8C8C)) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(10.dp),
+                visualTransformation = if (confirmPassVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                trailingIcon = {
+                    IconButton(onClick = { confirmPassVisible = !confirmPassVisible }) {
+                        Image(
+                            painter = painterResource(
+                                id = if (confirmPassVisible) R.drawable.open else R.drawable.close
+                            ),
+                            contentDescription = "Toggle password visibility"
+                        )
+                    }
+                },
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Color.Black,
                     unfocusedBorderColor = Color.Gray
@@ -125,7 +156,6 @@ fun ResetPasswordScreen(navController: NavController) {
             )
 
             Spacer(modifier = Modifier.height(30.dp))
-
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -152,5 +182,3 @@ fun ResetPasswordScreen(navController: NavController) {
         }
     }
 }
-
-

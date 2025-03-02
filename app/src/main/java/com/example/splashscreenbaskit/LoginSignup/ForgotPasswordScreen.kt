@@ -30,6 +30,7 @@ fun ForgotPasswordPreview() {
 fun ForgotPasswordScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
 
+
     Column(
         modifier = Modifier
             .fillMaxSize()

@@ -17,7 +17,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
@@ -27,7 +26,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun OnboardingScreen(navController: NavController) {
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(initialPage = 0)
     val coroutineScope = rememberCoroutineScope()
 
     Box(
@@ -43,29 +42,7 @@ fun OnboardingScreen(navController: NavController) {
             modifier = Modifier.fillMaxSize()
         )
 
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(25.dp),
-            contentAlignment = Alignment.BottomStart
-        ) {
-            TextButton(
-                onClick = {
-                    coroutineScope.launch { pagerState.animateScrollToPage(2) }
-                },
-                modifier = Modifier.zIndex(1f)
-            ) {
-                Text(
-                    text = "Skip",
-                    fontFamily = poppinsFontFamily,
-                    color = Color.Black,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp
-                )
-            }
-        }
-
+        // Onboarding Pager
         HorizontalPager(
             count = 3,
             state = pagerState,
@@ -98,6 +75,29 @@ fun OnboardingScreen(navController: NavController) {
             }
         }
 
+        // Skip Button (Bottom Left)
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 20.dp, bottom = 50.dp),
+            contentAlignment = Alignment.BottomStart
+        ) {
+            TextButton(
+                onClick = {
+                    coroutineScope.launch { pagerState.scrollToPage(2) }
+                }
+            ) {
+                Text(
+                    text = "Skip",
+                    fontFamily = poppinsFontFamily,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp
+                )
+            }
+        }
+
+        // Page Indicator
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Bottom,
@@ -106,31 +106,29 @@ fun OnboardingScreen(navController: NavController) {
             PageIndicator(currentPage = pagerState.currentPage, totalScreens = 3)
         }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            if (pagerState.currentPage == 2) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(end = 20.dp, bottom = 30.dp),
-                    contentAlignment = Alignment.BottomEnd
+        // Get Started Button (only on last page)
+        if (pagerState.currentPage == 2) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(end = 20.dp, bottom = 30.dp),
+                contentAlignment = Alignment.BottomEnd
+            ) {
+                TextButton(
+                    onClick = { navController.navigate("LoginActivity") }
                 ) {
-                    TextButton(
-                        onClick = { navController.navigate("LoginActivity") }
-                    ) {
-                        Text(
-                            text = "Get Started",
-                            fontFamily = poppinsFontFamily,
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 14.sp
-                        )
-                    }
+                    Text(
+                        text = "Get Started",
+                        fontFamily = poppinsFontFamily,
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp
+                    )
                 }
+            }
         }
     }
 }
-
 
 @Composable
 fun OnboardingImage(page: Int) {
@@ -143,7 +141,9 @@ fun OnboardingImage(page: Int) {
     Image(
         painter = painterResource(id = imageRes),
         contentDescription = null,
-        modifier = Modifier.fillMaxWidth().height(310.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(310.dp)
     )
 }
 
