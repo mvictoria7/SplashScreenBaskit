@@ -518,7 +518,7 @@ fun StartSellingPopup(onCancel: () -> Unit, onProceed: () -> Unit) {
             ) {
                 Text("Proceed",
                     fontWeight = FontWeight.SemiBold,
-                    fontSize = 14.sp,
+                    fontSize = 12.sp,
                     fontFamily = poppinsFontFamily,
                     color = Color.White
                 )
@@ -545,7 +545,7 @@ fun StartSellingPopup(onCancel: () -> Unit, onProceed: () -> Unit) {
         },
         containerColor = Color.White,
         properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
-        modifier = Modifier.size(width = 325.dp, height = 190.dp) .clip(RoundedCornerShape(20.dp))
+        modifier = Modifier.size(width = 325.dp, height = 195.dp) .clip(RoundedCornerShape(20.dp))
     )
 }
 

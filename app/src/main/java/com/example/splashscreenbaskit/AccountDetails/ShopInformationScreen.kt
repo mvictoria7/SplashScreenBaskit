@@ -49,6 +49,7 @@ fun ShopInformationScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White),
+
     ) {
         Spacer(modifier = Modifier.height(50.dp))
 
