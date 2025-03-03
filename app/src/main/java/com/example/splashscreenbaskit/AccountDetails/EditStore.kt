@@ -23,7 +23,6 @@ import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -73,12 +72,11 @@ fun EditStore(navController: NavController) {
     val categories = remember { mutableStateOf(mutableListOf<String>()) }
     var selectedCategory by remember { mutableStateOf<String?>(null) }
     var isDropdownExpanded by remember { mutableStateOf(false) }
+    var newProductName by remember { mutableStateOf("") }
 
-    // Sample product list
+    // Empty products list
     val products = remember {
-        listOf(
-            Product("Carrot", R.drawable.carrot) // Ensure R.drawable.carrot exists
-        )
+        mutableListOf<Product>()
     }
 
     Column(
@@ -198,11 +196,12 @@ fun EditStore(navController: NavController) {
                         fontWeight = if (selectedCategory == null) FontWeight.SemiBold else FontWeight.Bold,
                         modifier = Modifier.weight(1f)
                     )
-                    Icon(
-                        imageVector = if (isDropdownExpanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                    Image(
+                        painter = painterResource(id = R.drawable.add_category),
                         contentDescription = "Dropdown",
-                        tint = Color.Black,
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier
+                            .size(20.dp)
+                            .clickable { isDropdownExpanded = !isDropdownExpanded }
                     )
                 }
             }
@@ -275,6 +274,7 @@ fun EditStore(navController: NavController) {
         // Product Grid
         ProductGridWithAddButton(
             products = products,
+            newProductName = newProductName,
             navController = navController,
             modifier = Modifier
                 .weight(1f)
@@ -286,6 +286,7 @@ fun EditStore(navController: NavController) {
 @Composable
 fun ProductGridWithAddButton(
     products: List<Product>,
+    newProductName: String,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
@@ -357,14 +358,16 @@ fun ProductGridWithAddButton(
                                 .padding(4.dp)
                                 .clip(RoundedCornerShape(10.dp))
                                 .clickable {
-                                    // Add your add product navigation/action here
+                                    if (newProductName.isNotEmpty()) {
+                                        navController.navigate("ProductScreen/$newProductName")
+                                    }
                                 },
                             shape = RoundedCornerShape(10.dp),
                             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                         ) {
                             Box(
                                 modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center // Centers the Column within the Card
+                                contentAlignment = Alignment.Center
                             ) {
                                 Column(
                                     modifier = Modifier
@@ -392,7 +395,7 @@ fun ProductGridWithAddButton(
                         }
                     }
                 }
-                // Handle uneven rows with Spacer
+
                 if (rowProducts.size == 1) {
                     Spacer(modifier = Modifier.weight(1f))
                 }
