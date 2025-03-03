@@ -2,6 +2,7 @@ package com.example.splashscreenbaskit.AccountDetails
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,9 +18,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -47,28 +51,42 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.splashscreenbaskit.Home.Product
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
+// Define Product data class here
+data class Product(
+    val name: String,
+    val imageRes: Int // Should match the drawable resource ID
+)
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun EditStorePreview(){
+fun EditStorePreview() {
     EditStore(navController = rememberNavController())
 }
-@Composable
-fun  EditStore(navController: NavController) {
 
+@Composable
+fun EditStore(navController: NavController) {
     var storeName by remember { mutableStateOf("") }
     var categoryInput by remember { mutableStateOf("") }
     val categories = remember { mutableStateOf(mutableListOf<String>()) }
     var selectedCategory by remember { mutableStateOf<String?>(null) }
+    var isDropdownExpanded by remember { mutableStateOf(false) }
+
+    // Sample product list
+    val products = remember {
+        listOf(
+            Product("Carrot", R.drawable.carrot) // Ensure R.drawable.carrot exists
+        )
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
+        // Header Section
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -76,7 +94,6 @@ fun  EditStore(navController: NavController) {
                 .background(Color(0xFFDBDBDB)),
             contentAlignment = Alignment.BottomStart
         ) {
-
             Image(
                 painter = painterResource(id = R.drawable.seller_img),
                 contentDescription = "Seller",
@@ -109,10 +126,9 @@ fun  EditStore(navController: NavController) {
                     .padding(start = 8.dp)
                     .align(Alignment.BottomStart)
             ) {
-                TextButton(onClick = { }
-                ) {
+                TextButton(onClick = { }) {
                     Text(
-                        "Aling Lita's Store",
+                        "Aling Nena's Store",
                         color = Color.White,
                         fontSize = 24.sp,
                         fontFamily = poppinsFontFamily,
@@ -146,74 +162,82 @@ fun  EditStore(navController: NavController) {
             }
         }
 
-
+        // Category Selection Section
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp)
                 .background(Color.White)
-                .clickable { },
+                .clickable { isDropdownExpanded = !isDropdownExpanded },
             contentAlignment = Alignment.CenterStart
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(start = 20.dp)
+            Box(
+                modifier = Modifier
+                    .padding(start = 20.dp)
+                    .background(
+                        color = Color.LightGray.copy(alpha = 0.2f),
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = Color.Gray,
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .clickable { isDropdownExpanded = !isDropdownExpanded }
+                    .padding(8.dp)
             ) {
-                BasicTextField(
-                    value = categoryInput,
-                    onValueChange = { categoryInput = it },
-                    modifier = Modifier.padding(end = 5.dp),
-                    textStyle = TextStyle(
-                        fontSize = 18.sp,
-                        fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.Bold
-                    ),
-                    decorationBox = { innerTextField ->
-                        Box {
-                            if (categoryInput.isEmpty()) {
-                                Text(
-                                    text = "Add a category",
-                                    color = Color.Black,
-                                    fontSize = 16.sp,
-                                    fontFamily = poppinsFontFamily,
-                                    fontWeight = FontWeight.SemiBold
-                                )
-                            }
-                            innerTextField()
-                        }
-                    }
-                )
-                IconButton(
-                    onClick = {
-                        if (categoryInput.isNotEmpty()) {
-                            categories.value = categories.value.toMutableList().apply {
-                                add(categoryInput)
-                            }
-                            categoryInput = "" // Clear input after adding
-                            selectedCategory =
-                                categoryInput // Set the first category as selected
-                        }
-                    }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
+                    Text(
+                        text = selectedCategory ?: "Add a category",
+                        color = if (selectedCategory == null) Color.Black else Color.Black,
+                        fontSize = 16.sp,
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = if (selectedCategory == null) FontWeight.SemiBold else FontWeight.Bold,
+                        modifier = Modifier.weight(1f)
+                    )
                     Icon(
-                        painter = painterResource(id = R.drawable.list),
-                        contentDescription = "Add Category",
+                        imageVector = if (isDropdownExpanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                        contentDescription = "Dropdown",
                         tint = Color.Black,
-                        modifier = Modifier.size(18.dp)
+                        modifier = Modifier.size(20.dp)
                     )
                 }
             }
 
+            DropdownMenu(
+                expanded = isDropdownExpanded,
+                onDismissRequest = { isDropdownExpanded = false },
+                modifier = Modifier
+                    .background(Color.White)
+                    .padding(8.dp)
+            ) {
+                val categoryOptions = listOf("Fruits", "Vegetables", "Meat", "Spices", "Frozen Foods", "Fish")
+                categoryOptions.forEach { category ->
+                    DropdownMenuItem(
+                        onClick = {
+                            selectedCategory = category
+                            isDropdownExpanded = false
+                            if (!categories.value.contains(category)) {
+                                categories.value = categories.value.toMutableList().apply { add(category) }
+                            }
+                        }
+                    ) {
+                        Text(text = category, fontFamily = poppinsFontFamily, fontSize = 16.sp)
+                    }
+                }
+            }
         }
 
+        // Category Card
         Card(
             colors = CardDefaults.cardColors(containerColor = Color(0xFFFFA52F)),
             modifier = Modifier
                 .height(68.dp)
                 .fillMaxWidth()
-                .clickable {
-                    // navController.navigate("ProductScreen/${product.name}")
-                },
+                .clickable { },
             shape = RectangleShape,
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
@@ -224,10 +248,12 @@ fun  EditStore(navController: NavController) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth() .padding(start = 20.dp, end = 20.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 20.dp, end = 20.dp)
                 ) {
                     Text(
-                        text = "Vegetables",
+                        text = selectedCategory ?: "Vegetables",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.ExtraBold,
                         fontFamily = poppinsFontFamily,
@@ -246,105 +272,31 @@ fun  EditStore(navController: NavController) {
             }
         }
 
-
-
-        //temporary lang
-        Row (modifier = Modifier.padding(30.dp) .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ){
-            Card(
-                colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F0F0)),
-                modifier = Modifier
-                    .height(170.dp)
-                    .width(154.dp)
-                    .padding(4.dp)
-                    .clip(RoundedCornerShape(10.dp))
-                    .clickable {
-                        //navController.navigate("ProductScreen/${product.name}")
-                    },
-                shape = RoundedCornerShape(10.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 5.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.apple),
-                        contentDescription = "Product Image",
-                        modifier = Modifier
-                            .height(100.dp)
-                            .width(135.dp)
-                            .padding(top = 8.dp)
-                            .clip(RoundedCornerShape(10.dp))
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "Apple",
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 16.sp,
-                        fontFamily = poppinsFontFamily,
-                        modifier = Modifier.padding(8.dp)
-                    )
-                }
-            }
-
-            Card(
-                colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F0F0)),
-                modifier = Modifier
-                    .height(170.dp)
-                    .width(154.dp)
-                    .padding(4.dp)
-                    .clip(RoundedCornerShape(10.dp))
-                    .clickable {
-                        //navController.navigate("ProductScreen/${product.name}")
-                    },
-                shape = RoundedCornerShape(10.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-            ) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 5.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.AddCircle,
-                            contentDescription = "Back",
-                            tint = Color.Black,
-                            modifier = Modifier.size(35.dp)
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = "Add a product",
-                            fontWeight = FontWeight.SemiBold,
-                            fontSize = 14.sp,
-                            fontFamily = poppinsFontFamily,
-                            modifier = Modifier.padding(8.dp)
-                        )
-                    }
-                }
-            }
-
-        }
+        // Product Grid
+        ProductGridWithAddButton(
+            products = products,
+            navController = navController,
+            modifier = Modifier
+                .weight(1f)
+                .padding(top = 10.dp)
+        )
     }
 }
 
-//idk how to implement the cards hehe
 @Composable
-fun ProductGrid(
-    products: List<Product>, navController: NavController) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        products.chunked(2).forEach { rowProducts ->
+fun ProductGridWithAddButton(
+    products: List<Product>,
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
+    val productListWithAdd = remember(products) {
+        products.toMutableList().apply {
+            add(Product("Add a product", -1))
+        }
+    }
+
+    Column(modifier = modifier.fillMaxWidth()) {
+        productListWithAdd.chunked(2).forEach { rowProducts ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -352,47 +304,95 @@ fun ProductGrid(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 rowProducts.forEach { product ->
-                    Card(
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F0F0)),
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(170.dp)
-                            .width(154.dp)
-                            .padding(4.dp)
-                            .clip(RoundedCornerShape(10.dp))
-                            .clickable {
-                                navController.navigate("ProductScreen/${product.name}")
-                            },
-                        shape = RoundedCornerShape(10.dp),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-                    ) {
-                        Column(
+                    if (product.imageRes != -1) {
+                        // Regular product card
+                        Card(
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F0F0)),
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 5.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center
+                                .weight(1f)
+                                .height(170.dp)
+                                .width(154.dp)
+                                .padding(4.dp)
+                                .clip(RoundedCornerShape(10.dp))
+                                .clickable {
+                                    navController.navigate("ProductScreen/${product.name}")
+                                },
+                            shape = RoundedCornerShape(10.dp),
+                            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                         ) {
-                            Image(
-                                painter = painterResource(id = product.imageRes),
-                                contentDescription = "Product Image",
+                            Column(
                                 modifier = Modifier
-                                    .height(100.dp)
-                                    .width(135.dp)
-                                    .padding(top = 8.dp)
-                                    .clip(RoundedCornerShape(10.dp))
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = product.name,
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 16.sp,
-                                fontFamily = poppinsFontFamily,
-                                modifier = Modifier.padding(8.dp)
-                            )
+                                    .fillMaxWidth()
+                                    .padding(top = 5.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Image(
+                                    painter = painterResource(id = product.imageRes),
+                                    contentDescription = "Product Image",
+                                    modifier = Modifier
+                                        .height(100.dp)
+                                        .width(135.dp)
+                                        .padding(top = 8.dp)
+                                        .clip(RoundedCornerShape(10.dp))
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    text = product.name,
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = 16.sp,
+                                    fontFamily = poppinsFontFamily,
+                                    modifier = Modifier.padding(8.dp)
+                                )
+                            }
+                        }
+                    } else {
+                        // Add product card
+                        Card(
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F0F0)),
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(170.dp)
+                                .width(154.dp)
+                                .padding(4.dp)
+                                .clip(RoundedCornerShape(10.dp))
+                                .clickable {
+                                    // Add your add product navigation/action here
+                                },
+                            shape = RoundedCornerShape(10.dp),
+                            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                        ) {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center // Centers the Column within the Card
+                            ) {
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 5.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Center
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Filled.AddCircle,
+                                        contentDescription = "Add Product",
+                                        tint = Color.Black,
+                                        modifier = Modifier.size(35.dp)
+                                    )
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                    Text(
+                                        text = product.name,
+                                        fontWeight = FontWeight.SemiBold,
+                                        fontSize = 14.sp,
+                                        fontFamily = poppinsFontFamily,
+                                        modifier = Modifier.padding(8.dp)
+                                    )
+                                }
+                            }
                         }
                     }
                 }
+                // Handle uneven rows with Spacer
                 if (rowProducts.size == 1) {
                     Spacer(modifier = Modifier.weight(1f))
                 }

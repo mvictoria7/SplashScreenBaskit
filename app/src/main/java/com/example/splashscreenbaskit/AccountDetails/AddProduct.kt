@@ -50,15 +50,16 @@ import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
 @Preview(showBackground = true)
 @Composable
-fun AddProductPreview(){
+fun AddProductPreview() {
     AddProduct(navController = rememberNavController())
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun  AddProduct(navController: NavController) {
-
+fun AddProduct(navController: NavController) {
     var product by remember { mutableStateOf("") }
     var price by remember { mutableStateOf("") }
+    var selectedWeight by remember { mutableStateOf<String?>(null) }
     val scrollState = rememberScrollState()
 
     Column(
@@ -67,12 +68,13 @@ fun  AddProduct(navController: NavController) {
             .background(Color.White)
             .verticalScroll(scrollState)
     ) {
+        // Header with Add Icon
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(315.dp)
                 .background(Color(0xFFDBDBDB)),
-            contentAlignment = Alignment.BottomStart
+            contentAlignment = Alignment.Center
         ) {
             IconButton(
                 onClick = { navController.popBackStack() },
@@ -90,23 +92,23 @@ fun  AddProduct(navController: NavController) {
                 )
             }
 
-            IconButton(
-                onClick = {  },
-                modifier = Modifier.align(Alignment.Center)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.add_image),
-                    contentDescription = "Add",
-                    tint = Color.Unspecified,
-                    modifier = Modifier.size(40.dp)
-                )
-            }
+            Icon(
+                painter = painterResource(id = R.drawable.add_image),
+                contentDescription = "Add Product Image",
+                modifier = Modifier.size(40.dp),
+                tint = Color.Unspecified
+            )
         }
 
-        Column (modifier = Modifier
-            .fillMaxSize()
-            .padding(20.dp)
-        ){
+        // Content Section
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 20.dp, vertical = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // Product Name
             OutlinedTextField(
                 value = product,
                 onValueChange = { product = it },
@@ -114,34 +116,30 @@ fun  AddProduct(navController: NavController) {
                     text = "Enter product name",
                     fontFamily = poppinsFontFamily,
                     color = Color(0xFFBDBDBD),
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Medium) },
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium
+                ) },
                 modifier = Modifier
-                    .padding(top = 10.dp)
-                    .width(264.dp)
+                    .fillMaxWidth()
                     .height(50.dp),
                 singleLine = true,
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Color.Black,
                     unfocusedBorderColor = Color.Gray
-                ),
-                //contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
+                )
             )
 
-            Spacer(modifier = Modifier.height(35.dp))
-
+            // Seller Description
             Text(
                 text = "Seller Description",
                 fontSize = 16.sp,
                 fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.SemiBold
             )
-
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 10.dp)
                     .height(120.dp)
                     .background(Color(0xFFEEEDED), shape = RoundedCornerShape(10.dp)),
                 contentAlignment = Alignment.CenterStart
@@ -153,7 +151,7 @@ fun  AddProduct(navController: NavController) {
                     verticalArrangement = Arrangement.spacedBy(7.dp)
                 ) {
                     Text(
-                        text = "Seller name",
+                        text = "Aling Nena's Store",
                         fontSize = 14.sp,
                         fontFamily = poppinsFontFamily,
                         fontWeight = FontWeight.Normal,
@@ -175,15 +173,14 @@ fun  AddProduct(navController: NavController) {
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(30.dp))
 
+            // Set Price
             Text(
                 text = "Set Price",
                 fontSize = 16.sp,
                 fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.SemiBold
             )
-
             OutlinedTextField(
                 value = price,
                 onValueChange = { price = it },
@@ -192,9 +189,9 @@ fun  AddProduct(navController: NavController) {
                     fontFamily = poppinsFontFamily,
                     color = Color(0xFFBDBDBD),
                     fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium) },
+                    fontWeight = FontWeight.Medium
+                ) },
                 modifier = Modifier
-                    .padding(top = 10.dp)
                     .width(136.dp)
                     .height(50.dp),
                 singleLine = true,
@@ -202,72 +199,88 @@ fun  AddProduct(navController: NavController) {
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Color.Black,
                     unfocusedBorderColor = Color.Gray
-                ),
-                //contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
+                )
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Button(
-                modifier = Modifier
-                    .height(48.dp)
-                    .width(80.dp),
-                onClick = { },
-                shape = RoundedCornerShape(10.dp),
-//                //pag naayos na
-//                colors = ButtonDefaults.buttonColors(
-//                    containerColor = Color(0xFFEEEDED) if (selectedWeight == option) Color(0xFF5CC163) else Color(0xFFEEEDED),,
-//                    contentColor = if (selectedWeight == option) Color.White else Color(0xFF747474),
-//                )
+            // Weight Options
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(
-                    text = "1 pc",
-                    fontSize = 16.sp,
-                    fontFamily = poppinsFontFamily,
-                    fontWeight = FontWeight.SemiBold
-                )
+                val weightOptions = listOf("1 pc", "1/4 kg", "1/2 kg", "1 kg")
+                weightOptions.forEach { option ->
+                    Button(
+                        modifier = Modifier
+                            .height(48.dp)
+                            .width(80.dp),
+                        onClick = { selectedWeight = option },
+                        shape = RoundedCornerShape(10.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (selectedWeight == option) Color(0xFF5CC163) else Color(0xFFEEEDED),
+                            contentColor = if (selectedWeight == option) Color.White else Color(0xFF747474)
+                        )
+                    ) {
+                        Text(
+                            text = option,
+                            fontSize = 14.sp,
+                            fontFamily = poppinsFontFamily,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                }
             }
 
-            Spacer(modifier = Modifier.height(30.dp))
-
+            // Select Category
             Text(
                 text = "Select Category",
                 fontSize = 16.sp,
                 fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.SemiBold
             )
-            Spacer(modifier = Modifier.height(10.dp))
-            Button(
-                modifier = Modifier
-                    .height(48.dp)
-                    .wrapContentWidth(),
-                onClick = { },
-                shape = RoundedCornerShape(10.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFEEEDED),
-                    contentColor = Color(0xFF747474)
-                )
-            ) {
-                Text(
-                    text = "Vegetable",
-                    fontSize = 16.sp,
-                    fontFamily = poppinsFontFamily,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-
-
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(10.dp)) // Added spacing for consistency
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                val categories = listOf("Fruits", "Vegetables", "Fish", "Meats", "Frozen Foods", "Spices")
+                var selectedCategory by remember { mutableStateOf<String?>(null) }
+
+                categories.forEach { category ->
+                    Button(
+                        modifier = Modifier
+                            .height(48.dp)
+                            .weight(1f),
+                        onClick = { selectedCategory = category },
+                        shape = RoundedCornerShape(10.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (selectedCategory == category) Color(0xFF5CC163) else Color(0xFFEEEDED),
+                            contentColor = if (selectedCategory == category) Color.White else Color(0xFF747474)
+                        )
+                    ) {
+                        Text(
+                            text = category,
+                            fontSize = 14.sp,
+                            fontFamily = poppinsFontFamily,
+                            fontWeight = if (selectedCategory == category) FontWeight.Bold else FontWeight.SemiBold
+                        )
+                    }
+                }
+            }
+
+            // Buttons
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Button(
                     modifier = Modifier
                         .height(50.dp)
                         .width(147.dp),
-                    onClick = { },
+                    onClick = { navController.popBackStack() },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCB3B3B)),
                     enabled = true
                 ) {
@@ -284,8 +297,8 @@ fun  AddProduct(navController: NavController) {
                     modifier = Modifier
                         .height(50.dp)
                         .width(147.dp),
-                    onClick = { },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151)),
+                    onClick = { /* TODO: Implement add action */ },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1D7151)),
                     enabled = true
                 ) {
                     Text(
