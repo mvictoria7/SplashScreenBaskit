@@ -22,7 +22,7 @@ fun SlideImg(modifier: Modifier = Modifier) {
         HorizontalPager(
             count = 3,
             state = pagerState,
-            modifier = Modifier.fillMaxSize() // Ensures full container width & height
+            modifier = Modifier.fillMaxSize()
         ) { page ->
             Image(
                 painter = painterResource(
@@ -34,7 +34,7 @@ fun SlideImg(modifier: Modifier = Modifier) {
                 ),
                 contentDescription = "Slider Image $page",
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop // Makes the image cover the entire container
+                contentScale = ContentScale.Crop
             )
         }
 

@@ -15,15 +15,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -53,10 +52,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
-// Define Product data class here
+//  Product data class
 data class Product(
     val name: String,
-    val imageRes: Int // Should match the drawable resource ID
+    val imageRes: Int
 )
 
 @Preview(showBackground = true, showSystemUi = true)
@@ -71,7 +70,6 @@ fun EditStore(navController: NavController) {
     var categoryInput by remember { mutableStateOf("") }
     val categories = remember { mutableStateOf(mutableListOf<String>()) }
     var selectedCategory by remember { mutableStateOf<String?>(null) }
-    var isDropdownExpanded by remember { mutableStateOf(false) }
     var newProductName by remember { mutableStateOf("") }
 
     // Empty products list
@@ -166,7 +164,7 @@ fun EditStore(navController: NavController) {
                 .fillMaxWidth()
                 .height(56.dp)
                 .background(Color.White)
-                .clickable { isDropdownExpanded = !isDropdownExpanded },
+                .clickable { },
             contentAlignment = Alignment.CenterStart
         ) {
             Box(
@@ -181,7 +179,7 @@ fun EditStore(navController: NavController) {
                         color = Color.Gray,
                         shape = RoundedCornerShape(8.dp)
                     )
-                    .clickable { isDropdownExpanded = !isDropdownExpanded }
+                    .clickable { }
                     .padding(8.dp)
             ) {
                 Row(
@@ -201,36 +199,12 @@ fun EditStore(navController: NavController) {
                         contentDescription = "Dropdown",
                         modifier = Modifier
                             .size(20.dp)
-                            .clickable { isDropdownExpanded = !isDropdownExpanded }
+                            .clickable { }
                     )
-                }
-            }
-
-            DropdownMenu(
-                expanded = isDropdownExpanded,
-                onDismissRequest = { isDropdownExpanded = false },
-                modifier = Modifier
-                    .background(Color.White)
-                    .padding(8.dp)
-            ) {
-                val categoryOptions = listOf("Fruits", "Vegetables", "Meat", "Spices", "Frozen Foods", "Fish")
-                categoryOptions.forEach { category ->
-                    DropdownMenuItem(
-                        onClick = {
-                            selectedCategory = category
-                            isDropdownExpanded = false
-                            if (!categories.value.contains(category)) {
-                                categories.value = categories.value.toMutableList().apply { add(category) }
-                            }
-                        }
-                    ) {
-                        Text(text = category, fontFamily = poppinsFontFamily, fontSize = 16.sp)
-                    }
                 }
             }
         }
 
-        // Category Card
         Card(
             colors = CardDefaults.cardColors(containerColor = Color(0xFFFFA52F)),
             modifier = Modifier
@@ -244,29 +218,30 @@ fun EditStore(navController: NavController) {
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 20.dp, end = 20.dp)
+                        .padding(start = 20.dp, end = 20.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = selectedCategory ?: "Vegetables",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.ExtraBold,
-                        fontFamily = poppinsFontFamily,
-                        color = Color.White
-                    )
-
-                    Spacer(modifier = Modifier.width(8.dp))
-
-                    Icon(
-                        imageVector = Icons.Filled.KeyboardArrowUp,
-                        contentDescription = "Dropdown",
-                        tint = Color.White,
-                        modifier = Modifier.size(25.dp)
-                    )
+                    items(listOf("Fruits", "Vegetables", "Meat", "Spices", "Frozen Foods", "Fish")) { category ->
+                        Text(
+                            text = category,
+                            fontSize = 16.sp,
+                            fontWeight = if (selectedCategory == category) FontWeight.ExtraBold else FontWeight.Normal,
+                            fontFamily = poppinsFontFamily,
+                            color = if (selectedCategory == category) Color.White else Color(0xFFCCCCCC), // Highlight selected category
+                            modifier = Modifier
+                                .clickable {
+                                    selectedCategory = category
+                                    if (!categories.value.contains(category)) {
+                                        categories.value = categories.value.toMutableList().apply { add(category) }
+                                    }
+                                }
+                                .padding(horizontal = 8.dp, vertical = 4.dp)
+                        )
+                    }
                 }
             }
         }

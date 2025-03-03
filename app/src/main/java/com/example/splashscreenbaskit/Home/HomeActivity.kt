@@ -130,17 +130,17 @@ val frozenFoodList = listOf(
 )
 
 @Composable
-fun PageIndicator(currentPage: Int, totalScreens: Int) {
+fun PageIndicator(currentPage: Int, totalScreens: Int, modifier: Modifier = Modifier) {
     Row(
         horizontalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .padding(top = 170.dp, bottom = 20.dp)
+        modifier = modifier
             .fillMaxWidth()
+            .padding(vertical = 4.dp)
     ) {
         repeat(totalScreens) { index ->
             Box(
                 modifier = Modifier
-                    .size(15.dp)
+                    .size(10.dp)
                     .padding(horizontal = 2.dp)
                     .background(
                         color = if (index == currentPage) Color(0xAA1d7151) else Color.Gray,
@@ -371,7 +371,7 @@ fun SearchBar(navController: NavController) {
         )
         Spacer(modifier = Modifier.width(10.dp))
         IconButton(
-            onClick = {navController.navigate("NotificationsActivity")},
+            onClick = { navController.navigate("NotificationsActivity") },
             enabled = true,
             modifier = Modifier.size(25.dp)
         ) {
@@ -396,8 +396,17 @@ fun SliderCard() {
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            PageIndicator(currentPage = 0, totalScreens = 3)
-            SlideImg(modifier = Modifier.fillMaxSize())
+
+            SlideImg(modifier = Modifier.fillMaxSize().clipToBounds())
+
+
+            PageIndicator(
+                currentPage = 0,
+                totalScreens = 3,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 8.dp)
+            )
         }
     }
 }
@@ -445,7 +454,6 @@ fun BottomBar(navController: NavController) {
         modifier = Modifier
             .fillMaxWidth()
             .height(80.dp),
-            //.clip(RoundedCornerShape(topStart = 50.dp, topEnd = 50.dp)),
         color = Color(0xFF1d7151)
     ) {
         Row(
@@ -583,6 +591,7 @@ fun ShopScreen(navController: NavController, vendorName: String, imageRes: Int) 
         }
     }
 }
+
 @Composable
 fun HomeScreen() {
     val navController = rememberNavController()
@@ -721,7 +730,7 @@ fun HomeContent(navController: NavController) {
             Spacer(modifier = Modifier.height(15.dp))
             LocationSelector(selectedLocation)
             Box(
-            modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Box(
                     modifier = Modifier
@@ -734,10 +743,6 @@ fun HomeContent(navController: NavController) {
                         )
                 )
             }
-//            HorizontalDivider(
-//                modifier = Modifier.padding(vertical = 4.dp, horizontal = 10.dp),
-//                thickness = 2.dp
-//            )
             CategoryRow(selectedCategory, navController)
             Spacer(modifier = Modifier.height(5.dp))
 
