@@ -129,27 +129,6 @@ val frozenFoodList = listOf(
     Product("Chicken Nuggets", R.drawable.nuggets, "Frozen Foods", 4.50)
 )
 
-@Composable
-fun PageIndicator(currentPage: Int, totalScreens: Int, modifier: Modifier = Modifier) {
-    Row(
-        horizontalArrangement = Arrangement.Center,
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp)
-    ) {
-        repeat(totalScreens) { index ->
-            Box(
-                modifier = Modifier
-                    .size(10.dp)
-                    .padding(horizontal = 2.dp)
-                    .background(
-                        color = if (index == currentPage) Color(0xAA1d7151) else Color.Gray,
-                        shape = CircleShape
-                    )
-            )
-        }
-    }
-}
 
 @Composable
 fun CategoryRow(selectedCategory: MutableState<String?>, navController: NavController) {
@@ -399,14 +378,6 @@ fun SliderCard() {
 
             SlideImg(modifier = Modifier.fillMaxSize().clipToBounds())
 
-
-            PageIndicator(
-                currentPage = 0,
-                totalScreens = 3,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 8.dp)
-            )
         }
     }
 }

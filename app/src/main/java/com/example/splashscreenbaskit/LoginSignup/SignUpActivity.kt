@@ -329,21 +329,20 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
     val scrollState = rememberScrollState()
     var hasReachedBottom by remember { mutableStateOf(false) }
 
-    // Track if the user reaches the bottom
     LaunchedEffect(scrollState.value, scrollState.maxValue) {
-        if (scrollState.maxValue > 0) { // Ensure maxValue is valid
-            hasReachedBottom = scrollState.value >= (scrollState.maxValue - 10) // Small margin
+        if (scrollState.maxValue > 0) {
+            hasReachedBottom = scrollState.value >= (scrollState.maxValue - 10)
         }
     }
 
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxSize()
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
+            modifier = Modifier.fillMaxWidth()
                 .padding(start = 25.dp)
-                .background(Color.White, shape = RoundedCornerShape(10.dp)) // Rounded Row
+                .background(Color.White, shape = RoundedCornerShape(10.dp))
         ) {
             Checkbox(
                 checked = isChecked,
@@ -377,101 +376,99 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                 onDismissRequest = { showDialog = false },
                 modifier = Modifier.fillMaxSize()
             ) {
-                Column(
+                Box(
                     modifier = Modifier
                         .fillMaxSize()
                         .clip(RoundedCornerShape(16.dp)) // Rounded corners
-                        .background(Color.White) // Ensure background applies to the shape
-                        .padding(vertical = 5.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .background(Color.White) // White background
                 ) {
-                    Text(
-                        modifier = Modifier.padding(top = 70.dp),
-                        text = "Terms and Conditions",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 24.sp,
-                        fontFamily = poppinsFontFamily,
-                        color = Color.Black,
-                        textAlign = TextAlign.Center
-                    )
-
-                    Spacer(modifier = Modifier.height(40.dp))
-
                     Column(
                         modifier = Modifier
-                            .weight(1f)
-                            .verticalScroll(scrollState)
-                            .padding(horizontal = 16.dp)
-                            .clip(RoundedCornerShape(12.dp)) // Rounded content area
-                            .background(Color(0xFFF8F8F8)) // Light background for readability
-                            .padding(16.dp) // Inner padding
+                            .fillMaxSize()
+                            .padding(horizontal = 16.dp, vertical = 24.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        // Title
                         Text(
-                            text = "Welcome to Baskit!\nThese Terms and Conditions govern your use\nof our delivery app and services.".trimIndent(),
-                            fontSize = 15.sp,
+                            text = "Terms and Conditions",
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
                             fontFamily = poppinsFontFamily,
-                            textAlign = TextAlign.Center,
-                            color = Color.Black
+                            color = Color.Black,
+                            textAlign = TextAlign.Center
                         )
 
-                        Spacer(modifier = Modifier.height(40.dp))
+                        Spacer(modifier = Modifier.height(16.dp))
 
+                        // Subtitle
                         Text(
-                            text = "Terms",
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.SemiBold,
+                            text = "Welcome to Baskit! These Terms and Conditions govern your use of our delivery app and services.",
+                            fontSize = 16.sp,
                             fontFamily = poppinsFontFamily,
-                            color = Color.Black
+                            color = Color.Gray,
+                            textAlign = TextAlign.Center
                         )
 
-                        Spacer(modifier = Modifier.height(5.dp))
+                        Spacer(modifier = Modifier.height(24.dp))
 
-                        Text(
-                            text = """
-                          You must be at least 18 years old to use Baskit and agree to provide accurate personal information when creating an account.
-                          You are responsible for maintaining the confidentiality of your login details.
-                          Orders placed through the app are subject to availability and acceptance by merchants.
-                          Prices displayed on the app include applicable charges unless stated otherwise, and payment must be completed before order confirmation.
-
-                          Delivery times are estimated and may vary due to unforeseen circumstances.
-                          Users must provide accurate delivery addresses, and if a recipient is unavailable, the order may be canceled or rescheduled at the user’s cost.
-                          Orders can only be canceled before they are accepted by the merchant.
-                          Refunds, if applicable, will be processed according to Baskit’s refund policy.
-
-                          Users must not misuse the app, engage in fraud, or harass others.
-                          Baskit reserves the right to suspend or terminate accounts that violate these terms.
-                          We act as an intermediary between users and merchants and are not responsible for product quality.
-                          Additionally, we are not liable for delays or losses due to factors beyond our control.
-
-                          By using Baskit, you agree to our Privacy Policy regarding data collection and usage.
-                          We reserve the right to update these terms at any time, and continued use of the app signifies acceptance of any modifications.
-                          If you have any questions or concerns, please contact us at Baskit.
-                          """.trimIndent(),
-                            fontSize = 15.sp,
-                            fontFamily = poppinsFontFamily,
-                            color = Color.Black
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        Button(
+                        Column(
                             modifier = Modifier
-                                .height(50.dp)
-                                .width(147.dp),
-                            shape = RoundedCornerShape(12.dp), // Rounded button
-                            onClick = {
-                                onCheckedChange(false)
-                                showDialog = false
-                            },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCB3B3B)),
-                            enabled = hasReachedBottom
+                                .weight(1f)
+                                .verticalScroll(scrollState)
+                                .background(Color(0xFFF8F8F8), shape = RoundedCornerShape(12.dp))
+                                .padding(16.dp)
                         ) {
-                            Row {
+                            Text(
+                                text = "Terms",
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                fontFamily = poppinsFontFamily,
+                                color = Color.Black
+                            )
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            Text(
+                                text = """
+                                You must be at least 16 years old to use Baskit and agree to provide accurate personal information when creating an account.
+                                You are responsible for maintaining the confidentiality of your login details.
+                                Orders placed through the app are subject to availability and acceptance by merchants.
+                                Prices displayed on the app include applicable charges unless stated otherwise, and payment must be completed before order confirmation.
+
+                                Delivery times are estimated and may vary due to unforeseen circumstances.
+                                Users must provide accurate delivery addresses, and if a recipient is unavailable, the order may be canceled or rescheduled at the user’s cost.
+                                Orders can only be canceled before they are accepted by the merchant.
+                                Refunds, if applicable, will be processed according to Baskit’s refund policy.
+
+                                Users must not misuse the app, engage in fraud, or harass others.
+                                Baskit reserves the right to suspend or terminate accounts that violate these terms.
+                                We act as an intermediary between users and merchants and are not responsible for product quality.
+                                """.trimIndent(),
+                                fontSize = 14.sp,
+                                fontFamily = poppinsFontFamily,
+                                color = Color.Black
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            // Decline Button
+                            Button(
+                                modifier = Modifier
+                                    .height(50.dp)
+                                    .width(135.dp),
+                                shape = RoundedCornerShape(10.dp),
+                                onClick = {
+                                    onCheckedChange(false)
+                                    showDialog = false
+                                },
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCB3B3B)),
+                                enabled = hasReachedBottom
+                            ) {
                                 Icon(
                                     Icons.Default.Close,
                                     contentDescription = "Decline",
@@ -486,21 +483,20 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                                     fontFamily = poppinsFontFamily
                                 )
                             }
-                        }
 
-                        Button(
-                            modifier = Modifier
-                                .height(50.dp)
-                                .width(147.dp),
-                            shape = RoundedCornerShape(12.dp), // Rounded button
-                            onClick = {
-                                onCheckedChange(true)
-                                showDialog = false
-                            },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151)),
-                            enabled = hasReachedBottom
-                        ) {
-                            Row {
+                            // Accept Button
+                            Button(
+                                modifier = Modifier
+                                    .height(50.dp)
+                                    .width(135.dp),
+                                shape = RoundedCornerShape(10.dp),
+                                onClick = {
+                                    onCheckedChange(true)
+                                    showDialog = false
+                                },
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151)),
+                                enabled = hasReachedBottom
+                            ) {
                                 Icon(
                                     Icons.Default.Done,
                                     contentDescription = "Accept",
