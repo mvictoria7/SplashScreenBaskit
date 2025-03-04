@@ -13,12 +13,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
@@ -57,14 +55,14 @@ import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import com.example.splashscreenbaskit.AccountDetails.BusinessInformationActivity
 import com.example.splashscreenbaskit.AccountDetails.RequestSentScreen
+import com.example.splashscreenbaskit.AccountDetails.RulesPerksPunishScreen
+import com.example.splashscreenbaskit.AccountDetails.RulesPerksPunishScreen
+import com.example.splashscreenbaskit.AccountDetails.RulesPerksPunishScreen
 import com.example.splashscreenbaskit.AccountDetails.ShopInformationScreen
 import com.example.splashscreenbaskit.LoginSignup.ChangePasswordScreen
 import com.example.splashscreenbaskit.LoginSignup.EnterOTPScreen
@@ -644,6 +642,9 @@ fun HomeScreen() {
                 }
                 composable("RequestSentScreen") {
                     RequestSentScreen(navController)
+                }
+                composable("RulesPerksPunishScreen") {
+                    RulesPerksPunishScreen(navController)
                 }
                 composable(
                     "ShopScreen/{vendorName}/{imageRes}",

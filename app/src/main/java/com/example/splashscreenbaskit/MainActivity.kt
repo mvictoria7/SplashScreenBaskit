@@ -16,6 +16,9 @@ import com.example.splashscreenbaskit.AccountDetails.AccountActivity
 import com.example.splashscreenbaskit.AccountDetails.BusinessInformationActivity
 import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
 import com.example.splashscreenbaskit.AccountDetails.RequestSentScreen
+import com.example.splashscreenbaskit.AccountDetails.RulesPerksPunishScreen
+import com.example.splashscreenbaskit.AccountDetails.RulesPerksPunishScreen
+import com.example.splashscreenbaskit.AccountDetails.RulesPerksPunishScreen
 import com.example.splashscreenbaskit.AccountDetails.SettingsActivity
 import com.example.splashscreenbaskit.AccountDetails.ShopInformationScreen
 import com.example.splashscreenbaskit.Carts.CartScreen
@@ -129,6 +132,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("RequestSentScreen") {
                         RequestSentScreen(navController)
+                    }
+                    composable("RulesPerksPunishScreen") {
+                        RulesPerksPunishScreen(navController)
                     }
                 }
             }

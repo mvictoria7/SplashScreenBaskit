@@ -1,7 +1,6 @@
 package com.example.splashscreenbaskit.AccountDetails
 
 import android.os.Bundle
-import android.widget.Space
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.BorderStroke
@@ -10,7 +9,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -26,7 +24,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.KeyboardArrowRight
@@ -35,16 +32,12 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.window.DialogProperties
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
-import kotlin.io.path.Path
 
 @Preview(showBackground = true)
 @Composable
@@ -98,11 +91,8 @@ fun AccountActivity(navController: NavController) {
             ) {
                 if (showPopup) {
                     StartSellingPopup(
-                        onCancel = { showPopup = false },
-                        onProceed = {
-                            showPopup = true
-                            navController.navigate("ShopInformationScreen")
-                        }
+                        navController = navController, // Pass the NavController
+                        onCancel = { showPopup = false }
                     )
                 }
 
@@ -483,9 +473,9 @@ fun AccountActivity(navController: NavController) {
 }
 
 @Composable
-fun StartSellingPopup(onCancel: () -> Unit, onProceed: () -> Unit) {
+fun StartSellingPopup(navController: NavController, onCancel: () -> Unit) {
     AlertDialog(
-        onDismissRequest = {  },
+        onDismissRequest = { },
         title = {
             Text(
                 text = "Start Selling!",
@@ -514,9 +504,13 @@ fun StartSellingPopup(onCancel: () -> Unit, onProceed: () -> Unit) {
                     containerColor = Color(0xFF1D7151),
                     contentColor = Color.White
                 ),
-                onClick = onProceed
+                onClick = {
+                    navController.navigate("RulesPerksPunishScreen")
+                    onCancel()
+                }
             ) {
-                Text("Proceed",
+                Text(
+                    "Proceed",
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 12.sp,
                     fontFamily = poppinsFontFamily,
@@ -525,9 +519,10 @@ fun StartSellingPopup(onCancel: () -> Unit, onProceed: () -> Unit) {
             }
         },
         dismissButton = {
-            Button(modifier = Modifier
-                .height(38.dp)
-                .width(104.dp),
+            Button(
+                modifier = Modifier
+                    .height(38.dp)
+                    .width(104.dp),
                 shape = RoundedCornerShape(10.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFD9D9D9),
@@ -535,7 +530,8 @@ fun StartSellingPopup(onCancel: () -> Unit, onProceed: () -> Unit) {
                 ),
                 onClick = onCancel
             ) {
-                Text("Cancel",
+                Text(
+                    "Cancel",
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 15.sp,
                     fontFamily = poppinsFontFamily,
@@ -545,9 +541,13 @@ fun StartSellingPopup(onCancel: () -> Unit, onProceed: () -> Unit) {
         },
         containerColor = Color.White,
         properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
-        modifier = Modifier.size(width = 325.dp, height = 195.dp) .clip(RoundedCornerShape(20.dp))
+        modifier = Modifier
+            .size(width = 325.dp, height = 195.dp)
+            .clip(RoundedCornerShape(20.dp))
     )
 }
+
+
 
 class AccountActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
