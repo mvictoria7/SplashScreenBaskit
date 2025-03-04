@@ -55,12 +55,12 @@ fun ShopInformationScreen(navController: NavController) {
 
         Text(
             text = "< Back",
-            fontSize = 14.sp,
+            fontSize = 15.sp,
             color = Color.Black,
             fontWeight = FontWeight.SemiBold,
             fontFamily = poppinsFontFamily,
             modifier = Modifier
-                .padding(start = 20.dp)
+                .padding(start = 30.dp)
                 .clickable { navController.popBackStack() }
         )
 

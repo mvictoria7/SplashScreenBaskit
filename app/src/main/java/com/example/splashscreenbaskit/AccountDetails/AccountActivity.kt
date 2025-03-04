@@ -478,7 +478,7 @@ fun StartSellingPopup(navController: NavController, onCancel: () -> Unit) {
         onDismissRequest = { },
         title = {
             Text(
-                text = "Start Selling!",
+                text = "Start Selling?",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
                 fontFamily = poppinsFontFamily,
@@ -496,23 +496,21 @@ fun StartSellingPopup(navController: NavController, onCancel: () -> Unit) {
         },
         confirmButton = {
             Button(
-                modifier = Modifier
-                    .height(38.dp)
-                    .width(104.dp),
+                modifier = Modifier.height(38.dp),
                 shape = RoundedCornerShape(10.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF1D7151),
                     contentColor = Color.White
                 ),
                 onClick = {
-                    navController.navigate("RulesPerksPunishScreen")
+                    navController.navigate("RulesScreen")
                     onCancel()
                 }
             ) {
                 Text(
                     "Proceed",
                     fontWeight = FontWeight.SemiBold,
-                    fontSize = 12.sp,
+                    fontSize = 14.sp,
                     fontFamily = poppinsFontFamily,
                     color = Color.White
                 )
@@ -520,9 +518,7 @@ fun StartSellingPopup(navController: NavController, onCancel: () -> Unit) {
         },
         dismissButton = {
             Button(
-                modifier = Modifier
-                    .height(38.dp)
-                    .width(104.dp),
+                modifier = Modifier.height(38.dp),
                 shape = RoundedCornerShape(10.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFD9D9D9),

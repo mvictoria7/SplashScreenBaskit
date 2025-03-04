@@ -39,7 +39,7 @@ fun CheckoutScreenPreview(){
 @Composable
 fun CheckoutScreen(cartViewModel: CartViewModel, navController: NavController) {
     val cartItems by remember { mutableStateOf(cartViewModel.cartItems) }
-    var showCodeDialog by remember { mutableStateOf(false) } // State for Dialog
+    var showCodeDialog by remember { mutableStateOf(false) }
 
     val scrollState = rememberScrollState()
 

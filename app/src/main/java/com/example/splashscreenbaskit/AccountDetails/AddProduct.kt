@@ -68,7 +68,6 @@ fun AddProduct(navController: NavController) {
             .background(Color.White)
             .verticalScroll(scrollState)
     ) {
-        // Header with Add Icon
         Box(
             modifier = Modifier
                 .fillMaxWidth()

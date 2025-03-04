@@ -231,7 +231,7 @@ fun EditStore(navController: NavController) {
                             fontSize = 16.sp,
                             fontWeight = if (selectedCategory == category) FontWeight.ExtraBold else FontWeight.Normal,
                             fontFamily = poppinsFontFamily,
-                            color = if (selectedCategory == category) Color.White else Color(0xFFCCCCCC), // Highlight selected category
+                            color = if (selectedCategory == category) Color.White else Color(0xFFCCCCCC),
                             modifier = Modifier
                                 .clickable {
                                     selectedCategory = category

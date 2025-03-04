@@ -19,7 +19,7 @@ fun SlideImg(modifier: Modifier = Modifier) {
 
     LaunchedEffect(pagerState) {
         while (true) {
-            delay(2000)
+            delay(4000)
             val nextPage = (pagerState.currentPage + 1) % pageCount
             pagerState.animateScrollToPage(nextPage)
         }

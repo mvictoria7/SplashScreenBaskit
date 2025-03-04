@@ -60,9 +60,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import com.example.splashscreenbaskit.AccountDetails.BusinessInformationActivity
 import com.example.splashscreenbaskit.AccountDetails.RequestSentScreen
-import com.example.splashscreenbaskit.AccountDetails.RulesPerksPunishScreen
-import com.example.splashscreenbaskit.AccountDetails.RulesPerksPunishScreen
-import com.example.splashscreenbaskit.AccountDetails.RulesPerksPunishScreen
+import com.example.splashscreenbaskit.AccountDetails.RulesScreen
 import com.example.splashscreenbaskit.AccountDetails.ShopInformationScreen
 import com.example.splashscreenbaskit.LoginSignup.ChangePasswordScreen
 import com.example.splashscreenbaskit.LoginSignup.EnterOTPScreen
@@ -643,8 +641,8 @@ fun HomeScreen() {
                 composable("RequestSentScreen") {
                     RequestSentScreen(navController)
                 }
-                composable("RulesPerksPunishScreen") {
-                    RulesPerksPunishScreen(navController)
+                composable("RulesScreen") {
+                    RulesScreen(navController)
                 }
                 composable(
                     "ShopScreen/{vendorName}/{imageRes}",
