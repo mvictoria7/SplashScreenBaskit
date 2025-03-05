@@ -89,22 +89,6 @@ fun CheckoutScreen(cartViewModel: CartViewModel, navController: NavController) {
             }
         }
 
-//        // FULL-WIDTH SHADOW (End to End)
-//        Box(
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Box(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .height(12.dp)
-//                    .background(
-//                        brush = Brush.verticalGradient(
-//                            colors = listOf(Color.Gray.copy(alpha = 0.5f), Color.Transparent)
-//                        )
-//                    )
-//            )
-//        }
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -205,7 +189,7 @@ fun CheckoutScreen(cartViewModel: CartViewModel, navController: NavController) {
 
             Spacer(modifier = Modifier.height(4.dp))
 
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier.padding(top = 15.dp, bottom = 8.dp),
                 thickness = 0.5.dp,
                 color = Color.Black
@@ -263,7 +247,7 @@ fun YourCodeDialog(onDismiss: () -> Unit, onSaveImage: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Card(
-            shape = RoundedCornerShape(16.dp),
+            shape = RoundedCornerShape(30.dp),
             modifier = Modifier
                 .fillMaxWidth(0.85f)
                 .wrapContentHeight(),
@@ -287,9 +271,10 @@ fun YourCodeDialog(onDismiss: () -> Unit, onSaveImage: () -> Unit) {
 
                 Text(
                     text = "Present this code to\nour staff upon pickup.",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.Gray
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal,
+                    fontFamily = poppinsFontFamily,
+                    color = Color.Black
                 )
 
                 Spacer(modifier = Modifier.height(15.dp))
@@ -297,7 +282,8 @@ fun YourCodeDialog(onDismiss: () -> Unit, onSaveImage: () -> Unit) {
                 Text(
                     text = "YOUR CODE",
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.SemiBold,
+                    fontFamily = poppinsFontFamily,
                     color = Color.Black
                 )
 
@@ -305,40 +291,44 @@ fun YourCodeDialog(onDismiss: () -> Unit, onSaveImage: () -> Unit) {
 
                 Box(
                     modifier = Modifier
-                        .background(color = Color(0xFF1d7151), shape = RoundedCornerShape(8.dp))
-                        .padding(vertical = 12.dp, horizontal = 30.dp)
+                        .background(color = Color(0xFFB7DDCF), shape = RoundedCornerShape(50.dp))
+                        .wrapContentWidth()
+                        .padding(vertical = 10.dp, horizontal = 30.dp)
                 ) {
                     Text(
                         text = randomCode,
-                        fontSize = 26.sp,
+                        fontSize = 32.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        fontFamily = poppinsFontFamily,
+                        color = Color.Black
                     )
                 }
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(20.dp))
 
                 Text(
                     text = "Order processing...",
-                    fontSize = 18.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Medium,
-                    color = Color.Gray
+                    fontFamily = poppinsFontFamily,
+                    color = Color(0xFF8C8C8C)
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
 
                 Button(
                     onClick = {  },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray)
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF0F0F0)),
+                    shape = RoundedCornerShape(10.dp)
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Image(
                             painter = painterResource(id = R.drawable.save),
                             contentDescription = "Save as Image",
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(15.dp)
                         )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = "Save as Image", fontSize = 18.sp, color = Color.Black)
+                        Spacer(modifier = Modifier.width(5.dp))
+                        Text(text = "Save as Image", fontSize = 14.sp, color = Color.Black, fontFamily = poppinsFontFamily,)
                     }
                 }
             }
