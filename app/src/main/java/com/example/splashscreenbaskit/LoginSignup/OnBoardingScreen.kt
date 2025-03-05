@@ -173,7 +173,7 @@ fun OnboardingContent(title: String, description: String, maxWidth: Dp, maxHeigh
             text = title,
             fontFamily = poppinsFontFamily,
             style = TextStyle(
-                fontSize = maxWidth.value * 0.04f.sp,
+                fontSize = maxWidth.value * 0.10f.sp,
                 lineHeight = maxWidth.value * 0.045f.sp
             ),
             fontWeight = FontWeight.ExtraBold,
@@ -184,7 +184,7 @@ fun OnboardingContent(title: String, description: String, maxWidth: Dp, maxHeigh
         Text(
             text = description,
             fontFamily = poppinsFontFamily,
-            fontSize = maxWidth.value * 0.03f.sp,
+            fontSize = maxWidth.value * 0.05f.sp,
             fontWeight = FontWeight.Normal,
             color = Color.Black,
             textAlign = TextAlign.Center
