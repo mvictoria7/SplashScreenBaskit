@@ -135,7 +135,11 @@ fun EnterOTPScreen(navController: NavController) {
                             },
                         shape = RoundedCornerShape(10.dp),
                         singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+//                        colors = TextFieldDefaults.outlinedTextFieldColors(
+//                            focusedBorderColor = Color.Black,
+//                            unfocusedBorderColor = Color.Gray
+//                        )
                     )
                 }
             }

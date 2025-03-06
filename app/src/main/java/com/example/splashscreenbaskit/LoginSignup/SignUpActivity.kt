@@ -38,6 +38,7 @@ import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 fun SignUpActivityPreview() {
     SignUpActivity(navController =  rememberNavController())
 }
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpActivity(navController: NavController) {
     var firstName by remember { mutableStateOf("") }
@@ -102,8 +103,12 @@ fun SignUpActivity(navController: NavController) {
                     label = { Text(text = "First Name", fontFamily = poppinsFontFamily)},
                     modifier = Modifier.weight(1f),
                     singleLine = true,
-                    shape = RoundedCornerShape(10.dp)
+                    shape = RoundedCornerShape(10.dp),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = Color.Black,
+                        unfocusedBorderColor = Color.Gray
                     )
+                )
 
                 // Last Name field
                 OutlinedTextField(
@@ -115,7 +120,11 @@ fun SignUpActivity(navController: NavController) {
                     label = { Text(text = "Last Name", fontFamily = poppinsFontFamily) },
                     modifier = Modifier.weight(1f),
                     singleLine = true,
-                    shape = RoundedCornerShape(10.dp)
+                    shape = RoundedCornerShape(10.dp),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = Color.Black,
+                        unfocusedBorderColor = Color.Gray
+                    )
                 )
             }
 
@@ -146,7 +155,11 @@ fun SignUpActivity(navController: NavController) {
                 },
                 modifier = Modifier.fillMaxWidth(0.8f),
                 singleLine = true,
-                shape = RoundedCornerShape(10.dp)
+                shape = RoundedCornerShape(10.dp),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.Gray
+                )
             )
 
             Spacer(modifier = Modifier.height(2.dp))
@@ -161,7 +174,11 @@ fun SignUpActivity(navController: NavController) {
                 },
                 modifier = Modifier.fillMaxWidth(0.8f) ,
                 singleLine = true,
-                shape = RoundedCornerShape(10.dp)
+                shape = RoundedCornerShape(10.dp),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.Gray
+                )
             )
 
             Spacer(modifier = Modifier.height(2.dp))
@@ -176,7 +193,11 @@ fun SignUpActivity(navController: NavController) {
                 },
                 modifier = Modifier.fillMaxWidth(0.8f),
                 singleLine = true,
-                shape = RoundedCornerShape(10.dp)
+                shape = RoundedCornerShape(10.dp),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.Gray
+                )
             )
 
             Spacer(modifier = Modifier.height(2.dp))
@@ -196,7 +217,11 @@ fun SignUpActivity(navController: NavController) {
                 },
                 modifier = Modifier.fillMaxWidth(0.8f),
                 singleLine = true,
-                shape = RoundedCornerShape(10.dp)
+                shape = RoundedCornerShape(10.dp),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.Gray
+                )
             )
 
             Spacer(modifier = Modifier.height(2.dp))
@@ -212,7 +237,11 @@ fun SignUpActivity(navController: NavController) {
                 modifier = Modifier.fillMaxWidth(0.8f),
                 shape = RoundedCornerShape(10.dp),
                 singleLine = true,
-                visualTransformation = PasswordVisualTransformation()
+                visualTransformation = PasswordVisualTransformation(),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.Gray
+                )
             )
 
             Spacer(modifier = Modifier.height(2.dp))
@@ -231,7 +260,11 @@ fun SignUpActivity(navController: NavController) {
                 modifier = Modifier.fillMaxWidth(0.8f),
                 singleLine = true,
                 shape = RoundedCornerShape(10.dp) ,
-                visualTransformation = PasswordVisualTransformation()
+                visualTransformation = PasswordVisualTransformation(),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color.Black,
+                    unfocusedBorderColor = Color.Gray
+                )
             )
 
             Spacer(modifier = Modifier.height(1.dp))
@@ -402,7 +435,7 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
 
                         // Subtitle
                         Text(
-                            text = "Welcome to Baskit! These Terms and Conditions govern your use of our delivery app and services.",
+                            text = "Welcome to Baskit! These Terms and Conditions govern your use of our app and services.",
                             fontSize = 16.sp,
                             fontFamily = poppinsFontFamily,
                             color = Color.Gray,

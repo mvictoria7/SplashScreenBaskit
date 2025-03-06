@@ -37,6 +37,7 @@ fun LoginActivity() {
     LoginActivity(navController = rememberNavController())
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginActivity(navController: NavController) {
     var email by remember { mutableStateOf("") }
@@ -81,7 +82,11 @@ fun LoginActivity(navController: NavController) {
             label = { Text(text = "Username or Email", fontFamily = poppinsFontFamily) },
             modifier = Modifier.fillMaxWidth(0.8f),
             singleLine = true,
-            shape = RoundedCornerShape(10.dp)
+            shape = RoundedCornerShape(10.dp),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = Color.Black,
+                unfocusedBorderColor = Color.Gray
+            )
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -94,7 +99,11 @@ fun LoginActivity(navController: NavController) {
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(0.8f),
             singleLine = true,
-            shape = RoundedCornerShape(10.dp)
+            shape = RoundedCornerShape(10.dp),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = Color.Black,
+                unfocusedBorderColor = Color.Gray
+            )
         )
 
 
