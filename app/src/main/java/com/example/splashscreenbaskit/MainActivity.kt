@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.splashscreenbaskit.AccountDetails.AccountActivity
 import com.example.splashscreenbaskit.AccountDetails.BusinessInformationActivity
+import com.example.splashscreenbaskit.AccountDetails.EditStore
 import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
 import com.example.splashscreenbaskit.AccountDetails.RequestSentScreen
 import com.example.splashscreenbaskit.AccountDetails.RulesScreen
@@ -133,6 +134,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("RulesScreen") {
                         RulesScreen(navController)
+                    }
+                    composable("EditStore") {
+                        EditStore(navController = navController)
                     }
                 }
             }
