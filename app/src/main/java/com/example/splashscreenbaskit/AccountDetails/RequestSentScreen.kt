@@ -105,7 +105,7 @@ fun RequestSentScreen(navController: NavController) {
 
             // OK Button
             Button(
-                onClick = { navController.navigate("AccountActivity") },
+                onClick = { navController.navigate("EditStore") },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1D7151)),
                 modifier = Modifier.fillMaxWidth().height(50.dp)
             ) {

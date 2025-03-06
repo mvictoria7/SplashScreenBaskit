@@ -34,6 +34,7 @@ import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.window.DialogProperties
 import com.example.splashscreenbaskit.R
@@ -81,17 +82,16 @@ fun AccountActivity(navController: NavController) {
             Button(
                 onClick = {showPopup = true},
                 shape = RoundedCornerShape(topEnd = 20.dp, bottomEnd = 20.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF5F5F5), contentColor = Color.Black),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFEAEAEA), contentColor = Color.Black),
                 //elevation = ButtonDefaults.buttonElevation(20.dp),
                 modifier = Modifier
-                    .fillMaxWidth(0.38f)
+                    .wrapContentWidth()
                     .offset(x = (-10).dp)
-                    .width(110.dp)
                     .height(35.dp)
             ) {
                 if (showPopup) {
                     StartSellingPopup(
-                        navController = navController, // Pass the NavController
+                        navController = navController,
                         onCancel = { showPopup = false }
                     )
                 }
@@ -107,12 +107,12 @@ fun AccountActivity(navController: NavController) {
                 Text(
                     text = "Start Selling",
                     fontFamily = poppinsFontFamily,
-                    fontSize = 10.sp
+                    fontSize = 12.sp
                 )
 
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowRight,
-                    contentDescription = "Notifications",
+                    contentDescription = "Open",
                     tint = Color.Black
                 )
             }
@@ -230,7 +230,7 @@ fun AccountActivity(navController: NavController) {
 
                     Box(modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color(0xFFF0F6CE), RoundedCornerShape(10.dp))
+                        .background(Color(0xFFF7FAE2), RoundedCornerShape(10.dp))
                     ) {
                         Row (
                             verticalAlignment = Alignment.CenterVertically,
@@ -364,7 +364,7 @@ fun AccountActivity(navController: NavController) {
 
                     Box(modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color(0xFFF0F6CE), RoundedCornerShape(10.dp))
+                        .background(Color(0xFFF7FAE2), RoundedCornerShape(10.dp))
                     ) {
                         Row (verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -419,7 +419,7 @@ fun AccountActivity(navController: NavController) {
                     border = BorderStroke(1.dp, Color(0xFFE22727)),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color(0xFFE22727))
                 ) {
-                    Text(text = "Log Out", fontWeight = FontWeight.Bold, fontFamily = poppinsFontFamily)
+                    Text(text = "Log Out", fontSize = 15.sp, fontWeight = FontWeight.Bold, fontFamily = poppinsFontFamily)
                 }
 
                 Spacer(modifier = Modifier.height(30.dp))
@@ -431,37 +431,58 @@ fun AccountActivity(navController: NavController) {
         AlertDialog(
             onDismissRequest = { showDialog.value = false },
             title = {
-                Text("Log Out?",
+                Text("Logging Out?",
                     fontSize = 18.sp,
                     fontFamily = poppinsFontFamily,
-                    fontWeight = FontWeight.Bold ) },
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+                )
+            },
 
             text = { Text("Are you sure you want to log out?",
                 fontSize = 14.sp,
                 fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.Normal) },
+                fontWeight = FontWeight.Normal,
+                color = Color.Black
+            ) },
 
 
             confirmButton = {
                 Button(
+                    modifier = Modifier.height(38.dp),
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFCB3B3B),
+                        contentColor = Color.White
+                    ),
                     onClick = {
                         navController.navigate(route = "LoginActivity")
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCB3B3B))
                 ) {
                     Text("Log out",
                         color = Color.White,
                         fontSize = 15.sp,
                         fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.SemiBold)
+                        fontWeight = FontWeight.SemiBold
+                    )
                 }
             },
             dismissButton = {
                 Button(
-                    onClick = onCancelLogOut,
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD9D9D9))
+                    modifier = Modifier.height(38.dp),
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFD9D9D9),
+                        contentColor = Color.Black
+                    ),
+                    onClick = onCancelLogOut
                 ) {
-                    Text("Cancel", color = Color.Black, fontSize = 15.sp, fontFamily = poppinsFontFamily, fontWeight = FontWeight.SemiBold)
+                    Text("Cancel",
+                        color = Color.Black,
+                        fontSize = 15.sp,
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.SemiBold
+                    )
                 }
             },
             containerColor = Color.White,
