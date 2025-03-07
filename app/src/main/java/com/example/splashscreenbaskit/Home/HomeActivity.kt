@@ -58,6 +58,7 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
+import com.example.splashscreenbaskit.AccountDetails.AddProduct
 import com.example.splashscreenbaskit.AccountDetails.BusinessInformationActivity
 import com.example.splashscreenbaskit.AccountDetails.EditStore
 import com.example.splashscreenbaskit.AccountDetails.RequestSentScreen
@@ -588,7 +589,7 @@ fun HomeScreen() {
                 modifier = Modifier.weight(1f)
             ) {
                 composable(BottomBarScreen.Home.route) {
-                    HomeContent(navController)
+                    HomeContent(navController = navController)
                 }
                 composable(BottomBarScreen.Cart.route) {
                     CartScreen(cartViewModel = cartViewModel, navController = navController)
@@ -600,10 +601,11 @@ fun HomeScreen() {
                     "ProductScreen/{productName}",
                     arguments = listOf(navArgument("productName") { type = NavType.StringType })
                 ) { backStackEntry ->
+                    val productName = backStackEntry.arguments?.getString("productName")
                     ProductScreen(
                         navController = navController,
                         cartViewModel = cartViewModel,
-                        productName = backStackEntry.arguments?.getString("productName")
+                        productName = productName
                     )
                 }
                 composable("CartScreen") {
@@ -661,11 +663,13 @@ fun HomeScreen() {
                 composable("EditStore") {
                     EditStore(navController = navController)
                 }
+                composable("AddProduct") {
+                    AddProduct(navController = navController)
+                }
             }
         }
     }
 }
-
 @Composable
 fun HomeContent(navController: NavController) {
     val selectedCategory = remember { mutableStateOf<String?>(null) }

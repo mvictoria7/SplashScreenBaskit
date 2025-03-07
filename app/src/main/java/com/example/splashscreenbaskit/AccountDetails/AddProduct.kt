@@ -1,45 +1,32 @@
 package com.example.splashscreenbaskit.AccountDetails
 
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,7 +35,14 @@ import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
-@Preview(showBackground = true)
+data class Product(
+    val name: String,
+    val imageBitmap: Bitmap? = null,
+    val price: Double = 0.0,
+    val category: String? = null
+) : java.io.Serializable
+
+@Preview(showBackground = true, heightDp = 1000)
 @Composable
 fun AddProductPreview() {
     AddProduct(navController = rememberNavController())
@@ -60,13 +54,29 @@ fun AddProduct(navController: NavController) {
     var product by remember { mutableStateOf("") }
     var price by remember { mutableStateOf("") }
     var selectedWeight by remember { mutableStateOf<String?>(null) }
-    val scrollState = rememberScrollState()
+    var selectedCategory by remember { mutableStateOf<String?>(null) }
+    var selectedImage by remember { mutableStateOf<Bitmap?>(null) }
+    val context = LocalContext.current
+
+    val imagePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri ->
+        uri?.let {
+            selectedImage = if (Build.VERSION.SDK_INT < 28) {
+                @Suppress("DEPRECATION")
+                android.provider.MediaStore.Images.Media.getBitmap(context.contentResolver, it)
+            } else {
+                val source = ImageDecoder.createSource(context.contentResolver, it)
+                ImageDecoder.decodeBitmap(source)
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .verticalScroll(scrollState)
+            .verticalScroll(rememberScrollState())
     ) {
         Box(
             modifier = Modifier
@@ -80,7 +90,7 @@ fun AddProduct(navController: NavController) {
                 modifier = Modifier
                     .padding(top = 70.dp, start = 40.dp)
                     .align(Alignment.TopStart)
-                    .size(15.dp)
+                    .size(24.dp)
                     .background(Color(0xAAFFFFFF), shape = CircleShape)
             ) {
                 Icon(
@@ -91,23 +101,37 @@ fun AddProduct(navController: NavController) {
                 )
             }
 
-            Icon(
-                painter = painterResource(id = R.drawable.add_image),
-                contentDescription = "Add Product Image",
-                modifier = Modifier.size(40.dp),
-                tint = Color.Unspecified
-            )
+            Box(
+                modifier = Modifier
+                    .size(100.dp)
+                    .clickable { imagePickerLauncher.launch("image/*") },
+                contentAlignment = Alignment.Center
+            ) {
+                if (selectedImage != null) {
+                    Image(
+                        bitmap = selectedImage!!.asImageBitmap(),
+                        contentDescription = "Selected Product Image",
+                        modifier = Modifier
+                            .size(100.dp)
+                            .background(Color.White, shape = RoundedCornerShape(10.dp))
+                    )
+                } else {
+                    Icon(
+                        painter = painterResource(id = R.drawable.add_image),
+                        contentDescription = "Add Product Image",
+                        modifier = Modifier.size(40.dp),
+                        tint = Color.Unspecified
+                    )
+                }
+            }
         }
 
-        // Content Section
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(horizontal = 20.dp, vertical = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            // Product Name
             OutlinedTextField(
                 value = product,
                 onValueChange = { product = it },
@@ -120,7 +144,7 @@ fun AddProduct(navController: NavController) {
                 ) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp),
+                    .height(56.dp),
                 singleLine = true,
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -129,12 +153,12 @@ fun AddProduct(navController: NavController) {
                 )
             )
 
-            // Seller Description
             Text(
                 text = "Seller Description",
                 fontSize = 16.sp,
                 fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.fillMaxWidth()
             )
             Box(
                 modifier = Modifier
@@ -173,12 +197,12 @@ fun AddProduct(navController: NavController) {
                 }
             }
 
-            // Set Price
             Text(
                 text = "Set Price",
                 fontSize = 16.sp,
                 fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.fillMaxWidth()
             )
             OutlinedTextField(
                 value = price,
@@ -192,7 +216,7 @@ fun AddProduct(navController: NavController) {
                 ) },
                 modifier = Modifier
                     .width(136.dp)
-                    .height(50.dp),
+                    .height(56.dp),
                 singleLine = true,
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -201,8 +225,16 @@ fun AddProduct(navController: NavController) {
                 )
             )
 
-            // Weight Options
+            Text(
+                text = "Select Weight",
+                fontSize = 16.sp,
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.fillMaxWidth()
+            )
+
             Row(
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 val weightOptions = listOf("1 pc", "1/4 kg", "1/2 kg", "1 kg")
@@ -210,7 +242,7 @@ fun AddProduct(navController: NavController) {
                     Button(
                         modifier = Modifier
                             .height(48.dp)
-                            .width(80.dp),
+                            .weight(1f),
                         onClick = { selectedWeight = option },
                         shape = RoundedCornerShape(10.dp),
                         colors = ButtonDefaults.buttonColors(
@@ -228,29 +260,27 @@ fun AddProduct(navController: NavController) {
                 }
             }
 
-            // Select Category
             Text(
                 text = "Select Category",
                 fontSize = 16.sp,
                 fontFamily = poppinsFontFamily,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(10.dp)) // Added spacing for consistency
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.height(180.dp)
             ) {
                 val categories = listOf("Fruits", "Vegetables", "Fish", "Meats", "Frozen Foods", "Spices")
-                var selectedCategory by remember { mutableStateOf<String?>(null) }
-
-                categories.forEach { category ->
+                items(categories.size) { index ->
+                    val category = categories[index]
                     Button(
                         modifier = Modifier
-                            .height(48.dp)
-                            .weight(1f),
+                            .fillMaxWidth()
+                            .height(56.dp),
                         onClick = { selectedCategory = category },
                         shape = RoundedCornerShape(10.dp),
                         colors = ButtonDefaults.buttonColors(
@@ -260,28 +290,28 @@ fun AddProduct(navController: NavController) {
                     ) {
                         Text(
                             text = category,
-                            fontSize = 14.sp,
+                            fontSize = 16.sp,
                             fontFamily = poppinsFontFamily,
-                            fontWeight = if (selectedCategory == category) FontWeight.Bold else FontWeight.SemiBold
+                            fontWeight = if (selectedCategory == category) FontWeight.Bold else FontWeight.SemiBold,
+                            textAlign = TextAlign.Center
                         )
                     }
                 }
             }
 
-            // Buttons
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 20.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(
                     modifier = Modifier
                         .height(50.dp)
-                        .width(147.dp),
+                        .weight(1f)
+                        .padding(end = 8.dp),
                     onClick = { navController.popBackStack() },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCB3B3B)),
-                    enabled = true
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCB3B3B))
                 ) {
                     Text(
                         text = "Cancel",
@@ -295,10 +325,22 @@ fun AddProduct(navController: NavController) {
                 Button(
                     modifier = Modifier
                         .height(50.dp)
-                        .width(147.dp),
-                    onClick = { /* TODO: Implement add action */ },
+                        .weight(1f)
+                        .padding(start = 8.dp),
+                    onClick = {
+                        if (product.isNotEmpty() && price.isNotEmpty() && selectedImage != null) {
+                            val result = Product(
+                                name = product,
+                                imageBitmap = selectedImage,
+                                price = price.toDoubleOrNull() ?: 0.0,
+                                category = selectedCategory ?: ""
+                            )
+                            navController.previousBackStackEntry?.savedStateHandle?.set("newProduct", result)
+                            navController.popBackStack()
+                        }
+                    },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1D7151)),
-                    enabled = true
+                    enabled = product.isNotEmpty() && price.isNotEmpty() && selectedImage != null
                 ) {
                     Text(
                         text = "Add",

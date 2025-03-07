@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -31,11 +32,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
-
-data class Product(
-    val name: String,
-    val imageRes: Int
-)
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
@@ -49,23 +45,25 @@ fun EditStore(navController: NavController) {
     var storeName by remember { mutableStateOf("") }
     val categories = remember { mutableStateOf(mutableListOf<String>()) }
     var selectedCategory by remember { mutableStateOf<String?>(null) }
-    var newProductName by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
+    val products = remember { mutableStateListOf<Product>() } // Changed to mutableStateListOf
 
-    // Predefined categories for the dropdown
+    // Receive new product from AddProduct
+    LaunchedEffect(Unit) {
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Product>("newProduct")?.observeForever { newProduct ->
+            products.add(newProduct)
+            navController.currentBackStackEntry?.savedStateHandle?.remove<Product>("newProduct")
+        }
+    }
+
     val predefinedCategories = listOf("Fruits", "Vegetables", "Meats", "Spices", "Frozen Foods", "Fish")
-
-    // Desired order for sorting
     val categoryOrder = listOf("Vegetables", "Fruits", "Meats", "Fish", "Spices", "Frozen Foods")
-
-    val products = remember { mutableListOf<Product>() }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
-        // Header Section
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -132,7 +130,6 @@ fun EditStore(navController: NavController) {
             }
         }
 
-        // Category Selection Section with Dropdown
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -195,7 +192,6 @@ fun EditStore(navController: NavController) {
                             onClick = {
                                 if (!categories.value.contains(category)) {
                                     categories.value = categories.value.toMutableList().apply { add(category) }
-                                    // Sort the categories list according to the desired order
                                     categories.value.sortBy { categoryOrder.indexOf(it) }
                                 }
                                 selectedCategory = category
@@ -208,7 +204,6 @@ fun EditStore(navController: NavController) {
             }
         }
 
-        // Category List Section
         Card(
             colors = CardDefaults.cardColors(containerColor = Color(0xFFFFA52F)),
             modifier = Modifier
@@ -244,10 +239,8 @@ fun EditStore(navController: NavController) {
             }
         }
 
-        // Product Grid
         ProductGridWithAddButton(
-            products = products,
-            newProductName = newProductName,
+            products = products.filter { it.category == selectedCategory || selectedCategory == null },
             navController = navController,
             modifier = Modifier
                 .weight(1f)
@@ -259,13 +252,12 @@ fun EditStore(navController: NavController) {
 @Composable
 fun ProductGridWithAddButton(
     products: List<Product>,
-    newProductName: String,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
     val productListWithAdd = remember(products) {
         products.toMutableList().apply {
-            add(Product("Add a product", -1))
+            add(Product("Add a product", null)) // Placeholder for "Add" button
         }
     }
 
@@ -278,7 +270,7 @@ fun ProductGridWithAddButton(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 rowProducts.forEach { product ->
-                    if (product.imageRes != -1) {
+                    if (product.imageBitmap != null) {
                         Card(
                             colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F0F0)),
                             modifier = Modifier
@@ -301,7 +293,7 @@ fun ProductGridWithAddButton(
                                 verticalArrangement = Arrangement.Center
                             ) {
                                 Image(
-                                    painter = painterResource(id = product.imageRes),
+                                    bitmap = product.imageBitmap!!.asImageBitmap(),
                                     contentDescription = "Product Image",
                                     modifier = Modifier
                                         .height(100.dp)
@@ -309,59 +301,56 @@ fun ProductGridWithAddButton(
                                         .padding(top = 8.dp)
                                         .clip(RoundedCornerShape(10.dp))
                                 )
-                                Spacer(modifier = Modifier.height(8.dp))
+                                Spacer(modifier = Modifier.height(4.dp))
                                 Text(
                                     text = product.name,
                                     fontWeight = FontWeight.SemiBold,
                                     fontSize = 16.sp,
                                     fontFamily = poppinsFontFamily,
-                                    modifier = Modifier.padding(8.dp)
+                                    modifier = Modifier.padding(horizontal = 8.dp)
+                                )
+                                Text(
+                                    text = "₱${String.format("%.2f", product.price)}",
+                                    fontSize = 14.sp,
+                                    fontFamily = poppinsFontFamily,
+                                    modifier = Modifier.padding(bottom = 8.dp)
                                 )
                             }
                         }
                     } else {
-                        Card(
-                            colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F0F0)),
+                        Button(
+                            onClick = { navController.navigate("AddProduct") },
                             modifier = Modifier
                                 .weight(1f)
                                 .height(170.dp)
                                 .width(154.dp)
-                                .padding(4.dp)
-                                .clip(RoundedCornerShape(10.dp))
-                                .clickable {
-                                    if (newProductName.isNotEmpty()) {
-                                        navController.navigate("ProductScreen/$newProductName")
-                                    }
-                                },
+                                .padding(4.dp),
                             shape = RoundedCornerShape(10.dp),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFFFA52F),
+                                contentColor = Color.White
+                            ),
+                            elevation = ButtonDefaults.buttonElevation(
+                                defaultElevation = 4.dp,
+                                pressedElevation = 8.dp
+                            )
                         ) {
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
                             ) {
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(top = 5.dp),
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.Center
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Filled.AddCircle,
-                                        contentDescription = "Add Product",
-                                        tint = Color.Black,
-                                        modifier = Modifier.size(35.dp)
-                                    )
-                                    Spacer(modifier = Modifier.height(8.dp))
-                                    Text(
-                                        text = product.name,
-                                        fontWeight = FontWeight.SemiBold,
-                                        fontSize = 14.sp,
-                                        fontFamily = poppinsFontFamily,
-                                        modifier = Modifier.padding(8.dp)
-                                    )
-                                }
+                                Icon(
+                                    imageVector = Icons.Filled.AddCircle,
+                                    contentDescription = "Add Product",
+                                    modifier = Modifier.size(35.dp)
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    text = "Add a product",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 16.sp,
+                                    fontFamily = poppinsFontFamily
+                                )
                             }
                         }
                     }

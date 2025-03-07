@@ -1,5 +1,11 @@
 package com.example.splashscreenbaskit
 
+//import com.example.splashscreenbaskit.Products.AppleScreen
+//import com.example.splashscreenbaskit.Products.BananaScreen
+//import com.example.splashscreenbaskit.Products.GrapesScreen
+//import com.example.splashscreenbaskit.Products.MangoScreen
+//import com.example.splashscreenbaskit.Products.OrangeScreen
+//import com.example.splashscreenbaskit.Products.PineappleScreen
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.splashscreenbaskit.AccountDetails.AccountActivity
+import com.example.splashscreenbaskit.AccountDetails.AddProduct
 import com.example.splashscreenbaskit.AccountDetails.BusinessInformationActivity
 import com.example.splashscreenbaskit.AccountDetails.EditStore
 import com.example.splashscreenbaskit.AccountDetails.NotificationsActivity
@@ -31,12 +38,6 @@ import com.example.splashscreenbaskit.LoginSignup.OnboardingScreen
 import com.example.splashscreenbaskit.LoginSignup.ResetPasswordScreen
 import com.example.splashscreenbaskit.LoginSignup.SignUpActivity
 import com.example.splashscreenbaskit.Products.ProductScreen
-//import com.example.splashscreenbaskit.Products.AppleScreen
-//import com.example.splashscreenbaskit.Products.BananaScreen
-//import com.example.splashscreenbaskit.Products.GrapesScreen
-//import com.example.splashscreenbaskit.Products.MangoScreen
-//import com.example.splashscreenbaskit.Products.OrangeScreen
-//import com.example.splashscreenbaskit.Products.PineappleScreen
 import com.example.splashscreenbaskit.ui.theme.SplashScreenBaskitTheme
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
 
@@ -137,6 +138,12 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("EditStore") {
                         EditStore(navController = navController)
+                    }
+                    composable("AddProduct") {
+                        AddProduct(navController = navController)
+                    }
+                    composable("ProductScreen/{productName}") { backStackEntry ->
+                        val productName = backStackEntry.arguments?.getString("productName")
                     }
                 }
             }
