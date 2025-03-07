@@ -197,7 +197,7 @@ fun AccountActivity(navController: NavController) {
                         Row (
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
-                            modifier = Modifier.padding(15.dp)
+                            modifier = Modifier.padding(vertical = 12.dp, horizontal = 15.dp)
                         ){
                             Icon(
                                 imageVector = Icons.Default.Person,
@@ -206,6 +206,14 @@ fun AccountActivity(navController: NavController) {
                             )
                             Text(text = "Maria Victoria Catabay",
                                 fontFamily = poppinsFontFamily)
+
+                            Image(
+                                painter = painterResource(id = R.drawable.verified),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .height(30.dp)
+                                    .clickable {  }
+                            )
                         }
                     }
 

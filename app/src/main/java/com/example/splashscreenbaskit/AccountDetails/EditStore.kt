@@ -141,34 +141,29 @@ fun EditStore(navController: NavController) {
                 onExpandedChange = { expanded = !expanded }
             ) {
                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start,
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(
-                            color = Color.LightGray.copy(alpha = 0.2f),
+                            color = Color.White,
                             shape = RoundedCornerShape(8.dp)
                         )
-                        .border(
-                            width = 1.dp,
-                            color = Color.Gray,
-                            shape = RoundedCornerShape(8.dp)
-                        )
-                        .padding(8.dp)
+                        .padding(vertical = 8.dp)
                         .menuAnchor()
                 ) {
                     Text(
                         text = selectedCategory ?: "Add a category",
-                        color = if (selectedCategory == null) Color.Gray else Color.Black,
+                        color = Color.Black,
                         fontSize = 16.sp,
                         fontFamily = poppinsFontFamily,
-                        fontWeight = if (selectedCategory == null) FontWeight.SemiBold else FontWeight.Bold,
-                        modifier = Modifier.weight(1f)
+                        fontWeight = FontWeight.SemiBold
                     )
+                    Spacer(modifier = Modifier.width(10.dp))
                     Icon(
                         painter = painterResource(id = R.drawable.add_category),
                         contentDescription = "Add Category",
                         tint = Color.Black,
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(18.dp)
                     )
                 }
 
@@ -261,6 +256,8 @@ fun ProductGridWithAddButton(
         }
     }
 
+    Spacer(modifier = Modifier.height(10.dp))
+
     Column(modifier = modifier.fillMaxWidth()) {
         productListWithAdd.chunked(2).forEach { rowProducts ->
             Row(
@@ -323,11 +320,10 @@ fun ProductGridWithAddButton(
                             modifier = Modifier
                                 .weight(1f)
                                 .height(170.dp)
-                                .width(154.dp)
-                                .padding(4.dp),
+                                .width(154.dp),
                             shape = RoundedCornerShape(10.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFFFFA52F),
+                                containerColor = Color(0xFFF0F0F0),
                                 contentColor = Color.White
                             ),
                             elevation = ButtonDefaults.buttonElevation(
@@ -342,14 +338,16 @@ fun ProductGridWithAddButton(
                                 Icon(
                                     imageVector = Icons.Filled.AddCircle,
                                     contentDescription = "Add Product",
-                                    modifier = Modifier.size(35.dp)
+                                    modifier = Modifier.size(35.dp),
+                                    tint = Color.Black
                                 )
                                 Spacer(modifier = Modifier.height(8.dp))
                                 Text(
                                     text = "Add a product",
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 16.sp,
-                                    fontFamily = poppinsFontFamily
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = 14.sp,
+                                    fontFamily = poppinsFontFamily,
+                                    color = Color.Black
                                 )
                             }
                         }

@@ -100,6 +100,22 @@ fun RequestSentScreen(navController: NavController) {
                 color = Color.Black,
                 textAlign = TextAlign.Center
             )
+            Spacer(modifier = Modifier.height(10.dp))
+            Image(
+                painter = painterResource(id = R.drawable.verified),
+                contentDescription = "Example Image",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(30.dp)
+            )
+            Text(
+                text = "This badge will be displayed alongside your account name once verified.",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
+                fontFamily = poppinsFontFamily,
+                color = Color.Black,
+                textAlign = TextAlign.Center
+            )
 
             Spacer(modifier = Modifier.height(40.dp))
 
