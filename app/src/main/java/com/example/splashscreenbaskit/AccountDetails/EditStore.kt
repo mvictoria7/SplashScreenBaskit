@@ -90,44 +90,17 @@ fun EditStore(navController: NavController) {
                         )
                     )
             )
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
+            Text(
+                "Aling Nena's Store",
                 modifier = Modifier
-                    .padding(start = 8.dp)
-                    .align(Alignment.BottomStart)
-            ) {
-                TextButton(onClick = { }) {
-                    Text(
-                        "Aling Nena's Store",
-                        color = Color.White,
-                        fontSize = 24.sp,
-                        fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.Bold,
-                        style = TextStyle(fontFamily = poppinsFontFamily)
-                    )
-                }
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = "Edit",
-                    tint = Color.White,
-                    modifier = Modifier.size(20.dp)
-                )
-            }
-            IconButton(
-                onClick = { navController.popBackStack() },
-                modifier = Modifier
-                    .padding(top = 70.dp, start = 40.dp)
-                    .align(Alignment.TopStart)
-                    .size(15.dp)
-                    .background(Color(0xAAFFFFFF), shape = CircleShape)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.back),
-                    contentDescription = "Back",
-                    tint = Color.Black,
-                    modifier = Modifier.size(15.dp)
-                )
-            }
+                    .padding(start = 20.dp, bottom = 10.dp),
+                //.align(Alignment.BottomStart),
+                color = Color.White,
+                fontSize = 24.sp,
+                fontFamily = poppinsFontFamily,
+                fontWeight = FontWeight.Bold,
+                style = TextStyle(fontFamily = poppinsFontFamily)
+            )
         }
 
         Column(
