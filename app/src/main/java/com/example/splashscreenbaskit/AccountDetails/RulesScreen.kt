@@ -43,9 +43,25 @@ fun RulesScreen(navController: NavHostController) {
     var hasReachedBottom by remember { mutableStateOf(false) }
 
     val rules = listOf(
-        "1. Users must provide accurate information when registering and making purchases.",
-        "2. Orders must be confirmed before generating a unique code for in-store pickup.",
-        "3. Generated codes are valid only within the specified time frame."
+        "1. All store owners must provide accurate and truthful information during the sign-up process. This includes business name, contact information, and product details..",
+        "2. All products listed in your store must meet the platform's quality standards. Descriptions, images, and pricing should be clear, accurate, and not misleading. Products must also be properly categorized for better visibility.",
+        "3. Store owners must fulfill orders within a reasonable timeframe, ensuring that products are delivered as promised."
+    )
+
+    val standard_perks = listOf(
+        "1. List up to 10 products.",
+        "2. Access to basic platform features."
+    )
+
+    val partner_perks = listOf(
+        "1. Unlimited product listings.",
+        "2. Displayed as top products on the platform."
+    )
+
+    val punishments = listOf(
+        "1. A formal warning issued to the store owner for minor infractions or first-time offenses. A record will be kept on file.",
+        "2. A more serious penalty where the store’s account is suspended for a longer period, preventing the store owner from accessing their account or performing transactions.",
+        "3. In cases of severe or repeated violations, the store and its owner may be permanently banned from the platform, with no option for reinstatement."
     )
 
 
@@ -149,6 +165,16 @@ fun RulesScreen(navController: NavHostController) {
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
                     )
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Text(
+                        text = "Whether you’re just starting out or looking to take your business to the next level, we offer two plans to fit your needs.\nChoose the plan that suits your goals and start growing today!",
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 12.sp,
+                        fontFamily = poppinsFontFamily,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                     Spacer(modifier = Modifier.height(30.dp))
 
                     Text(
@@ -161,8 +187,8 @@ fun RulesScreen(navController: NavHostController) {
                     )
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    rules.forEach { rule ->
-                        TextItem(text = rule)
+                    standard_perks.forEach { perk ->
+                        TextItem(text = perk)
                     }
 
                     Spacer(modifier = Modifier.height(20.dp))
@@ -177,8 +203,8 @@ fun RulesScreen(navController: NavHostController) {
                     )
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    rules.forEach { rule ->
-                        TextItem(text = rule)
+                    partner_perks.forEach { perks ->
+                        TextItem(text = perks)
                     }
                 }
             }
@@ -212,8 +238,8 @@ fun RulesScreen(navController: NavHostController) {
                     )
                     Spacer(modifier = Modifier.height(30.dp))
 
-                    rules.forEach { rule ->
-                        TextItem(text = rule)
+                    punishments.forEach { punishment ->
+                        TextItem(text = punishment)
                     }
                 }
             }
@@ -242,7 +268,7 @@ fun RulesScreen(navController: NavHostController) {
                     )
                 }
             }
-
+            Spacer(modifier = Modifier.height(30.dp))
         }
     }
 }
@@ -253,7 +279,7 @@ fun TextItem(text: String) {
             text = text,
             fontWeight = FontWeight.Normal,
             fontFamily = poppinsFontFamily,
-            textAlign = TextAlign.Start,
+            textAlign = TextAlign.Justify,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(10.dp))
