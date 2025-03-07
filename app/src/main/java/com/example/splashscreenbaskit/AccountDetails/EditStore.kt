@@ -4,36 +4,16 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,7 +32,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
-//  Product data class
 data class Product(
     val name: String,
     val imageRes: Int
@@ -60,22 +39,26 @@ data class Product(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun EditStorePreview() {
+private fun EditStorePreview() {
     EditStore(navController = rememberNavController())
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditStore(navController: NavController) {
     var storeName by remember { mutableStateOf("") }
-    var categoryInput by remember { mutableStateOf("") }
     val categories = remember { mutableStateOf(mutableListOf<String>()) }
     var selectedCategory by remember { mutableStateOf<String?>(null) }
     var newProductName by remember { mutableStateOf("") }
+    var expanded by remember { mutableStateOf(false) }
 
-    // Empty products list
-    val products = remember {
-        mutableListOf<Product>()
-    }
+    // Predefined categories for the dropdown
+    val predefinedCategories = listOf("Fruits", "Vegetables", "Meats", "Spices", "Frozen Foods", "Fish")
+
+    // Desired order for sorting
+    val categoryOrder = listOf("Vegetables", "Fruits", "Meats", "Fish", "Spices", "Frozen Foods")
+
+    val products = remember { mutableListOf<Product>() }
 
     Column(
         modifier = Modifier
@@ -98,24 +81,17 @@ fun EditStore(navController: NavController) {
                     .height(315.dp),
                 contentScale = ContentScale.Crop
             )
-
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomStart)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(100.dp)
-                        .background(
-                            brush = Brush.verticalGradient(
-                                colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.8f))
-                            )
+                    .height(100.dp)
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.8f))
                         )
-                )
-            }
-
+                    )
+            )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
@@ -132,7 +108,6 @@ fun EditStore(navController: NavController) {
                         style = TextStyle(fontFamily = poppinsFontFamily)
                     )
                 }
-
                 Icon(
                     imageVector = Icons.Default.Edit,
                     contentDescription = "Edit",
@@ -140,7 +115,6 @@ fun EditStore(navController: NavController) {
                     modifier = Modifier.size(20.dp)
                 )
             }
-
             IconButton(
                 onClick = { navController.popBackStack() },
                 modifier = Modifier
@@ -158,59 +132,88 @@ fun EditStore(navController: NavController) {
             }
         }
 
-        // Category Selection Section
-        Box(
+        // Category Selection Section with Dropdown
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp)
+                .padding(horizontal = 20.dp, vertical = 8.dp)
                 .background(Color.White)
-                .clickable { },
-            contentAlignment = Alignment.CenterStart
         ) {
-            Box(
-                modifier = Modifier
-                    .padding(start = 20.dp)
-                    .background(
-                        color = Color.LightGray.copy(alpha = 0.2f),
-                        shape = RoundedCornerShape(8.dp)
-                    )
-                    .border(
-                        width = 1.dp,
-                        color = Color.Gray,
-                        shape = RoundedCornerShape(8.dp)
-                    )
-                    .clickable { }
-                    .padding(8.dp)
+            ExposedDropdownMenuBox(
+                expanded = expanded,
+                onExpandedChange = { expanded = !expanded }
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            color = Color.LightGray.copy(alpha = 0.2f),
+                            shape = RoundedCornerShape(8.dp)
+                        )
+                        .border(
+                            width = 1.dp,
+                            color = Color.Gray,
+                            shape = RoundedCornerShape(8.dp)
+                        )
+                        .padding(8.dp)
+                        .menuAnchor()
                 ) {
                     Text(
                         text = selectedCategory ?: "Add a category",
-                        color = if (selectedCategory == null) Color.Black else Color.Black,
+                        color = if (selectedCategory == null) Color.Gray else Color.Black,
                         fontSize = 16.sp,
                         fontFamily = poppinsFontFamily,
                         fontWeight = if (selectedCategory == null) FontWeight.SemiBold else FontWeight.Bold,
                         modifier = Modifier.weight(1f)
                     )
-                    Image(
+                    Icon(
                         painter = painterResource(id = R.drawable.add_category),
-                        contentDescription = "Dropdown",
-                        modifier = Modifier
-                            .size(20.dp)
-                            .clickable { }
+                        contentDescription = "Add Category",
+                        tint = Color.Black,
+                        modifier = Modifier.size(20.dp)
                     )
+                }
+
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    predefinedCategories.forEach { category ->
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    text = category,
+                                    style = TextStyle(
+                                        fontFamily = poppinsFontFamily,
+                                        fontSize = 16.sp,
+                                        fontWeight = FontWeight.Normal,
+                                        color = Color.Black
+                                    )
+                                )
+                            },
+                            onClick = {
+                                if (!categories.value.contains(category)) {
+                                    categories.value = categories.value.toMutableList().apply { add(category) }
+                                    // Sort the categories list according to the desired order
+                                    categories.value.sortBy { categoryOrder.indexOf(it) }
+                                }
+                                selectedCategory = category
+                                expanded = false
+                            },
+                            contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                        )
+                    }
                 }
             }
         }
 
+        // Category List Section
         Card(
             colors = CardDefaults.cardColors(containerColor = Color(0xFFFFA52F)),
             modifier = Modifier
                 .height(68.dp)
-                .fillMaxWidth()
-                .clickable { },
+                .fillMaxWidth(),
             shape = RectangleShape,
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
@@ -225,7 +228,7 @@ fun EditStore(navController: NavController) {
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    items(listOf("Fruits", "Vegetables", "Meat", "Spices", "Frozen Foods", "Fish")) { category ->
+                    items(categories.value) { category ->
                         Text(
                             text = category,
                             fontSize = 16.sp,
@@ -233,12 +236,7 @@ fun EditStore(navController: NavController) {
                             fontFamily = poppinsFontFamily,
                             color = if (selectedCategory == category) Color.White else Color(0xFFCCCCCC),
                             modifier = Modifier
-                                .clickable {
-                                    selectedCategory = category
-                                    if (!categories.value.contains(category)) {
-                                        categories.value = categories.value.toMutableList().apply { add(category) }
-                                    }
-                                }
+                                .clickable { selectedCategory = category }
                                 .padding(horizontal = 8.dp, vertical = 4.dp)
                         )
                     }
@@ -281,7 +279,6 @@ fun ProductGridWithAddButton(
             ) {
                 rowProducts.forEach { product ->
                     if (product.imageRes != -1) {
-                        // Regular product card
                         Card(
                             colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F0F0)),
                             modifier = Modifier
@@ -323,7 +320,6 @@ fun ProductGridWithAddButton(
                             }
                         }
                     } else {
-                        // Add product card
                         Card(
                             colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F0F0)),
                             modifier = Modifier
@@ -370,7 +366,6 @@ fun ProductGridWithAddButton(
                         }
                     }
                 }
-
                 if (rowProducts.size == 1) {
                     Spacer(modifier = Modifier.weight(1f))
                 }

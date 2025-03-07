@@ -59,6 +59,7 @@ import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import com.example.splashscreenbaskit.AccountDetails.BusinessInformationActivity
+import com.example.splashscreenbaskit.AccountDetails.EditStore
 import com.example.splashscreenbaskit.AccountDetails.RequestSentScreen
 import com.example.splashscreenbaskit.AccountDetails.RulesScreen
 import com.example.splashscreenbaskit.AccountDetails.ShopInformationScreen
@@ -656,6 +657,9 @@ fun HomeScreen() {
                         vendorName = backStackEntry.arguments?.getString("vendorName") ?: "",
                         imageRes = backStackEntry.arguments?.getInt("imageRes") ?: 0
                     )
+                }
+                composable("EditStore") {
+                    EditStore(navController = navController)
                 }
             }
         }
