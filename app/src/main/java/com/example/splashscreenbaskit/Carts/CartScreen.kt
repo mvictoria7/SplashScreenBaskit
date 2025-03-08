@@ -197,7 +197,7 @@ fun CartItemView(
         colors = CardDefaults.cardColors(containerColor = Color.White),
         shape = MaterialTheme.shapes.medium
     ) {
-        Column(modifier = Modifier.padding(0.dp)) {
+        Column(modifier = Modifier.padding(10.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
