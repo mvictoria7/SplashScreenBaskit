@@ -142,9 +142,7 @@ fun AddProduct(navController: NavController) {
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium
                 ) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
+                modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -215,8 +213,7 @@ fun AddProduct(navController: NavController) {
                     fontWeight = FontWeight.Medium
                 ) },
                 modifier = Modifier
-                    .width(136.dp)
-                    .height(56.dp),
+                    .width(136.dp),
                 singleLine = true,
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -235,14 +232,12 @@ fun AddProduct(navController: NavController) {
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(7.dp)
             ) {
                 val weightOptions = listOf("1 pc", "1/4 kg", "1/2 kg", "1 kg")
                 weightOptions.forEach { option ->
                     Button(
-                        modifier = Modifier
-                            .height(48.dp)
-                            .weight(1f),
+                        modifier = Modifier.wrapContentWidth() .height(48.dp),
                         onClick = { selectedWeight = option },
                         shape = RoundedCornerShape(10.dp),
                         colors = ButtonDefaults.buttonColors(
