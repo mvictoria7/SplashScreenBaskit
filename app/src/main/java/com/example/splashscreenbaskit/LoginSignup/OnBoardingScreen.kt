@@ -153,7 +153,7 @@ fun OnboardingImage(page: Int, maxWidth: Dp, maxHeight: Dp) {
         painter = painterResource(id = imageRes),
         contentDescription = null,
         modifier = Modifier
-            .height(maxHeight * 0.4f)
+            .height(maxHeight * 0.37f)
             .clip(RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp)),
     )
 }
@@ -168,13 +168,13 @@ fun OnboardingContent(title: String, description: String, maxWidth: Dp, maxHeigh
         verticalArrangement = Arrangement.spacedBy(maxHeight * 0.02f)
     ) {
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(80.dp))
 
         Text(
             text = title,
             fontFamily = poppinsFontFamily,
             style = TextStyle(
-                fontSize = maxWidth.value * 0.07f.sp,
+                fontSize = maxWidth.value * 0.08f.sp,
                 lineHeight = maxWidth.value * 0.045f.sp
             ),
             fontWeight = FontWeight.ExtraBold,

@@ -21,6 +21,8 @@ import com.example.splashscreenbaskit.AccountDetails.AccountActivity
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 
@@ -43,20 +45,33 @@ fun ResetPasswordScreen(navController: NavController) {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        Spacer(modifier = Modifier.height(50.dp))
-
-        Text(
-            text = "< Back",
-            fontSize = 14.sp,
-            color = Color.Black,
-            fontWeight = FontWeight.SemiBold,
-            fontFamily = poppinsFontFamily,
+        Box(
             modifier = Modifier
-                .padding(start = 20.dp)
-                .clickable { navController.popBackStack() }
-        )
+                .fillMaxWidth()
+                .background(Color.White)
+                .clickable { navController.popBackStack() },
+            contentAlignment = Alignment.TopStart
+        ) {
+            Row(
+                modifier = Modifier.padding(top = 70.dp, start = 20.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowLeft,
+                    contentDescription = "Back",
+                    tint = Color.Black
+                )
+                Text(
+                    text = "Back",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    fontFamily = poppinsFontFamily,
+                    color = Color.Black
+                )
+            }
+        }
 
-        Spacer(modifier = Modifier.height(70.dp))
+        Spacer(modifier = Modifier.height(50.dp))
 
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -105,6 +120,7 @@ fun ResetPasswordScreen(navController: NavController) {
                             painter = painterResource(
                                 id = if (newPassVisible) R.drawable.open else R.drawable.close
                             ),
+                            modifier = Modifier.size(20.dp),
                             contentDescription = "Toggle password visibility"
                         )
                     }
@@ -136,6 +152,7 @@ fun ResetPasswordScreen(navController: NavController) {
                             painter = painterResource(
                                 id = if (confirmPassVisible) R.drawable.open else R.drawable.close
                             ),
+                            modifier = Modifier.size(20.dp),
                             contentDescription = "Toggle password visibility"
                         )
                     }

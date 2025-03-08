@@ -266,7 +266,14 @@ fun YourCodeDialog(onDismiss: () -> Unit, onSaveImage: () -> Unit) {
                     IconButton(onClick = onDismiss) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
                     }
-                    Spacer(modifier = Modifier.weight(1f))
+                    Text(
+                        text = "Back",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        fontFamily = poppinsFontFamily,
+                        color = Color.Black
+                    )
+
                 }
 
                 Text(

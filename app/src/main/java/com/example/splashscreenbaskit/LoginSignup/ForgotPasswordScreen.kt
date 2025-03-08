@@ -5,6 +5,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -36,20 +39,36 @@ fun ForgotPasswordScreen(navController: NavController) {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        Spacer(modifier = Modifier.height(50.dp))
-
-        Text(
-            text = "< Back",
-            fontSize = 14.sp,
-            color = Color.Black,
-            fontWeight = FontWeight.SemiBold,
-            fontFamily = poppinsFontFamily,
+        Box(
             modifier = Modifier
-                .padding(start = 20.dp)
-                .clickable { navController.popBackStack() }
-        )
+                .fillMaxWidth()
+                .background(Color.White)
+                .clickable { navController.popBackStack() },
+            contentAlignment = Alignment.TopStart
+        ) {
+            Row(
+                modifier = Modifier.padding(top = 70.dp, start = 20.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowLeft,
+                    contentDescription = "Back",
+                    tint = Color.Black
+                )
+                Text(
+                    text = "Back",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    fontFamily = poppinsFontFamily,
+                    color = Color.Black
+                )
+            }
+        }
 
-        Spacer(modifier = Modifier.height(70.dp))
+
+
+
+        Spacer(modifier = Modifier.height(50.dp))
 
 
         Column (

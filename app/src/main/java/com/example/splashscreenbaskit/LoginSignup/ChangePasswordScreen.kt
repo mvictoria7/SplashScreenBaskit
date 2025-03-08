@@ -5,6 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -40,20 +42,33 @@ fun ChangePasswordScreen(navController: NavController) {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        Spacer(modifier = Modifier.height(50.dp))
-
-        Text(
-            text = "< Back",
-            fontSize = 14.sp,
-            color = Color.Black,
-            fontWeight = FontWeight.SemiBold,
-            fontFamily = poppinsFontFamily,
+        Box(
             modifier = Modifier
-                .padding(start = 20.dp)
-                .clickable { navController.popBackStack() }
-        )
+                .fillMaxWidth()
+                .background(Color.White)
+                .clickable { navController.popBackStack() },
+            contentAlignment = Alignment.TopStart
+        ) {
+            Row(
+                modifier = Modifier.padding(top = 70.dp, start = 20.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowLeft,
+                    contentDescription = "Back",
+                    tint = Color.Black
+                )
+                Text(
+                    text = "Back",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    fontFamily = poppinsFontFamily,
+                    color = Color.Black
+                )
+            }
+        }
 
-        Spacer(modifier = Modifier.height(60.dp))
+        Spacer(modifier = Modifier.height(50.dp))
 
 
         Column (
@@ -88,7 +103,7 @@ fun ChangePasswordScreen(navController: NavController) {
             OutlinedTextField(
                 value = newPass,
                 onValueChange = { newPass = it },
-                label = { Text("N Password",
+                label = { Text("New Password",
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
                     fontFamily = poppinsFontFamily,
@@ -101,8 +116,9 @@ fun ChangePasswordScreen(navController: NavController) {
                     IconButton(onClick = { newPassVisible = !newPassVisible }) {
                         Image(
                             painter = painterResource(
-                                id = if (newPassVisible) R.drawable.open else R.drawable.close
+                                id = if (newPassVisible) R.drawable.show else R.drawable.hide
                             ),
+                            modifier = Modifier.size(20.dp),
                             contentDescription = "Toggle password visibility"
                         )
                     }
@@ -129,9 +145,10 @@ fun ChangePasswordScreen(navController: NavController) {
                     IconButton(onClick = { confirmPassVisible = !confirmPassVisible }) {
                         Image(
                             painter = painterResource(
-                                id = if (confirmPassVisible) R.drawable.open else R.drawable.close
+                                id = if (confirmPassVisible) R.drawable.show else R.drawable.hide
                             ),
-                            contentDescription = "Toggle password visibility"
+                            modifier = Modifier.size(20.dp),
+                            contentDescription = "password visibility"
                         )
                     }
                 },
