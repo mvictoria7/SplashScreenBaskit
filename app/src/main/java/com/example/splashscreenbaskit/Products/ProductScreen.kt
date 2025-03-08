@@ -76,7 +76,7 @@ val frozenFoodList = listOf(
 fun ProductScreenPreview() {
     val navController = rememberNavController()
     val cartViewModel = CartViewModel()
-    val productName = "Apple"
+    val productName = "Chicken"
 
     ProductScreen(
         navController = navController,
