@@ -87,27 +87,29 @@ fun CheckoutScreen(cartViewModel: CartViewModel, navController: NavController) {
                     CheckoutItemView(item = item)
                 }
             }
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 30.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+        }
 
-                val totalPrice = cartItems.sumOf { it.price * it.quantity }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 30.dp, vertical = 30.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+        val totalPrice = cartItems.sumOf { it.price * it.quantity }
 
 
-                Divider(
-                    thickness = 0.5.dp,
-                    color = Color.Black
-                )
-                Text(
-                    text = "Waiting for Tagabili...",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    fontFamily = poppinsFontFamily,
-                    modifier = Modifier.padding(top = 25.dp, bottom = 8.dp)
-                )
+            Divider(
+                thickness = 0.5.dp,
+                color = Color.Black
+            )
+            Text(
+                text = "Waiting for Tagabili...",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = poppinsFontFamily,
+                modifier = Modifier.padding(top = 25.dp, bottom = 8.dp)
+            )
 //            Text(
 //                text = "Tagabili: Juan Sebastian",
 //                fontSize = 16.sp,
@@ -123,106 +125,105 @@ fun CheckoutScreen(cartViewModel: CartViewModel, navController: NavController) {
 //                color = Color.Black
 //            )
 
-                Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
-                Box(
-                    modifier = Modifier
-                        .width(263.dp)
-                        .height(60.dp)
-                        .background(Color(0xFFEEEDED), shape = RoundedCornerShape(10.dp)),
-                    contentAlignment = Alignment.Center
-                ){
-                    Text(
-                        text = "GCash and Cash are accepted",
-                        fontSize = 14.sp,
-                        fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color(0xFF5F5D5D)
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(40.dp))
-
-                Row (
-                    modifier = Modifier.fillMaxWidth() .padding(horizontal = 10.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ){
-                    Text(
-                        text = "Subtotal:",
-                        fontSize = 16.sp,
-                        fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Gray
-                    )
-                    Text(
-                        text = "₱${"%.2f".format(totalPrice)}",
-                        fontSize = 16.sp,
-                        fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Gray
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(15.dp))
-
-                Row (
-                    modifier = Modifier.fillMaxWidth() .padding(horizontal = 10.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ){
-                    Text(
-                        text = "Tagabili Fee:",
-                        fontSize = 16.sp,
-                        fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Gray
-                    )
-                    Text(
-                        text = "₱0.00",
-                        fontSize = 16.sp,
-                        fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Gray
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                HorizontalDivider(
-                    modifier = Modifier.padding(top = 15.dp, bottom = 8.dp),
-                    thickness = 0.5.dp,
-                    color = Color.Black
+            Box(
+                modifier = Modifier
+                    .width(263.dp)
+                    .height(60.dp)
+                    .background(Color(0xFFEEEDED), shape = RoundedCornerShape(10.dp)),
+                contentAlignment = Alignment.Center
+            ){
+                Text(
+                    text = "GCash and Cash are accepted",
+                    fontSize = 14.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color(0xFF5F5D5D)
                 )
+            }
 
-                Spacer(modifier = Modifier.height(7.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
-                Row (
-                    modifier = Modifier.fillMaxWidth() .padding(horizontal = 10.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ){
-                    Text(
-                        text = "Total:",
-                        fontSize = 24.sp,
-                        fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.ExtraBold,
-                        color = Color(0xFF83BD70)
-                    )
-                    Text(
-                        text = "₱${"%.2f".format(totalPrice)}",
-                        fontSize = 24.sp,
-                        fontFamily = poppinsFontFamily,
-                        fontWeight = FontWeight.ExtraBold,
-                        color = Color(0xFF83BD70)
-                    )
-                }
-                Spacer(modifier = Modifier.height(40.dp))
-                Button(
-                    onClick = {showCodeDialog = true },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF83BD70)),
-                    modifier = Modifier.width(205.dp) .height(58.dp)
-                ) {
-                    Text(text = "Pay In Store", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = poppinsFontFamily)
+            Row (
+                modifier = Modifier.fillMaxWidth() .padding(horizontal = 10.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+                Text(
+                    text = "Subtotal:",
+                    fontSize = 16.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Gray
+                )
+                Text(
+                    text = "₱${"%.2f".format(totalPrice)}",
+                    fontSize = 16.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Gray
+                )
+            }
 
-                }
+            Spacer(modifier = Modifier.height(15.dp))
+
+            Row (
+                modifier = Modifier.fillMaxWidth() .padding(horizontal = 10.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+                Text(
+                    text = "Tagabili Fee:",
+                    fontSize = 16.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Gray
+                )
+                Text(
+                    text = "₱0.00",
+                    fontSize = 16.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Gray
+                )
+            }
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            HorizontalDivider(
+                modifier = Modifier.padding(top = 15.dp, bottom = 8.dp),
+                thickness = 0.5.dp,
+                color = Color.Black
+            )
+
+            Spacer(modifier = Modifier.height(7.dp))
+
+            Row (
+                modifier = Modifier.fillMaxWidth() .padding(horizontal = 10.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+                Text(
+                    text = "Total:",
+                    fontSize = 24.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = Color(0xFF83BD70)
+                )
+                Text(
+                    text = "₱${"%.2f".format(totalPrice)}",
+                    fontSize = 24.sp,
+                    fontFamily = poppinsFontFamily,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = Color(0xFF83BD70)
+                )
+            }
+            Spacer(modifier = Modifier.height(40.dp))
+            Button(
+                onClick = {showCodeDialog = true },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF83BD70)),
+                modifier = Modifier.width(205.dp) .height(58.dp)
+            ) {
+                Text(text = "Pay In Store", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold, fontFamily = poppinsFontFamily)
+
             }
         }
     }
