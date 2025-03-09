@@ -362,6 +362,15 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
     val scrollState = rememberScrollState()
     var hasReachedBottom by remember { mutableStateOf(false) }
 
+    val terms = listOf(
+        "1. You must be at least 18 years old to use Baskit and agree to provide accurate personal information when creating an account.",
+        "2. You are responsible for maintaining the confidentiality of your login details.",
+        "3. Orders placed through the app are subject to availability.",
+        "4. Purchasing times are estimated and may vary due to unforeseen circumstances.",
+        "5. Refunds, if applicable, will be processed according to Baskit’s refund policy.",
+        "6. Baskit reserves the right to suspend or terminate accounts that violate these terms."
+    )
+
     LaunchedEffect(scrollState.value, scrollState.maxValue) {
         if (scrollState.maxValue > 0) {
             hasReachedBottom = scrollState.value >= (scrollState.maxValue - 10)
@@ -411,49 +420,56 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
             ) {
                 Box(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(16.dp)) // Rounded corners
-                        .background(Color.White) // White background
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(20.dp))
+                        .background(Color.White)
                 ) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(horizontal = 16.dp, vertical = 24.dp),
+                            .padding(horizontal = 20.dp, vertical = 24.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        // Title
                         Text(
                             text = "Terms and Conditions",
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
                             fontFamily = poppinsFontFamily,
                             color = Color.Black,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(horizontal = 20.dp)
                         )
 
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(25.dp))
 
-                        // Subtitle
                         Text(
                             text = "Welcome to Baskit! These Terms and Conditions govern your use of our app and services.",
                             fontSize = 16.sp,
                             fontFamily = poppinsFontFamily,
-                            color = Color.Gray,
-                            textAlign = TextAlign.Center
+                            color = Color.Black,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(horizontal = 20.dp)
                         )
 
-                        Spacer(modifier = Modifier.height(24.dp))
+                        Spacer(modifier = Modifier.height(20.dp))
 
                         Column(
                             modifier = Modifier
                                 .weight(1f)
                                 .verticalScroll(scrollState)
-                                .background(Color(0xFFF8F8F8), shape = RoundedCornerShape(12.dp))
-                                .padding(16.dp)
+                                .background(Color(0xFFE0F4DE), shape = RoundedCornerShape(15.dp))
+                                .padding(horizontal = 25.dp, vertical = 20.dp)
                         ) {
+                            Spacer(modifier = Modifier.height(20.dp))
+                            Image(
+                                painter = painterResource(id = R.drawable.terms_img),
+                                contentDescription = "Rules",
+                                modifier = Modifier.height(170.dp).align(Alignment.CenterHorizontally) .padding(top = 10.dp, bottom = 40.dp),
+                            )
+
                             Text(
                                 text = "Terms",
-                                fontSize = 18.sp,
+                                fontSize = 20.sp,
                                 fontWeight = FontWeight.SemiBold,
                                 fontFamily = poppinsFontFamily,
                                 color = Color.Black
@@ -461,39 +477,22 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
 
                             Spacer(modifier = Modifier.height(8.dp))
 
-                            Text(
-                                text = """
-                                You must be at least 16 years old to use Baskit and agree to provide accurate personal information when creating an account.
-                                You are responsible for maintaining the confidentiality of your login details.
-                                Orders placed through the app are subject to availability and acceptance by merchants.
-                                Prices displayed on the app include applicable charges unless stated otherwise, and payment must be completed before order confirmation.
-
-                                Delivery times are estimated and may vary due to unforeseen circumstances.
-                                Users must provide accurate delivery addresses, and if a recipient is unavailable, the order may be canceled or rescheduled at the user’s cost.
-                                Orders can only be canceled before they are accepted by the merchant.
-                                Refunds, if applicable, will be processed according to Baskit’s refund policy.
-
-                                Users must not misuse the app, engage in fraud, or harass others.
-                                Baskit reserves the right to suspend or terminate accounts that violate these terms.
-                                We act as an intermediary between users and merchants and are not responsible for product quality.
-                                """.trimIndent(),
-                                fontSize = 14.sp,
-                                fontFamily = poppinsFontFamily,
-                                color = Color.Black
-                            )
+                            terms.forEach { term ->
+                                TextItem(text = term)
+                            }
                         }
 
                         Spacer(modifier = Modifier.height(20.dp))
 
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceEvenly
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             // Decline Button
                             Button(
                                 modifier = Modifier
                                     .height(50.dp)
-                                    .width(135.dp),
+                                    .width(130.dp),
                                 shape = RoundedCornerShape(10.dp),
                                 onClick = {
                                     onCheckedChange(false)
@@ -502,12 +501,6 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFCB3B3B)),
                                 enabled = hasReachedBottom
                             ) {
-                                Icon(
-                                    Icons.Default.Close,
-                                    contentDescription = "Decline",
-                                    tint = Color.White
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
                                 Text(
                                     text = "Decline",
                                     color = Color.White,
@@ -521,7 +514,7 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                             Button(
                                 modifier = Modifier
                                     .height(50.dp)
-                                    .width(135.dp),
+                                    .width(130.dp),
                                 shape = RoundedCornerShape(10.dp),
                                 onClick = {
                                     onCheckedChange(true)
@@ -530,12 +523,6 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151)),
                                 enabled = hasReachedBottom
                             ) {
-                                Icon(
-                                    Icons.Default.Done,
-                                    contentDescription = "Accept",
-                                    tint = Color.White
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
                                 Text(
                                     text = "Accept",
                                     color = Color.White,
@@ -549,5 +536,19 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun TextItem(text: String) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = text,
+            fontWeight = FontWeight.Normal,
+            fontFamily = poppinsFontFamily,
+            textAlign = TextAlign.Justify,
+            modifier = Modifier.fillMaxWidth() .padding(bottom = 5.dp)
+        )
+        Spacer(modifier = Modifier.height(10.dp))
     }
 }
