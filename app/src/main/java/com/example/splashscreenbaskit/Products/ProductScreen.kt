@@ -104,8 +104,8 @@ fun ProductScreen(
     val priceForWeight = when (selectedWeight) {
         "1 pc" -> basePrice
         "1/4 kg" -> basePrice + priceIncrease
-        "1/2 kg" -> basePrice + priceIncrease
-        "1 kg" -> basePrice + priceIncrease * 2
+        "1/2 kg" -> basePrice + priceIncrease * 2
+        "1 kg" -> basePrice + priceIncrease * 3
         else -> basePrice
     }
     val totalPrice = priceForWeight * quantity
