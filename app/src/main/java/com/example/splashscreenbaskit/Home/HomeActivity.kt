@@ -1,6 +1,7 @@
 package com.example.splashscreenbaskit.Home
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -55,9 +56,14 @@ import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 import com.example.splashscreenbaskit.viewmodel.CartViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.border
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
 import com.example.splashscreenbaskit.AccountDetails.AddProduct
 import com.example.splashscreenbaskit.AccountDetails.BusinessInformationActivity
 import com.example.splashscreenbaskit.AccountDetails.EditStore
@@ -315,51 +321,93 @@ fun LabelChip(text: String) {
 @Composable
 fun SearchBar(navController: NavController) {
     var searchText by remember { mutableStateOf(TextFieldValue("")) }
+    val allProducts = vegetableList + fruitList + meatList + fishList + spiceList + frozenFoodList
+    val filteredProducts = remember(searchText.text) {
+        allProducts.filter { it.name.contains(searchText.text, ignoreCase = true) }
+    }
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp)
-            .padding(start = 30.dp, end = 30.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        BasicTextField(
-            value = searchText,
-            onValueChange = { searchText = it },
+    Column {
+        Row(
             modifier = Modifier
+                .fillMaxWidth()
                 .height(50.dp)
-                .weight(1f)
-                .background(color = Color(0xFFF5F5F5), shape = RoundedCornerShape(10.dp))
-                .padding(horizontal = 16.dp, vertical = 12.dp),
-            singleLine = true,
-            decorationBox = { innerTextField ->
-                Box(contentAlignment = Alignment.CenterStart, modifier = Modifier.fillMaxWidth()) {
-                    if (searchText.text.isEmpty()) {
-                        Text(
-                            text = "Search food, vegetable, etc.",
-                            color = Color.Gray,
-                            fontSize = 14.sp,
-                            fontFamily = poppinsFontFamily
-                        )
+                .padding(start = 30.dp, end = 30.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            BasicTextField(
+                value = searchText,
+                onValueChange = { searchText = it },
+                modifier = Modifier
+                    .height(50.dp)
+                    .weight(1f)
+                    .background(color = Color(0xFFF5F5F5), shape = RoundedCornerShape(10.dp))
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                singleLine = true,
+                decorationBox = { innerTextField ->
+                    Box(contentAlignment = Alignment.CenterStart, modifier = Modifier.fillMaxWidth()) {
+                        if (searchText.text.isEmpty()) {
+                            Text(
+                                text = "Search food, vegetable, etc.",
+                                color = Color.Gray,
+                                fontSize = 14.sp,
+                                fontFamily = poppinsFontFamily
+                            )
+                        }
+                        innerTextField()
                     }
-                    innerTextField()
+                },
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                keyboardActions = KeyboardActions(onSearch = {
+                    if (filteredProducts.isNotEmpty()) {
+                        navController.navigate("ProductScreen/${filteredProducts.first().name}")
+                    }
+                })
+            )
+
+            Spacer(modifier = Modifier.width(10.dp))
+
+            IconButton(
+                onClick = { navController.navigate("NotificationsActivity") },
+                enabled = true,
+                modifier = Modifier.size(25.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Notifications,
+                    contentDescription = "Notifications",
+                    tint = Color.Black
+                )
+            }
+        }
+
+        // Suggestions List
+        if (searchText.text.isNotEmpty() && filteredProducts.isNotEmpty()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 30.dp)
+                    .background(Color.White, shape = RoundedCornerShape(10.dp))
+                    .border(1.dp, Color.Gray, shape = RoundedCornerShape(10.dp))
+                    .padding(10.dp)
+            ) {
+                filteredProducts.take(5).forEach { product ->
+                    Text(
+                        text = product.name,
+                        fontSize = 16.sp,
+                        fontFamily = poppinsFontFamily,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
+                            .clickable {
+                                navController.navigate("ProductScreen/${product.name}")
+                            }
+                    )
                 }
             }
-        )
-        Spacer(modifier = Modifier.width(10.dp))
-        IconButton(
-            onClick = { navController.navigate("NotificationsActivity") },
-            enabled = true,
-            modifier = Modifier.size(25.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Notifications,
-                contentDescription = "Notifications",
-                tint = Color.Black
-            )
         }
     }
 }
+
 
 @Composable
 fun SliderCard() {
@@ -597,16 +645,11 @@ fun HomeScreen() {
                 composable(BottomBarScreen.Account.route) {
                     AccountActivity(navController)
                 }
-                composable(
-                    "ProductScreen/{productName}",
-                    arguments = listOf(navArgument("productName") { type = NavType.StringType })
-                ) { backStackEntry ->
+                composable("ProductScreen/{productName}") { backStackEntry ->
                     val productName = backStackEntry.arguments?.getString("productName")
-                    ProductScreen(
-                        navController = navController,
-                        cartViewModel = cartViewModel,
-                        productName = productName
-                    )
+                    if (productName != null) {
+                        ProductScreen(navController, cartViewModel, productName)
+                    }
                 }
                 composable("CartScreen") {
                     CartScreen(cartViewModel = cartViewModel, navController = navController)

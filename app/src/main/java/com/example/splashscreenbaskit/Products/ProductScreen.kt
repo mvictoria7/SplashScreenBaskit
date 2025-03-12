@@ -32,44 +32,44 @@ import com.example.splashscreenbaskit.viewmodel.CartViewModel
 
 // Product lists for each category
 val vegetableList = listOf(
-    Product("Carrot", R.drawable.carrot, "Vegetables", 1.50),
-    Product("Broccoli", R.drawable.brocolli, "Vegetables", 2.00),
-    Product("Spinach", R.drawable.spinach, "Vegetables", 1.20),
-    Product("Potato", R.drawable.potato, "Vegetables", 0.80)
+    Product("Carrot", R.drawable.carrot, "Vegetables", 15.00),
+    Product("Broccoli", R.drawable.brocolli, "Vegetables", 50.00),
+    Product("Spinach", R.drawable.spinach, "Vegetables", 15.00),
+    Product("Potato", R.drawable.potato, "Vegetables", 18.00)
 )
 
 val fruitList = listOf(
-    Product("Apple", R.drawable.apple, "Fruits", 0.50),
-    Product("Orange", R.drawable.orange, "Fruits", 0.60),
-    Product("Banana", R.drawable.banana, "Fruits", 0.30),
-    Product("Mango", R.drawable.mango, "Fruits", 1.00),
-    Product("Grapes", R.drawable.grapes, "Fruits", 2.50),
-    Product("Pineapple", R.drawable.pineapple, "Fruits", 3.00)
+    Product("Apple", R.drawable.apple, "Fruits", 25.00),
+    Product("Orange", R.drawable.orange, "Fruits", 25.00),
+    Product("Banana", R.drawable.banana, "Fruits", 10.00),
+    Product("Mango", R.drawable.mango, "Fruits", 30.00),
+    Product("Grapes", R.drawable.grapes, "Fruits", 5.00),
+    Product("Pineapple", R.drawable.pineapple, "Fruits", 70.00)
 )
 
 val meatList = listOf(
-    Product("Beef", R.drawable.beef, "Meats", 10.00),
-    Product("Chicken", R.drawable.chicken, "Meats", 5.00),
-    Product("Pork", R.drawable.pork, "Meats", 7.00),
+    Product("Beef", R.drawable.beef, "Meats", 100.00),
+    Product("Chicken", R.drawable.chicken, "Meats", 150.00),
+    Product("Pork", R.drawable.pork, "Meats", 80.00),
 )
 
 val fishList = listOf(
-    Product("Tilapia", R.drawable.tilipia, "Fish", 4.00),
-    Product("Bangus", R.drawable.bangus, "Fish", 10.00)
+    Product("Tilapia", R.drawable.tilipia, "Fish", 80.00),
+    Product("Bangus", R.drawable.bangus, "Fish", 150.00)
 )
 
 val spiceList = listOf(
-    Product("Pepper", R.drawable.pepper, "Spices", 2.00),
-    Product("Salt", R.drawable.slat, "Spices", 1.00),
-    Product("Paprika", R.drawable.paprika, "Spices", 3.00),
+    Product("Pepper", R.drawable.pepper, "Spices", 5.00),
+    Product("Salt", R.drawable.slat, "Spices", 10.00),
+    Product("Paprika", R.drawable.paprika, "Spices", 20.00),
 
     )
 
 val frozenFoodList = listOf(
-    Product("Tender Juicy Hotdog", R.drawable.hotdog, "Frozen Foods", 5.00),
-    Product("Ice Cream", R.drawable.icecream, "Frozen Foods", 3.50),
-    Product("Frozen Peas", R.drawable.frozen_peas, "Frozen Foods", 2.00),
-    Product("Chicken Nuggets", R.drawable.nuggets, "Frozen Foods", 4.50)
+    Product("Tender Juicy Hotdog", R.drawable.hotdog, "Frozen Foods", 180.00),
+    Product("Ice Cream", R.drawable.icecream, "Frozen Foods", 100.00),
+    Product("Frozen Peas", R.drawable.frozen_peas, "Frozen Foods", 50.00),
+    Product("Chicken Nuggets", R.drawable.nuggets, "Frozen Foods", 130.00)
 )
 @Preview(showBackground = true)
 @Composable
