@@ -71,15 +71,11 @@ class MainActivity : ComponentActivity() {
                     composable("HomeActivity") {
                         HomeScreen()
                     }
-                    composable(
-                        "ProductScreen/{productName}",
-                        arguments = listOf(navArgument("productName") { type = NavType.StringType })
-                    ) { backStackEntry ->
-                        ProductScreen(
-                            navController = navController,
-                            cartViewModel = cartViewModel,
-                            productName = backStackEntry.arguments?.getString("productName")
-                        )
+                    composable("ProductScreen/{productName}") { backStackEntry ->
+                        val productName = backStackEntry.arguments?.getString("productName")
+                        if (productName != null) {
+                            ProductScreen(navController, cartViewModel, productName)
+                        }
                     }
 //                    composable("AppleScreen") {
 //                        // Pass CartViewModel to AppleScreen
