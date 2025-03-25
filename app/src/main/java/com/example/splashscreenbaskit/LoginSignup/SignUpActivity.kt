@@ -2,7 +2,6 @@ package com.example.splashscreenbaskit.LoginSignup
 
 import android.app.AlertDialog
 import android.util.Log
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -33,14 +32,18 @@ import androidx.navigation.compose.rememberNavController
 import com.example.splashscreenbaskit.R
 import com.example.splashscreenbaskit.ui.theme.poppinsFontFamily
 
+// Preview composable for testing the UI
 @Preview(showBackground = true)
 @Composable
 fun SignUpActivityPreview() {
-    SignUpActivity(navController =  rememberNavController())
+    SignUpActivity(navController = rememberNavController())
 }
+
+// Main SignUpActivity composable
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpActivity(navController: NavController) {
+    // State variables for input fields and UI logic
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var userName by remember { mutableStateOf("") }
@@ -54,6 +57,7 @@ fun SignUpActivity(navController: NavController) {
 
     val scrollState = rememberScrollState()
 
+    // Main layout
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.White
@@ -68,6 +72,7 @@ fun SignUpActivity(navController: NavController) {
         ) {
             Spacer(modifier = Modifier.height(25.dp))
 
+            // App logo
             Image(
                 painter = painterResource(id = R.drawable.baskit_logo),
                 contentDescription = "Sign Up image",
@@ -76,6 +81,7 @@ fun SignUpActivity(navController: NavController) {
 
             Spacer(modifier = Modifier.height(4.dp))
 
+            // Title
             Text(
                 text = "Create your account",
                 color = Color.Gray,
@@ -92,15 +98,11 @@ fun SignUpActivity(navController: NavController) {
                 modifier = Modifier.fillMaxWidth(0.8f),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-
                 // First Name field
                 OutlinedTextField(
                     value = firstName,
-                    onValueChange = { if (it.all { char -> char.isLetter() }) {
-                        firstName = it
-                    }
-                    },
-                    label = { Text(text = "First Name", fontFamily = poppinsFontFamily)},
+                    onValueChange = { if (it.all { char -> char.isLetter() }) firstName = it },
+                    label = { Text(text = "First Name", fontFamily = poppinsFontFamily) },
                     modifier = Modifier.weight(1f),
                     singleLine = true,
                     shape = RoundedCornerShape(10.dp),
@@ -113,10 +115,7 @@ fun SignUpActivity(navController: NavController) {
                 // Last Name field
                 OutlinedTextField(
                     value = lastName,
-                    onValueChange = { if (it.all { char -> char.isLetter() }) {
-                        lastName = it
-                    }
-                    },
+                    onValueChange = { if (it.all { char -> char.isLetter() }) lastName = it },
                     label = { Text(text = "Last Name", fontFamily = poppinsFontFamily) },
                     modifier = Modifier.weight(1f),
                     singleLine = true,
@@ -130,6 +129,7 @@ fun SignUpActivity(navController: NavController) {
 
             Spacer(modifier = Modifier.height(2.dp))
 
+            // Birthday field with formatting
             OutlinedTextField(
                 value = birthday,
                 onValueChange = { newValue ->
@@ -140,19 +140,12 @@ fun SignUpActivity(navController: NavController) {
                             append(digitsOnly[i])
                         }
                     }
-                    if (formattedDate.length <= 10) {
-                        birthday = formattedDate
-                    }
+                    if (formattedDate.length <= 10) birthday = formattedDate
                 },
                 label = { Text("Birthday", fontFamily = poppinsFontFamily) },
                 placeholder = { Text("MM/DD/YYYY") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Filled.DateRange,
-                        contentDescription = "Calendar Icon"
-                    )
-                },
+                leadingIcon = { Icon(imageVector = Icons.Filled.DateRange, contentDescription = "Calendar Icon") },
                 modifier = Modifier.fillMaxWidth(0.8f),
                 singleLine = true,
                 shape = RoundedCornerShape(10.dp),
@@ -164,15 +157,13 @@ fun SignUpActivity(navController: NavController) {
 
             Spacer(modifier = Modifier.height(2.dp))
 
-            // username field
+            // Username field
             OutlinedTextField(
                 value = userName,
                 onValueChange = { userName = it },
-                label = { Text(text = "Username", fontFamily = poppinsFontFamily,) },
-                leadingIcon = {
-                    Icon(imageVector = Icons.Default.Person, contentDescription = "Person Icon")
-                },
-                modifier = Modifier.fillMaxWidth(0.8f) ,
+                label = { Text(text = "Username", fontFamily = poppinsFontFamily) },
+                leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = "Person Icon") },
+                modifier = Modifier.fillMaxWidth(0.8f),
                 singleLine = true,
                 shape = RoundedCornerShape(10.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -183,14 +174,12 @@ fun SignUpActivity(navController: NavController) {
 
             Spacer(modifier = Modifier.height(2.dp))
 
-            // number field
+            // Contact Number field
             OutlinedTextField(
                 value = contactNumber,
                 onValueChange = { contactNumber = it },
                 label = { Text(text = "Contact Number", fontFamily = poppinsFontFamily) },
-                leadingIcon = {
-                    Icon(imageVector = Icons.Default.Phone, contentDescription = "Phone Icon")
-                },
+                leadingIcon = { Icon(imageVector = Icons.Default.Phone, contentDescription = "Phone Icon") },
                 modifier = Modifier.fillMaxWidth(0.8f),
                 singleLine = true,
                 shape = RoundedCornerShape(10.dp),
@@ -203,18 +192,11 @@ fun SignUpActivity(navController: NavController) {
             Spacer(modifier = Modifier.height(2.dp))
 
             // Email field
-            val emailRegex = "[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
             OutlinedTextField(
                 value = email,
-                onValueChange = {
-                    if (it.matches(emailRegex.toRegex())) {
-                        email = it
-                    }
-                },
-                label = { Text(text = "Email", fontFamily = poppinsFontFamily,) },
-                leadingIcon = {
-                    Icon(imageVector = Icons.Default.Email, contentDescription = "Email Icon")
-                },
+                onValueChange = { email = it },
+                label = { Text(text = "Email", fontFamily = poppinsFontFamily) },
+                leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email Icon") },
                 modifier = Modifier.fillMaxWidth(0.8f),
                 singleLine = true,
                 shape = RoundedCornerShape(10.dp),
@@ -231,9 +213,7 @@ fun SignUpActivity(navController: NavController) {
                 value = password,
                 onValueChange = { password = it },
                 label = { Text(text = "Password", fontFamily = poppinsFontFamily) },
-                leadingIcon = {
-                    Icon(imageVector = Icons.Default.Lock, contentDescription = "Password Icon")
-                },
+                leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Password Icon") },
                 modifier = Modifier.fillMaxWidth(0.8f),
                 shape = RoundedCornerShape(10.dp),
                 singleLine = true,
@@ -250,16 +230,11 @@ fun SignUpActivity(navController: NavController) {
             OutlinedTextField(
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
-                label = { Text(text = "Confirm Password", fontFamily = poppinsFontFamily,) },
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = "Confirm Password Icon"
-                    )
-                },
+                label = { Text(text = "Confirm Password", fontFamily = poppinsFontFamily) },
+                leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Confirm Password Icon") },
                 modifier = Modifier.fillMaxWidth(0.8f),
                 singleLine = true,
-                shape = RoundedCornerShape(10.dp) ,
+                shape = RoundedCornerShape(10.dp),
                 visualTransformation = PasswordVisualTransformation(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Color.Black,
@@ -269,60 +244,31 @@ fun SignUpActivity(navController: NavController) {
 
             Spacer(modifier = Modifier.height(1.dp))
 
+            // Terms and Conditions checkbox and dialog
             TermsAndConditions(isChecked) { newValue -> isChecked = newValue }
 
             Spacer(modifier = Modifier.height(6.dp))
 
+            // Sign Up button with validation
             Button(
-                onClick = { navController.navigate("LoginActivity")
-                    if (password != confirmPassword) {
-                        Log.e("SignUp", "Passwords do not match")
-                    } else {
-                        Log.i("SignUp", "User Registered: $email")
-                    }
+                onClick = {
+                    Log.i("SignUp", "User Registered: $email")
+                    navController.navigate("LoginActivity")
                 },
                 modifier = Modifier
                     .width(180.dp)
                     .height(50.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1d7151)),
                 enabled = firstName.isNotBlank() && lastName.isNotBlank() &&
-                        email.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank()
+                        userName.isNotBlank() && contactNumber.isNotBlank() &&
+                        birthday.isNotBlank() && email.isNotBlank() &&
+                        password.isNotBlank() && confirmPassword.isNotBlank() &&
+                        password == confirmPassword && isChecked
             ) {
                 Text(text = "Sign up", fontFamily = poppinsFontFamily)
             }
-            //            Button(
-//                onClick = {
-//                    if (email.isNotBlank() && password.isNotBlank()) {
-//                        val request = LoginRequest(email, password)
-//
-////                        CoroutineScope(Dispatchers.Main).launch {
-////                            try {
-////                                val response = RetrofitInstance.instance.login(request)
-////                                if (response.isSuccessful) {
-////                                    val token = response.body()?.token
-////                                    Log.d("LoginSuccess", "Token: $token")
-////                                    navController.navigate("HomeActivity")
-////                                } else {
-////                                    Log.e("LoginFailed", "Error: ${response.message()}")
-////                                }
-////                            } catch (e: Exception) {
-////                                Log.e("LoginError", "Error: ${e.message}")
-////                            }
-////                        }
-//                    }
-//                },
-//                modifier = Modifier.fillMaxWidth(0.8f).height(50.dp),
-//                enabled = email.isNotBlank() && password.isNotBlank(),
-//                shape = RoundedCornerShape(10.dp),
-//                colors = ButtonDefaults.buttonColors(
-//                    containerColor = Color(0xFF1d7151),
-//                    contentColor = Color.White
-//                )
-//            ) {
-//                Text(text = "Sign Up")
-//            }
 
-
+            // Login link
             Row(
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
@@ -337,10 +283,7 @@ fun SignUpActivity(navController: NavController) {
                     modifier = Modifier.align(Alignment.CenterVertically)
                 )
 
-                TextButton(
-                    onClick = { navController.navigate("LoginActivity")},
-                    enabled = true
-                ) {
+                TextButton(onClick = { navController.navigate("LoginActivity") }, enabled = true) {
                     Text(
                         text = "Log In",
                         color = Color(0xFF4557FF),
@@ -355,6 +298,7 @@ fun SignUpActivity(navController: NavController) {
     }
 }
 
+// Terms and Conditions composable with dialog
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
@@ -362,6 +306,7 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
     val scrollState = rememberScrollState()
     var hasReachedBottom by remember { mutableStateOf(false) }
 
+    // Terms list
     val terms = listOf(
         "1. You must be at least 18 years old to use Baskit and agree to provide accurate personal information when creating an account.",
         "2. You are responsible for maintaining the confidentiality of your login details.",
@@ -371,18 +316,18 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
         "6. Baskit reserves the right to suspend or terminate accounts that violate these terms."
     )
 
+    // Detect if user has scrolled to the bottom
     LaunchedEffect(scrollState.value, scrollState.maxValue) {
         if (scrollState.maxValue > 0) {
             hasReachedBottom = scrollState.value >= (scrollState.maxValue - 10)
         }
     }
 
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
+    Column(modifier = Modifier.fillMaxSize()) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(start = 25.dp)
                 .background(Color.White, shape = RoundedCornerShape(10.dp))
         ) {
@@ -396,7 +341,7 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
             )
 
             Text(
-                text = "Agree to Terms and Conditions",
+                text = " Agree to Terms and Conditions",
                 fontSize = 12.sp,
                 fontFamily = poppinsFontFamily,
                 fontWeight = FontWeight.Normal,
@@ -413,6 +358,7 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
             }
         }
 
+        // Terms and Conditions dialog
         if (showDialog) {
             AlertDialog(
                 onDismissRequest = { showDialog = false },
@@ -464,7 +410,10 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
                             Image(
                                 painter = painterResource(id = R.drawable.terms_img),
                                 contentDescription = "Rules",
-                                modifier = Modifier.height(170.dp).align(Alignment.CenterHorizontally) .padding(top = 10.dp, bottom = 40.dp),
+                                modifier = Modifier
+                                    .height(170.dp)
+                                    .align(Alignment.CenterHorizontally)
+                                    .padding(top = 10.dp, bottom = 40.dp)
                             )
 
                             Text(
@@ -539,6 +488,7 @@ fun TermsAndConditions(isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
     }
 }
 
+// Helper composable for rendering terms items
 @Composable
 fun TextItem(text: String) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -547,7 +497,9 @@ fun TextItem(text: String) {
             fontWeight = FontWeight.Normal,
             fontFamily = poppinsFontFamily,
             textAlign = TextAlign.Justify,
-            modifier = Modifier.fillMaxWidth() .padding(bottom = 5.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 5.dp)
         )
         Spacer(modifier = Modifier.height(10.dp))
     }
